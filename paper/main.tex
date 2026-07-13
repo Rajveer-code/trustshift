@@ -22,7 +22,10 @@
 \title{\textbf{TrustShift: Shift Type, Not Shift Magnitude,\\
 Determines Machine-Learning Failure Modes}\\
 \large A cross-domain audit protocol and a failure taxonomy}
-\author{Rajveer Singh Pall}
+\author{Rajveer Singh Pall\\[2pt]
+\normalsize Department of Computer Science and Business Systems\\
+\normalsize Gyan Ganga Institute of Technology and Sciences, Jabalpur, Madhya Pradesh, India\\
+\normalsize \texttt{rajveerpall04@gmail.com}\ \ $\cdot$\ \ ORCID: 0009-0001-6762-6124}
 \date{}
 
 \begin{document}
@@ -476,16 +479,30 @@ TrustShift protocol and benchmark available upon publication so that new domains
 the same axes, and offer the resulting taxonomy as a practical guide to what a deployment audit
 should check.
 
-\section*{Data and Code Availability}
-The TrustShift protocol, the four domain adapters, the audit engine, and every results file that
-backs a number in this paper---together with a single script that regenerates all tables and
-figures from the committed prediction files---are available as an open-source repository at
-\url{https://github.com/Rajveer-code/trustshift}, and the harmonized benchmark of standardized
-predictions is on the Hugging Face Hub at
-\url{https://huggingface.co/datasets/Rajveer-code/trustshift}. All source datasets are public
-(NHANES, BRFSS, HMDA, GoEmotions, CIC-DDoS2019, CICIDS2017); consistent with their licenses we
-redistribute standardized model predictions and metadata, not raw third-party records. Seeds,
-estimator settings, and metric definitions are fixed in the released configuration.
+\section*{Statements and Declarations}
+
+\paragraph{Funding.} No funding was received to assist with the preparation of this manuscript.
+
+\paragraph{Competing interests.} The author declares no competing interests.
+
+\paragraph{Ethics approval.} Not applicable. This study uses only publicly available, de-identified
+datasets and involves no new human- or animal-subjects data collection.
+
+\paragraph{Author contributions.} Rajveer Singh Pall is the sole author and conducted all aspects of
+the work: conception, methodology, experiments, analysis, and writing.
+
+\paragraph{Data availability statement.} All source datasets are public: NHANES and BRFSS
+(U.S.\ Centers for Disease Control and Prevention), HMDA (U.S.\ Consumer Financial Protection
+Bureau), GoEmotions, CIC-DDoS2019, and CICIDS2017. Consistent with their licenses, the released
+benchmark redistributes standardized model \emph{predictions} and metadata---not raw third-party
+records. The harmonized benchmark of predictions is available on the Hugging Face Hub at
+\url{https://huggingface.co/datasets/Rajveer-code/trustshift}.
+
+\paragraph{Code availability.} The TrustShift protocol, the four domain adapters, the audit engine,
+and every results file that backs a number in this paper---together with a single script that
+regenerates all tables and figures from the committed prediction files---are available as an
+open-source repository at \url{https://github.com/Rajveer-code/trustshift}. Seeds, estimator
+settings, and metric definitions are fixed in the released configuration.
 
 \bibliography{references}
 
