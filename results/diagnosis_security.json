@@ -1,0 +1,20 @@
+{
+  "domain": "security",
+  "label_shift": {
+    "source_test": {
+      "pos": 0.8418284629680889
+    },
+    "target_cicids2017": {
+      "pos": 0.5
+    }
+  },
+  "covariate": {},
+  "concept": {},
+  "summary": {
+    "target_cicids2017": {
+      "max_delta_pi": 0.3418284629680889,
+      "auc_dc": null,
+      "diagnosis": "label"
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "domain": "lending",
+  "label_shift": {
+    "source_test": {
+      "pos": 0.8364595911489778
+    },
+    "target_2022": {
+      "pos": 0.7919860400697997
+    },
+    "target_2023": {
+      "pos": 0.758845
+    },
+    "target_2024": {
+      "pos": 0.7658711706441468
+    },
+    "target_heldout_states": {
+      "pos": 0.81312
+    }
+  },
+  "covariate": {
+    "target_2022": {
+      "auc_dc": 0.68792069625,
+      "top_psi": {
+        "purpose_refi": 0.21436961731108845,
+        "ltv": 0.14441950034487017,
+        "aus_automated": 0.10865678314634131,
+        "aus_exempt": 0.09590465773598664,
+        "loan_amount": 0.06813597833179925,
+        "log_loan_amount": 0.06813597833179925,
+        "purpose_purchase": 0.0442944796672748,
+        "dti_midpoint": 0.03303019859237338,
+        "dti_high": 0.020830429103523278,
+        "property_value": 0.01017727340305365
+      }
+    },
+    "target_2023": {
+      "auc_dc": 0.80373844375,
+      "top_psi": {
+        "purpose_refi": 0.5318592375967564,
+        "ltv": 0.3849711802570783,
+        "aus_automated": 0.2511159103996756,
+        "aus_exempt": 0.20529260774977212,
+        "loan_amount": 0.16997814930110539,
+        "log_loan_amount": 0.16997814930110539,
+        "dti_midpoint": 0.13010446672867115,
+        "purpose_purchase": 0.10177632443582166,
+        "dti_high": 0.08877603376791517,
+        "near_pmi_threshold": 0.02543438118658991
+      }
+    },
+    "target_2024": {
+      "auc_dc": 0.7980847175,
+      "top_psi": {
+        "purpose_refi": 0.42549256967712906,
+        "ltv": 0.35568153570868755,
+        "aus_automated": 0.21008023199638487,
+        "aus_exempt": 0.1769905141522019,
+        "loan_amount": 0.13853103083830168,
+        "log_loan_amount": 0.13853103083830168,
+        "dti_midpoint": 0.13022354708257478,
+        "dti_high": 0.08738921535999095,
+        "purpose_purchase": 0.0750683443160518,
+        "property_value": 0.027386670728324264
+      }
+    },
+    "geo_note": "geographic target uses the same feature space; AUC_dc for temporal years shown"
+  },
+  "concept": {
+    "note": "feature<->prediction alignment unavailable; label+covariate reported"
+  },
+  "summary": {
+    "target_2022": {
+      "max_delta_pi": 0.044473551079178164,
+      "auc_dc": 0.68792069625,
+      "diagnosis": "covariate"
+    },
+    "target_2023": {
+      "max_delta_pi": 0.07761459114897784,
+      "auc_dc": 0.80373844375,
+      "diagnosis": "covariate"
+    },
+    "target_2024": {
+      "max_delta_pi": 0.07058842050483105,
+      "auc_dc": 0.7980847175,
+      "diagnosis": "covariate"
+    },
+    "target_heldout_states": {
+      "max_delta_pi": 0.02333959114897788,
+      "auc_dc": null,
+      "diagnosis": "mixed"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+[project]
+name = "trustshift"
+version = "0.1.0"
+description = "Cross-domain audit of accuracy, calibration, and subgroup reliability under deployment shift"
+authors = [{ name = "Rajveer Singh Pall", email = "rajveerpall04@gmail.com" }]
+requires-python = ">=3.10"
+dependencies = [
+    "pandas>=2.0",
+    "pyarrow>=14.0",
+    "scikit-learn>=1.3",
+    "lightgbm>=4.0",
+    "xgboost>=2.0",
+    "matplotlib>=3.8",
+    "joblib>=1.3",
+    "scipy>=1.11",
+    "statsmodels>=0.14",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+security = ["kagglehub", "truststore"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

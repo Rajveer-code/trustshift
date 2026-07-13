@@ -1,0 +1,21 @@
+{
+  "domain": "clinical",
+  "model": "fedavg",
+  "targets": {
+    "target_brfss": {
+      "ece_L0": 0.27596985312488154,
+      "auc_L0": 0.7570829190771269,
+      "gap_L0": 0.05405599035920494,
+      "ece_temperature": 0.2686039733842716,
+      "auc_temperature": 0.7570826816223153,
+      "gap_temperature": 0.054037846112028776,
+      "ece_platt": 0.02308190769680039,
+      "auc_platt": 0.7570826816223153,
+      "gap_platt": 0.054037846112028776,
+      "ece_isotonic": 0.0022956200185411686,
+      "auc_isotonic": 0.7569929071532316,
+      "gap_isotonic": 0.05293906418999317
+    }
+  },
+  "reading": "L1 expectation: ece_isotonic << ece_L0 while auc_* ~ auc_L0 and gap_* ~ gap_L0"
+}

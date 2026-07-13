@@ -1,0 +1,21 @@
+{
+  "domain": "security",
+  "model": "lightgbm",
+  "targets": {
+    "target_cicids2017": {
+      "ece_L0": 0.4500762477598521,
+      "auc_L0": 0.6342318002794829,
+      "gap_L0": NaN,
+      "ece_temperature": 0.13947587639671438,
+      "auc_temperature": 0.6229109987941607,
+      "gap_temperature": NaN,
+      "ece_platt": 0.09673125700534707,
+      "auc_platt": 0.6229109987941607,
+      "gap_platt": NaN,
+      "ece_isotonic": 0.013174150792170481,
+      "auc_isotonic": 0.7075901818642798,
+      "gap_isotonic": NaN
+    }
+  },
+  "reading": "L1 expectation: ece_isotonic << ece_L0 while auc_* ~ auc_L0 and gap_* ~ gap_L0"
+}

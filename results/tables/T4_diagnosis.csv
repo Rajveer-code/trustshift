@@ -1,0 +1,9 @@
+domain,target,diagnosis,max_delta_pi,auc_dc,auc_source,auc_source_reweighted,auc_target
+clinical,target_brfss,mixed,0.0526,,,,
+nlp,target_reddit,concept,0.522,0.9338419185735075,0.9881577615164796,0.9869582014237177,0.5964860028282171
+nlp,target_twitter,concept,0.2654,0.9877839866790845,0.9881577615164796,0.9882877583976004,0.6027695391882243
+lending,target_2022,covariate,0.0445,0.68792069625,,,
+lending,target_2023,covariate,0.0776,0.80373844375,,,
+lending,target_2024,covariate,0.0706,0.7980847175,,,
+lending,target_heldout_states,mixed,0.0233,,,,
+security,target_cicids2017,label,0.3418,,,,

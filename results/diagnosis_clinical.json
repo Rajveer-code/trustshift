@@ -1,0 +1,27 @@
+{
+  "domain": "clinical",
+  "label_shift": {
+    "source_test": {
+      "pos": 0.18581469648562302
+    },
+    "target_brfss": {
+      "pos": 0.1331891804252407
+    }
+  },
+  "covariate": {
+    "target_brfss": {
+      "p_hat_ks": 0.18233310936854996,
+      "note": "target-side features unrecoverable; score-distribution proxy"
+    }
+  },
+  "concept": {
+    "note": "target features unrecoverable; not computed"
+  },
+  "summary": {
+    "target_brfss": {
+      "max_delta_pi": 0.05262551606038232,
+      "auc_dc": null,
+      "diagnosis": "mixed"
+    }
+  }
+}

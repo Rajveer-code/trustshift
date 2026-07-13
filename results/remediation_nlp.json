@@ -1,0 +1,35 @@
+{
+  "domain": "nlp",
+  "model": "bert",
+  "targets": {
+    "target_reddit": {
+      "ece_L0": 0.11533843916815692,
+      "auc_L0": 0.6476810984321071,
+      "gap_L0": NaN,
+      "ece_temperature": 0.06415452686743875,
+      "auc_temperature": 0.6476810984321071,
+      "gap_temperature": NaN,
+      "ece_platt": 0.019435515922050887,
+      "auc_platt": 0.6476810984321071,
+      "gap_platt": NaN,
+      "ece_isotonic": 0.016088282875477974,
+      "auc_isotonic": 0.6362200601676887,
+      "gap_isotonic": NaN
+    },
+    "target_twitter": {
+      "ece_L0": 0.25444419291361337,
+      "auc_L0": 0.5923407173074255,
+      "gap_L0": NaN,
+      "ece_temperature": 0.07818905863079528,
+      "auc_temperature": 0.5923407173074255,
+      "gap_temperature": NaN,
+      "ece_platt": 0.03875732639248663,
+      "auc_platt": 0.5923407173074255,
+      "gap_platt": NaN,
+      "ece_isotonic": 0.0546911105377813,
+      "auc_isotonic": 0.5887338275993231,
+      "gap_isotonic": NaN
+    }
+  },
+  "reading": "L1 expectation: ece_isotonic << ece_L0 while auc_* ~ auc_L0 and gap_* ~ gap_L0"
+}

@@ -1,0 +1,38 @@
+data/
+*.parquet
+*.npy
+*.joblib
+models/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+paper/build/
+*.aux
+*.log
+*.out
+*.bbl
+*.blg
+.ipynb_checkpoints/
+kaggle.json
+
+# results/ IS tracked (source of every paper number) — only prediction parquets are ignored
+!results/**/*.json
+!results/**/*.csv
+
+# run logs
+results/_*.log
+paper/_build.log
+paper/*.aux
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.out
+paper/*.bbl
+paper/*.blg
+paper/*.log
+
+# internal (not for public repo)
+CLAUDE.md
+PLAN.md
+docs/
+run_remaining.sh

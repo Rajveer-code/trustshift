@@ -1,0 +1,8 @@
+domain,model,target,ece_L0,ece_isotonic,ece_temperature,auc_L0,auc_isotonic,gap_L0,gap_isotonic
+clinical,fedavg,target_brfss,0.276,0.0023,0.2686,0.7571,0.757,0.0541,0.0529
+nlp,bert,target_reddit,0.1153,0.0161,0.0642,0.6477,0.6362,,
+nlp,bert,target_twitter,0.2544,0.0547,0.0782,0.5923,0.5887,,
+lending,lightgbm_temporal,target_2022,0.2463,0.0059,0.249,0.8054,0.8049,0.0214,0.0212
+lending,lightgbm_temporal,target_2023,0.2401,0.0024,0.2453,0.8212,0.8208,0.018,0.018
+lending,lightgbm_temporal,target_2024,0.2412,0.0061,0.2461,0.819,0.8187,0.0146,0.0147
+security,lightgbm,target_cicids2017,0.4501,0.0132,0.1395,0.6342,0.7076,,

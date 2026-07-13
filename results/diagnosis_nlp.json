@@ -1,0 +1,55 @@
+{
+  "domain": "nlp",
+  "label_shift": {
+    "source_test": {
+      "anxiety": 0.07467191601049869,
+      "depression": 0.5661417322834645,
+      "normal": 0.28713910761154854,
+      "stress": 0.07204724409448819
+    },
+    "target_reddit": {
+      "anxiety": 0.022534761067604284,
+      "depression": 0.06552661019657983,
+      "normal": 0.8091737254275212,
+      "stress": 0.10276490330829471
+    },
+    "target_twitter": {
+      "anxiety": 0.12278876170655567,
+      "depression": 0.3007284079084287,
+      "normal": 0.4363510232396809,
+      "stress": 0.1401318071453347
+    }
+  },
+  "covariate": {
+    "target_reddit": {
+      "auc_dc": 0.9338419185735075
+    },
+    "target_twitter": {
+      "auc_dc": 0.9877839866790845
+    }
+  },
+  "concept": {
+    "target_reddit": {
+      "auc_source": 0.9881577615164796,
+      "auc_source_reweighted": 0.9869582014237177,
+      "auc_target": 0.5964860028282171
+    },
+    "target_twitter": {
+      "auc_source": 0.9881577615164796,
+      "auc_source_reweighted": 0.9882877583976004,
+      "auc_target": 0.6027695391882243
+    }
+  },
+  "summary": {
+    "target_reddit": {
+      "max_delta_pi": 0.5220346178159727,
+      "auc_dc": 0.9338419185735075,
+      "diagnosis": "concept"
+    },
+    "target_twitter": {
+      "max_delta_pi": 0.26541332437503584,
+      "auc_dc": 0.9877839866790845,
+      "diagnosis": "concept"
+    }
+  }
+}

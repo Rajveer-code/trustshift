@@ -1,0 +1,131 @@
+{
+  "clinical_fedavg": {
+    "auc_src": 0.7877,
+    "auc_tgt": 0.7569,
+    "dauc": 0.0308,
+    "ece_src": 0.1679,
+    "ece_tgt": 0.2762,
+    "dgap": -0.0661,
+    "dgap_ci": [
+      -0.11269804715433636,
+      -0.016389540570819122
+    ],
+    "dgap_p": 0.011
+  },
+  "clinical_xgb": {
+    "ece_tgt": 0.4102,
+    "dgap": 0.0285
+  },
+  "nlp": {
+    "auc_src_min": 0.9833,
+    "auc_src_max": 0.9865,
+    "auc_tgt_min": 0.5957,
+    "auc_tgt_max": 0.703,
+    "dauc_min": 0.2819,
+    "dauc_max": 0.3883,
+    "dgap_min": 0.0675,
+    "dgap_max": 0.1509,
+    "ece_tgt_min": 0.0997,
+    "ece_tgt_max": 0.2745
+  },
+  "lending_temporal": {
+    "dauc_min": -0.0277,
+    "dauc_max": -0.0121,
+    "dgap_min": -0.0313,
+    "dgap_max": -0.0183,
+    "auc_dc_min": 0.68792069625,
+    "auc_dc_max": 0.80373844375
+  },
+  "lending_geo": {
+    "dauc": 0.0587,
+    "dgap": -0.0292
+  },
+  "security": {
+    "auc_src": 1.0,
+    "auc_tgt": 0.6354,
+    "dauc": 0.3646,
+    "ece_src": 0.001,
+    "ece_tgt": 0.4507
+  },
+  "security_recall": {
+    "ddos": 0.355,
+    "goldeneye": 0.306,
+    "hulk": 0.052,
+    "slowhttp": 0.12,
+    "slowloris": 0.215
+  },
+  "remediation": {
+    "clinical/target_brfss": {
+      "ece_L0": 0.276,
+      "ece_iso": 0.0023,
+      "auc_L0": 0.7571,
+      "auc_iso": 0.757
+    },
+    "nlp/target_reddit": {
+      "ece_L0": 0.1153,
+      "ece_iso": 0.0161,
+      "auc_L0": 0.6477,
+      "auc_iso": 0.6362
+    },
+    "nlp/target_twitter": {
+      "ece_L0": 0.2544,
+      "ece_iso": 0.0547,
+      "auc_L0": 0.5923,
+      "auc_iso": 0.5887
+    },
+    "lending/target_2022": {
+      "ece_L0": 0.2463,
+      "ece_iso": 0.0059,
+      "auc_L0": 0.8054,
+      "auc_iso": 0.8049
+    },
+    "lending/target_2023": {
+      "ece_L0": 0.2401,
+      "ece_iso": 0.0024,
+      "auc_L0": 0.8212,
+      "auc_iso": 0.8208
+    },
+    "lending/target_2024": {
+      "ece_L0": 0.2412,
+      "ece_iso": 0.0061,
+      "auc_L0": 0.819,
+      "auc_iso": 0.8187
+    },
+    "security/target_cicids2017": {
+      "ece_L0": 0.4501,
+      "ece_iso": 0.0132,
+      "auc_L0": 0.6342,
+      "auc_iso": 0.7076
+    }
+  },
+  "meta": {
+    "M1_gap_vs_calibration": {
+      "slope": 0.415,
+      "ci": [
+        0.169,
+        0.603
+      ],
+      "r2": 0.414,
+      "n": 14
+    },
+    "M2_gap_vs_covariateshift": {
+      "slope": 0.536,
+      "ci": [
+        0.347,
+        0.843
+      ],
+      "r2": 0.771,
+      "n": 11
+    },
+    "M3_gap_vs_accuracyloss": {
+      "slope": 0.344,
+      "ci": [
+        0.271,
+        0.435
+      ],
+      "r2": 0.818,
+      "n": 14
+    },
+    "n_shift_points": 16
+  }
+}
