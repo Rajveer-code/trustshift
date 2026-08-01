@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software or protocol, please cite it as below."
+title: "TrustShift: Shift Type, Not Shift Magnitude, Determines Machine-Learning Failure Modes — A Cross-Domain Audit Protocol and a Failure Taxonomy"
+type: software
+authors:
+  - family-names: Pall
+    given-names: "Rajveer Singh"
+    orcid: "https://orcid.org/0009-0001-6762-6134"
+license: MIT
+repository-code: "https://github.com/Rajveer-code/trustshift"
