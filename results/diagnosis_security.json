@@ -2,19 +2,49 @@
   "domain": "security",
   "label_shift": {
     "source_test": {
-      "pos": 0.8418284629680889
+      "pos": 0.7732091401600942
     },
     "target_cicids2017": {
-      "pos": 0.5
+      "pos": 0.13995138048877875
     }
   },
   "covariate": {},
   "concept": {},
+  "probe_availability": {
+    "label_shift": true,
+    "covariate": false,
+    "concept": false
+  },
+  "label_shift_note": "Computed on the RAW (uncapped) harmonized, population-filtered data -- see security_raw_prevalence.json -- NOT the capped predictions parquet. The capped parquet's prevalence is source=0.773-ish artificially close to target because both sides are capped per-attack-family for training-compute reasons; the raw population prevalence is the deployment-relevant quantity and is substantially larger (BLOCKER-6 fix, PLAN_ijdsa.md).",
+  "family_disjoint": {
+    "target_cicids2017": true
+  },
+  "family_overlap_note": {
+    "available": true,
+    "trained_attack_families": [
+      "ldap",
+      "mssql",
+      "netbios",
+      "portmap",
+      "syn",
+      "udp"
+    ],
+    "target_attack_families": [
+      "ddos",
+      "goldeneye",
+      "hulk",
+      "slowhttp",
+      "slowloris"
+    ],
+    "overlap": [],
+    "disjoint": true
+  },
   "summary": {
     "target_cicids2017": {
-      "max_delta_pi": 0.3418284629680889,
+      "max_delta_pi": 0.6332577596713155,
       "auc_dc": null,
-      "diagnosis": "label"
+      "diagnosis": "inconclusive",
+      "note": "large prevalence shift measured (|Delta-pi|=0.633), but the positive-class attack families are measurably disjoint between source training data and target (see family_overlap_note) -- label shift's assumption that P(X|Y) is stable is directly contradicted, so the shift cannot be reduced to a prevalence change alone"
     }
   }
 }

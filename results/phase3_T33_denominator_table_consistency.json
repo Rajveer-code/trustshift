@@ -1,0 +1,5 @@
+{
+  "denominator_valid": 11,
+  "table_valid_true_rows": 11,
+  "note": "table includes non-feasible/N-A rows too (for full transparency); 'valid=True' row count here should equal exact_denominator()'s 'valid' count"
+}

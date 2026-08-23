@@ -63,10 +63,15 @@
         "property_value": 0.027386670728324264
       }
     },
-    "geo_note": "geographic target uses the same feature space; AUC_dc for temporal years shown"
+    "geo_note": "geographic target (target_heldout_states) has no covariate probe -- AUC_dc computed for temporal years only. Phase-3 (T3.1) replaces this with a per-state severity ladder that will supersede this limitation."
   },
   "concept": {
     "note": "feature<->prediction alignment unavailable; label+covariate reported"
+  },
+  "probe_availability": {
+    "label_shift": true,
+    "covariate": true,
+    "concept": false
   },
   "summary": {
     "target_2022": {
@@ -87,7 +92,8 @@
     "target_heldout_states": {
       "max_delta_pi": 0.02333959114897788,
       "auc_dc": null,
-      "diagnosis": "mixed"
+      "diagnosis": "inconclusive",
+      "note": "no probe produced adjudicable evidence above threshold for this target"
     }
   }
 }

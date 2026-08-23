@@ -1,0 +1,215 @@
+{
+  "scope": "WITHIN the covariate mechanism only (T3.1, n=447) -- tests context/state identity vs. magnitude, NOT mechanism-category vs. magnitude. See phase3_h2_magnitude_vs_mechanism.json for the (severely underpowered) direct mechanism-category test.",
+  "results": {
+    "delta_auc": {
+      "label": "$\\Delta$AUC (discrimination)",
+      "M0_magnitude_only": {
+        "predictor": "auc_dc",
+        "r2": 1.687041222275809e-07,
+        "n_params": 2
+      },
+      "M_state_only": {
+        "predictor": "C(state_fips)",
+        "r2": 0.8318572860750582,
+        "n_params": 51
+      },
+      "M2_magnitude_plus_state": {
+        "predictor": "auc_dc + C(state_fips)",
+        "r2": 0.852263957797416,
+        "n_params": 52
+      },
+      "r2_increase_state_over_magnitude": 0.8522637890932938,
+      "nested_F_test_state_beyond_magnitude": {
+        "F": 45.57373971481183,
+        "p": 1.7842185026139749e-134,
+        "interpretation": "tests H0: all state fixed effects are jointly zero, i.e. state adds NOTHING beyond auc_dc. Small p => state identity carries real, statistically detectable information beyond the magnitude scalar."
+      },
+      "M_year_only_r2": 0.03126187397694691,
+      "nested_F_test_year_beyond_magnitude": {
+        "F": 8.541648094942355,
+        "p": 0.00022916491729626666
+      },
+      "M_seed_only_r2": 0.0027626829631928196,
+      "nested_F_test_seed_beyond_magnitude": {
+        "F": 0.6136091713133774,
+        "p": 0.5418528472263429
+      },
+      "note_in_sample_caveat": "R2 values for M_state/M2 are IN-SAMPLE. A model with ~50 state dummies will mechanically fit better in-sample than a 1-parameter model regardless of true signal; the nested F-test (which accounts for the added degrees of freedom) is the statistically honest comparison, not the raw R2 gap alone."
+    },
+    "delta_macro_f1": {
+      "label": "$\\Delta$macro-F1 (operating point)",
+      "M0_magnitude_only": {
+        "predictor": "auc_dc",
+        "r2": 0.00044543064666902055,
+        "n_params": 2
+      },
+      "M_state_only": {
+        "predictor": "C(state_fips)",
+        "r2": 0.8440931784841116,
+        "n_params": 51
+      },
+      "M2_magnitude_plus_state": {
+        "predictor": "auc_dc + C(state_fips)",
+        "r2": 0.8479129283082163,
+        "n_params": 52
+      },
+      "r2_increase_state_over_magnitude": 0.8474674976615473,
+      "nested_F_test_state_beyond_magnitude": {
+        "F": 44.0207912286861,
+        "p": 5.314309373785548e-132,
+        "interpretation": "tests H0: all state fixed effects are jointly zero, i.e. state adds NOTHING beyond auc_dc. Small p => state identity carries real, statistically detectable information beyond the magnitude scalar."
+      },
+      "M_year_only_r2": 0.0225700671852207,
+      "nested_F_test_year_beyond_magnitude": {
+        "F": 7.366224270726145,
+        "p": 0.000712744191892778
+      },
+      "M_seed_only_r2": 0.0014027106285535718,
+      "nested_F_test_seed_beyond_magnitude": {
+        "F": 0.30843772932149816,
+        "p": 0.7347513183410137
+      },
+      "note_in_sample_caveat": "R2 values for M_state/M2 are IN-SAMPLE. A model with ~50 state dummies will mechanically fit better in-sample than a 1-parameter model regardless of true signal; the nested F-test (which accounts for the added degrees of freedom) is the statistically honest comparison, not the raw R2 gap alone."
+    },
+    "delta_f1_positive": {
+      "label": "$\\Delta$F1$_{positive}$ (diagnostic)",
+      "M0_magnitude_only": {
+        "predictor": "auc_dc",
+        "r2": 0.06412418437912826,
+        "n_params": 2
+      },
+      "M_state_only": {
+        "predictor": "C(state_fips)",
+        "r2": 0.8557496871320907,
+        "n_params": 51
+      },
+      "M2_magnitude_plus_state": {
+        "predictor": "auc_dc + C(state_fips)",
+        "r2": 0.88088426028361,
+        "n_params": 52
+      },
+      "r2_increase_state_over_magnitude": 0.8167600759044817,
+      "nested_F_test_state_beyond_magnitude": {
+        "F": 54.1692022818171,
+        "p": 5.15166758159528e-147,
+        "interpretation": "tests H0: all state fixed effects are jointly zero, i.e. state adds NOTHING beyond auc_dc. Small p => state identity carries real, statistically detectable information beyond the magnitude scalar."
+      },
+      "M_year_only_r2": 0.010157749563709517,
+      "nested_F_test_year_beyond_magnitude": {
+        "F": 0.6532356152441889,
+        "p": 0.520859857142058
+      },
+      "M_seed_only_r2": 0.0006001532361231687,
+      "nested_F_test_seed_beyond_magnitude": {
+        "F": 0.11055076844199957,
+        "p": 0.8953655667398247
+      },
+      "note_in_sample_caveat": "R2 values for M_state/M2 are IN-SAMPLE. A model with ~50 state dummies will mechanically fit better in-sample than a 1-parameter model regardless of true signal; the nested F-test (which accounts for the added degrees of freedom) is the statistically honest comparison, not the raw R2 gap alone."
+    },
+    "delta_ece": {
+      "label": "$\\Delta$ECE (calibration)",
+      "M0_magnitude_only": {
+        "predictor": "auc_dc",
+        "r2": 0.0020480166629843755,
+        "n_params": 2
+      },
+      "M_state_only": {
+        "predictor": "C(state_fips)",
+        "r2": 0.8432146351029822,
+        "n_params": 51
+      },
+      "M2_magnitude_plus_state": {
+        "predictor": "auc_dc + C(state_fips)",
+        "r2": 0.8452191432740691,
+        "n_params": 52
+      },
+      "r2_increase_state_over_magnitude": 0.8431711266110847,
+      "nested_F_test_state_beyond_magnitude": {
+        "F": 43.03537298557686,
+        "p": 2.1526511424132155e-130,
+        "interpretation": "tests H0: all state fixed effects are jointly zero, i.e. state adds NOTHING beyond auc_dc. Small p => state identity carries real, statistically detectable information beyond the magnitude scalar."
+      },
+      "M_year_only_r2": 0.021446160068501197,
+      "nested_F_test_year_beyond_magnitude": {
+        "F": 4.565140309044728,
+        "p": 0.010902830590225785
+      },
+      "M_seed_only_r2": 0.00017580237941472454,
+      "nested_F_test_seed_beyond_magnitude": {
+        "F": 0.043389158189025334,
+        "p": 0.9575427522644947
+      },
+      "note_in_sample_caveat": "R2 values for M_state/M2 are IN-SAMPLE. A model with ~50 state dummies will mechanically fit better in-sample than a 1-parameter model regardless of true signal; the nested F-test (which accounts for the added degrees of freedom) is the statistically honest comparison, not the raw R2 gap alone."
+    },
+    "delta_brier": {
+      "label": "$\\Delta$Brier (calibration, diagnostic)",
+      "M0_magnitude_only": {
+        "predictor": "auc_dc",
+        "r2": 0.026891176833858665,
+        "n_params": 2
+      },
+      "M_state_only": {
+        "predictor": "C(state_fips)",
+        "r2": 0.8813515634449196,
+        "n_params": 51
+      },
+      "M2_magnitude_plus_state": {
+        "predictor": "auc_dc + C(state_fips)",
+        "r2": 0.8904176275644832,
+        "n_params": 52
+      },
+      "r2_increase_state_over_magnitude": 0.8635264507306245,
+      "nested_F_test_state_beyond_magnitude": {
+        "F": 62.253251222373564,
+        "p": 2.416854950884487e-157,
+        "interpretation": "tests H0: all state fixed effects are jointly zero, i.e. state adds NOTHING beyond auc_dc. Small p => state identity carries real, statistically detectable information beyond the magnitude scalar."
+      },
+      "M_year_only_r2": 0.0026308823671248316,
+      "nested_F_test_year_beyond_magnitude": {
+        "F": 1.4991075321215503,
+        "p": 0.22446009437479453
+      },
+      "M_seed_only_r2": 0.0003217559871303566,
+      "nested_F_test_seed_beyond_magnitude": {
+        "F": 0.06190065560010972,
+        "p": 0.9399843922968052
+      },
+      "note_in_sample_caveat": "R2 values for M_state/M2 are IN-SAMPLE. A model with ~50 state dummies will mechanically fit better in-sample than a 1-parameter model regardless of true signal; the nested F-test (which accounts for the added degrees of freedom) is the statistically honest comparison, not the raw R2 gap alone."
+    },
+    "delta_gap_auc": {
+      "label": "$\\Delta$G (subgroup gap, race_black)",
+      "M0_magnitude_only": {
+        "predictor": "auc_dc",
+        "r2": 0.04617526864338506,
+        "n_params": 2
+      },
+      "M_state_only": {
+        "predictor": "C(state_fips)",
+        "r2": 0.7209199436321807,
+        "n_params": 51
+      },
+      "M2_magnitude_plus_state": {
+        "predictor": "auc_dc + C(state_fips)",
+        "r2": 0.7212642827498774,
+        "n_params": 52
+      },
+      "r2_increase_state_over_magnitude": 0.6750890141064924,
+      "nested_F_test_state_beyond_magnitude": {
+        "F": 19.133547950209614,
+        "p": 6.838988782425655e-78,
+        "interpretation": "tests H0: all state fixed effects are jointly zero, i.e. state adds NOTHING beyond auc_dc. Small p => state identity carries real, statistically detectable information beyond the magnitude scalar."
+      },
+      "M_year_only_r2": 0.0014661484543083692,
+      "nested_F_test_year_beyond_magnitude": {
+        "F": 2.573999529523757,
+        "p": 0.07736982186051283
+      },
+      "M_seed_only_r2": 0.014202619011472795,
+      "nested_F_test_seed_beyond_magnitude": {
+        "F": 3.1522545866475205,
+        "p": 0.04371628210911835
+      },
+      "note_in_sample_caveat": "R2 values for M_state/M2 are IN-SAMPLE. A model with ~50 state dummies will mechanically fit better in-sample than a 1-parameter model regardless of true signal; the nested F-test (which accounts for the added degrees of freedom) is the statistically honest comparison, not the raw R2 gap alone."
+    }
+  }
+}

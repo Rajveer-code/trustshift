@@ -1,0 +1,21 @@
+{
+  "domain": "lending",
+  "model": "lightgbm_geo",
+  "targets": {
+    "target_heldout_states": {
+      "ece_L0": 0.1893048569679382,
+      "auc_L0": 0.785592981028746,
+      "gap_L0": 0.0093109331568475,
+      "ece_temperature": 0.17131465855562125,
+      "auc_temperature": 0.785592981028746,
+      "gap_temperature": 0.0093109331568475,
+      "ece_platt": 0.00559487904745865,
+      "auc_platt": 0.785592981028746,
+      "gap_platt": 0.0093109331568475,
+      "ece_isotonic": 0.0048702411842502565,
+      "auc_isotonic": 0.7844846744258378,
+      "gap_isotonic": 0.009696037163119064
+    }
+  },
+  "reading": "L1 expectation: ece_isotonic << ece_L0 while auc_* ~ auc_L0 and gap_* ~ gap_L0"
+}

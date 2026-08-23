@@ -3,7 +3,14 @@
 Consumes results/predictions_{domain}.parquet, writes results/audit_{domain}.json.
 
 Axis 1 (discrimination): AUC (macro over class groups for multiclass domains, else pooled)
-                         and macro-F1 per split; DeLong CI per AUC.
+                         and macro_f1 (unweighted mean of per-class F1, average="macro" for
+                         binary domains) per split; DeLong CI per AUC. Binary domains also
+                         report f1_positive (positive-class-only F1, sklearn's average="binary"
+                         default) alongside macro_f1 -- these are two distinct quantities that
+                         previously shared the single, incorrectly-macro-labeled `macro_f1` key
+                         for binary domains until the 2026-08-23 correction (see
+                         _split_aggregate's docstring). f1_positive is None for multiclass
+                         domains, where "the positive class" is not a meaningful concept.
 Axis 2 (calibration):    ECE (M=10) and Brier per split; ECE bootstrap CI.
 Axis 3 (subgroup):       per-subgroup AUC/ECE; gap G = max-min over an axis's groups;
                          DELTA-G = G(target) - G(source_test) is the headline "fairness gap
@@ -47,10 +54,83 @@ def _auc_se(y, p):
     return r["auc"], r["se"]
 
 
+def _brier_decomposition(y, p, n_bins=ECE_BINS):
+    """Murphy (1973) three-term decomposition: brier_binned = reliability - resolution + uncertainty.
+
+    reliability = calibration-within-bin error (lower is better, 0 = perfectly calibrated bins);
+    resolution  = how much bin-level base rates vary from the overall base rate (higher is
+                  better -- the model sorts examples into genuinely different-risk buckets);
+    uncertainty = obar*(1-obar), the irreducible variance of the label itself given only the
+                  base rate -- rises whenever prevalence moves toward 0.5, independent of the
+                  model.
+
+    Murphy's identity is exact for forecasts that take only finitely many DISCRETE values (every
+    member of a bin has the literal same forecast). Continuous ML scores only approximately
+    satisfy this once binned: replacing each score by its bin mean (as reliability/resolution do)
+    changes the score itself, so `brier_binned` (the Brier score of the bin-mean-substituted
+    forecast) differs slightly from `brier_raw` (the actual Brier score of the unmodified scores)
+    by a `grouping_loss` term (Brier_raw - Brier_binned) that shrinks as bins narrow. This
+    function reports all of: reliability, resolution, uncertainty, brier_binned (exactly
+    reliability - resolution + uncertainty, to floating-point precision) and grouping_loss, so
+    the three-term identity is always exact against brier_binned, and grouping_loss quantifies
+    how much binning cost against the true Brier score (PLAN_ijdsa.md T1.2). Same equal-width
+    bins as the reported ECE -- this decomposition explains cases where Brier and ECE move in
+    opposite directions (e.g. lending: ECE improves while Brier worsens because uncertainty rises
+    faster than reliability improves).
+    """
+    y = np.asarray(y, dtype=float); p = np.asarray(p, dtype=float)
+    n = len(y)
+    if n == 0:
+        return dict(reliability=np.nan, resolution=np.nan, uncertainty=np.nan,
+                    brier_binned=np.nan, grouping_loss=np.nan)
+    edges = np.linspace(0.0, 1.0, n_bins + 1)
+    idx = np.clip(np.digitize(p, edges[1:-1], right=False), 0, n_bins - 1)
+    obar = float(y.mean())
+    reliability = resolution = 0.0
+    brier_raw_sum = 0.0
+    for b in range(n_bins):
+        mask = idx == b
+        nb = int(mask.sum())
+        if nb == 0:
+            continue
+        ob = float(y[mask].mean()); fb = float(p[mask].mean())
+        reliability += nb * (fb - ob) ** 2
+        resolution += nb * (ob - obar) ** 2
+        brier_raw_sum += float(np.sum((p[mask] - y[mask]) ** 2))
+    reliability /= n; resolution /= n
+    uncertainty = obar * (1 - obar)
+    brier_binned = reliability - resolution + uncertainty
+    brier_raw = brier_raw_sum / n
+    return dict(reliability=float(reliability), resolution=float(resolution),
+                uncertainty=float(uncertainty), brier_binned=float(brier_binned),
+                grouping_loss=float(brier_raw - brier_binned))
+
+
 def _split_aggregate(sdf: pd.DataFrame, multiclass: bool, primary_axis: str):
-    """Aggregate AUC (+SE), macro-F1, ECE, Brier for one split."""
+    """Aggregate AUC (+SE), macro-F1, ECE, Brier, and the Brier decomposition for one split.
+    AUC is ranking discrimination; macro_f1 is a threshold-dependent operating-point metric and
+    is reported alongside AUC (never merged into it or treated as a fourth trustworthiness axis,
+    PLAN_ijdsa.md T1.1) so the two can disagree.
+
+    2026-08-23 correction (round-4 hostile audit, found while building Phase 3 T3.1): for BINARY
+    domains this function previously called `f1_score(y, pred, zero_division=0)` with sklearn's
+    default `average="binary"` -- i.e. the POSITIVE CLASS'S F1 alone -- and stored it under the
+    key `macro_f1`. That is not macro-F1 (the unweighted mean of per-class F1 across BOTH
+    classes). Verified against actual data: clinical and lending are BINARY
+    (`class_label.notna().any() == False` on their predictions parquets) despite an earlier,
+    incorrect assumption that only lending/security were affected -- clinical's quoted
+    "macro-F1 -0.131" (main.tex) was equally mislabeled. Only NLP is genuinely multiclass, where
+    the per-class-OvR-then-average procedure below was already correct macro-F1 all along.
+
+    Both quantities are now always computed and returned, explicitly named:
+      f1_positive -- the positive class's F1 at threshold 0.5. None for multiclass domains,
+                      where "the positive class" is not a meaningful concept.
+      macro_f1    -- the unweighted mean of per-class F1 across every class (average="macro").
+                      This is the ONLY quantity that may be called "macro-F1" in the manuscript.
+    """
     if multiclass:  # macro over class groups (one-vs-rest rows)
         aucs, ses, f1s, eces, briers = [], [], [], [], []
+        rels, ress, uncs = [], [], []
         for _, g in sdf[sdf.subgroup_axis == primary_axis].groupby("class_label"):
             a, s = _auc_se(g.y_true, g.p_hat)
             if not np.isnan(a):
@@ -58,14 +138,21 @@ def _split_aggregate(sdf: pd.DataFrame, multiclass: bool, primary_axis: str):
             f1s.append(f1_score(g.y_true, (g.p_hat >= 0.5).astype(int), zero_division=0))
             eces.append(expected_calibration_error(g.y_true.values, g.p_hat.values, n_bins=ECE_BINS))
             briers.append(brier_score_loss(g.y_true, g.p_hat))
+            dec = _brier_decomposition(g.y_true.values, g.p_hat.values)
+            rels.append(dec["reliability"]); ress.append(dec["resolution"]); uncs.append(dec["uncertainty"])
         auc = float(np.mean(aucs)); se = float(np.sqrt(np.mean(np.square(ses))) / np.sqrt(len(ses)))
-        return auc, se, float(np.mean(f1s)), float(np.mean(eces)), float(np.mean(briers))
+        decomp = dict(reliability=float(np.mean(rels)), resolution=float(np.mean(ress)),
+                      uncertainty=float(np.mean(uncs)))
+        return auc, se, None, float(np.mean(f1s)), float(np.mean(eces)), float(np.mean(briers)), decomp
     d = sdf[sdf.subgroup_axis == primary_axis]  # binary: rows = each example once
     auc, se = _auc_se(d.y_true, d.p_hat)
-    f1 = f1_score(d.y_true, (d.p_hat >= 0.5).astype(int), zero_division=0)
+    pred = (d.p_hat >= 0.5).astype(int)
+    f1_positive = f1_score(d.y_true, pred, zero_division=0)
+    macro_f1 = f1_score(d.y_true, pred, average="macro", zero_division=0)
     ece = expected_calibration_error(d.y_true.values, d.p_hat.values, n_bins=ECE_BINS)
     brier = brier_score_loss(d.y_true, d.p_hat)
-    return auc, se, f1, ece, brier
+    decomp = _brier_decomposition(d.y_true.values, d.p_hat.values)
+    return auc, se, float(f1_positive), float(macro_f1), ece, brier, decomp
 
 
 def _subgroup_gap(sdf_axis: pd.DataFrame, metric: str):
@@ -128,7 +215,7 @@ def audit_domain(domain: str) -> dict:
             splits = {}
             per_split_agg = {}
             for split, sdf in sdf_all.groupby("split"):
-                auc, se, f1, ece, brier = _split_aggregate(sdf, multiclass, paxis)
+                auc, se, f1_positive, macro_f1, ece, brier, decomp = _split_aggregate(sdf, multiclass, paxis)
                 per_split_agg[split] = dict(auc=auc, auc_se=se)
                 axis_gaps = {}
                 for ax in axes:
@@ -137,8 +224,8 @@ def audit_domain(domain: str) -> dict:
                     g_ece, groups_ece = _subgroup_gap(axdf, "ece")
                     axis_gaps[ax] = dict(gap_auc=g_auc, gap_ece=g_ece,
                                          subgroup_auc=groups_auc, subgroup_ece=groups_ece)
-                splits[split] = dict(auc=auc, auc_se=se, macro_f1=f1, ece=ece, brier=brier,
-                                     axis_gaps=axis_gaps)
+                splits[split] = dict(auc=auc, auc_se=se, macro_f1=macro_f1, f1_positive=f1_positive,
+                                     ece=ece, brier=brier, brier_decomposition=decomp, axis_gaps=axis_gaps)
 
             # deltas: each target vs source_test
             src = splits.get("source_test")

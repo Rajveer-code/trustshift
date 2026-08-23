@@ -1,0 +1,15 @@
+{
+  "clinical": [
+    "fedavg"
+  ],
+  "nlp": [
+    "roberta"
+  ],
+  "lending": [
+    "lightgbm_geo",
+    "lightgbm_temporal"
+  ],
+  "security": [
+    "xgboost"
+  ]
+}

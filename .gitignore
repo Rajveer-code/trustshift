@@ -34,6 +34,7 @@ paper/*.log
 # internal (not for public repo)
 CLAUDE.md
 PLAN.md
+PLAN_ijdsa.md
 docs/
 run_remaining.sh
 paper/arxiv/

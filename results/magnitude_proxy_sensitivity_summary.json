@@ -1,0 +1,23 @@
+{
+  "both_proxies_weak_every_endpoint": false,
+  "conclusion": "At least one endpoint shows a magnitude proxy with R2>=0.10 -- H2a's 'insufficient regardless of proxy' framing needs the per-endpoint exception stated explicitly, not asserted as universal.",
+  "scope_note": "SCOPE LIMIT, stated rather than silently narrowed: only AUC_dc and |Delta-pi| are compared here -- both are already-computed columns in lending_shiftpoints.csv. PSI (population stability index) and a raw score-distribution-drift statistic are NOT currently computed anywhere in this codebase and would require new instrumentation; they are not fabricated or approximated here.",
+  "r2_table": {
+    "AUC_dc": {
+      "$\\Delta$AUC (discrimination)": 1.6870412244962552e-07,
+      "$\\Delta$Brier (calibration, diagnostic)": 0.026891176833858443,
+      "$\\Delta$ECE (calibration)": 0.0020480166629843755,
+      "$\\Delta$F1$_{positive}$ (diagnostic)": 0.06412418437912781,
+      "$\\Delta$G (subgroup gap, race_black)": 0.04617526864338517,
+      "$\\Delta$macro-F1 (operating point)": 0.0004454306466693536
+    },
+    "|Delta-pi|": {
+      "$\\Delta$AUC (discrimination)": 0.013812121190551196,
+      "$\\Delta$Brier (calibration, diagnostic)": 0.0001595902630547874,
+      "$\\Delta$ECE (calibration)": 0.178957785821112,
+      "$\\Delta$F1$_{positive}$ (diagnostic)": 0.046463407477750684,
+      "$\\Delta$G (subgroup gap, race_black)": 0.0005762347384346,
+      "$\\Delta$macro-F1 (operating point)": 0.08416198291100019
+    }
+  }
+}

@@ -30,26 +30,65 @@
   },
   "concept": {
     "target_reddit": {
-      "auc_source": 0.9881577615164796,
-      "auc_source_reweighted": 0.9869582014237177,
-      "auc_target": 0.5964860028282171
+      "auc_source": 0.9901996790931816,
+      "auc_source_reweighted": 0.9891292770145251,
+      "auc_target": 0.5992568630150129,
+      "target": "target_reddit",
+      "model": "roberta",
+      "weighting_diagnostics": {
+        "auc_dc_oof": 0.9353749312580932,
+        "ess": 1233.1635372133755,
+        "ess_frac": 0.1618324851986057,
+        "n_source": 7620,
+        "n_target": 6257,
+        "prior_correction": 1.2178360236535082,
+        "max_weight": 10.0,
+        "median_weight": 0.0012190550787322403,
+        "p99_weight": 10.0,
+        "adjudicable": true
+      },
+      "adjudicable": true
     },
     "target_twitter": {
-      "auc_source": 0.9881577615164796,
-      "auc_source_reweighted": 0.9882877583976004,
-      "auc_target": 0.6027695391882243
+      "auc_source": 0.9901996790931816,
+      "auc_source_reweighted": 0.9925060131358389,
+      "auc_target": 0.6065441290895444,
+      "target": "target_twitter",
+      "model": "roberta",
+      "weighting_diagnostics": {
+        "auc_dc_oof": 0.9880924743928342,
+        "ess": 318.14908454370715,
+        "ess_frac": 0.0417518483653159,
+        "n_source": 7620,
+        "n_target": 2883,
+        "prior_correction": 2.643080124869927,
+        "max_weight": 10.0,
+        "median_weight": 0.002645725850720648,
+        "p99_weight": 10.0,
+        "adjudicable": false
+      },
+      "adjudicable": false,
+      "note": "effective sample size is 4.2% of n_source (< 10% threshold) -- the available source data do not provide sufficient overlap with the target for reliable importance-weighted adjudication. This does NOT mean covariate shift is ruled out; it means reweighting cannot adjudicate here."
     }
   },
+  "probe_availability": {
+    "label_shift": true,
+    "covariate": true,
+    "concept": true
+  },
+  "concept_probe_model": "roberta",
   "summary": {
     "target_reddit": {
       "max_delta_pi": 0.5220346178159727,
       "auc_dc": 0.9338419185735075,
-      "diagnosis": "concept"
+      "diagnosis": "mixed",
+      "note": "multiple probes fired: ['concept', 'label', 'covariate']"
     },
     "target_twitter": {
       "max_delta_pi": 0.26541332437503584,
       "auc_dc": 0.9877839866790845,
-      "diagnosis": "concept"
+      "diagnosis": "mixed",
+      "note": "multiple probes fired: ['label', 'covariate']"
     }
   }
 }

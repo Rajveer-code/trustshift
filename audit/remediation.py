@@ -19,13 +19,18 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from config import P, ECE_BINS, TARGET_CALIB_FRAC, SEED  # noqa: E402
 from audit.engine import _jsonable  # noqa: E402
+from audit.primary_model import select_primary_models  # noqa: E402
 from fairscope.core.calibration import expected_calibration_error, isotonic_recalibrate  # noqa: E402
 from sklearn.linear_model import LogisticRegression  # noqa: E402
 from sklearn.metrics import roc_auc_score  # noqa: E402
 from scipy.optimize import minimize_scalar  # noqa: E402
 
-PRIMARY_MODEL = {"clinical": "fedavg", "nlp": "bert", "lending": "lightgbm_temporal",
-                 "security": "lightgbm"}
+# PLAN_ijdsa.md T1.8: the model(s) remediated here MUST be the same ones audit/primary_model.py
+# selects for the main tables (source-only rule) -- a hardcoded dict here would let this file's
+# "primary" model silently drift from tables.py's, reintroducing BLOCKER-5 through the back door.
+# lending has TWO primary models (temporal + geographic are different experiments, not competing
+# models for one task -- see audit/primary_model.py docstring), so every domain is remediated
+# once PER primary model, not once per domain.
 PRIMARY_AXIS = {"clinical": "age", "nlp": "proxy_class", "lending": "race_black",
                 "security": "attack_family"}
 
@@ -95,10 +100,9 @@ def _one_split(sdf: pd.DataFrame, multiclass: bool) -> dict:
     return eval_block(sdf.y_true.values, sdf.p_hat.values, sdf.subgroup.values)
 
 
-def remediate(domain: str) -> dict:
+def remediate(domain: str, model: str) -> dict:
     df = pd.read_parquet(P["out"] / f"predictions_{domain}.parquet")
     df = df[df.seed == 42] if 42 in set(df.seed.unique()) else df[df.seed == df.seed.min()]
-    model = PRIMARY_MODEL[domain]
     paxis = PRIMARY_AXIS[domain]
     multiclass = df["class_label"].notna().any()
     mdf = df[(df.model == model) & (df.subgroup_axis == paxis)]
@@ -114,13 +118,23 @@ def main():
         if not (P["out"] / f"predictions_{domain}.parquet").exists():
             print(f"[skip] {domain}")
             continue
-        res = remediate(domain)
-        (P["out"] / f"remediation_{domain}.json").write_text(json.dumps(res, indent=2, default=_jsonable))
-        print(f"\n=== {domain} remediation (primary={res['model']}) ===")
-        for tgt, m in res["targets"].items():
-            print(f"  {tgt:22s} ECE {m['ece_L0']:.3f}->iso {m['ece_isotonic']:.3f} | "
-                  f"AUC {m['auc_L0']:.3f}->iso {m['auc_isotonic']:.3f} | "
-                  f"gap {m['gap_L0']:.3f}->iso {m['gap_isotonic']:.3f}")
+        primaries = select_primary_models(domain)
+        results = [remediate(domain, model) for model in primaries]
+        # single-experiment domains keep the old flat file shape for backward compatibility;
+        # multi-experiment domains (lending) write one file per model, suffixed by model name.
+        if len(results) == 1:
+            (P["out"] / f"remediation_{domain}.json").write_text(
+                json.dumps(results[0], indent=2, default=_jsonable))
+        else:
+            for res in results:
+                (P["out"] / f"remediation_{domain}_{res['model']}.json").write_text(
+                    json.dumps(res, indent=2, default=_jsonable))
+        for res in results:
+            print(f"\n=== {domain} remediation (primary={res['model']}) ===")
+            for tgt, m in res["targets"].items():
+                print(f"  {tgt:22s} ECE {m['ece_L0']:.3f}->iso {m['ece_isotonic']:.3f} | "
+                      f"AUC {m['auc_L0']:.3f}->iso {m['auc_isotonic']:.3f} | "
+                      f"gap {m['gap_L0']:.3f}->iso {m['gap_isotonic']:.3f}")
     print("\nwrote remediation_*.json")
 
 

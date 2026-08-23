@@ -1,9 +1,9 @@
-domain,target,diagnosis,max_delta_pi,auc_dc,auc_source,auc_source_reweighted,auc_target
-clinical,target_brfss,mixed,0.0526,,,,
-nlp,target_reddit,concept,0.522,0.9338419185735075,0.9881577615164796,0.9869582014237177,0.5964860028282171
-nlp,target_twitter,concept,0.2654,0.9877839866790845,0.9881577615164796,0.9882877583976004,0.6027695391882243
-lending,target_2022,covariate,0.0445,0.68792069625,,,
-lending,target_2023,covariate,0.0776,0.80373844375,,,
-lending,target_2024,covariate,0.0706,0.7980847175,,,
-lending,target_heldout_states,mixed,0.0233,,,,
-security,target_cicids2017,label,0.3418,,,,
+domain,target,diagnosis,note,max_delta_pi,auc_dc,auc_source,auc_source_reweighted,auc_target,concept_adjudicable
+clinical,target_brfss,inconclusive,no probe produced adjudicable evidence above threshold for this target,0.0526,,,,,
+nlp,target_reddit,mixed,"multiple probes fired: ['concept', 'label', 'covariate']",0.522,0.9338419185735075,0.9901996790931816,0.9891292770145251,0.5992568630150129,True
+nlp,target_twitter,mixed,"multiple probes fired: ['label', 'covariate']",0.2654,0.9877839866790845,0.9901996790931816,0.9925060131358389,0.6065441290895444,False
+lending,target_2022,covariate,,0.0445,0.68792069625,,,,
+lending,target_2023,covariate,,0.0776,0.80373844375,,,,
+lending,target_2024,covariate,,0.0706,0.7980847175,,,,
+lending,target_heldout_states,inconclusive,no probe produced adjudicable evidence above threshold for this target,0.0233,,,,,
+security,target_cicids2017,inconclusive,"large prevalence shift measured (|Delta-pi|=0.633), but the positive-class attack families are measurably disjoint between source training data and target (see family_overlap_note) -- label shift's assumption that P(X|Y) is stable is directly contradicted, so the shift cannot be reduced to a prevalence change alone",0.6333,,,,,

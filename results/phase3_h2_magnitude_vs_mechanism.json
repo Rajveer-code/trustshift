@@ -1,0 +1,119 @@
+{
+  "n_rows_used": 10,
+  "rows": [
+    {
+      "source": "T3.3",
+      "domain": "lending",
+      "mechanism": "covariate",
+      "severity": "low",
+      "severity_ordinal": 0,
+      "auc_delta": -0.0267778642612401
+    },
+    {
+      "source": "T3.3",
+      "domain": "lending",
+      "mechanism": "covariate",
+      "severity": "medium",
+      "severity_ordinal": 1,
+      "auc_delta": -0.0026273320454743
+    },
+    {
+      "source": "T3.3",
+      "domain": "lending",
+      "mechanism": "covariate",
+      "severity": "high",
+      "severity_ordinal": 2,
+      "auc_delta": 0.0154929924357762
+    },
+    {
+      "source": "T3.3",
+      "domain": "lending",
+      "mechanism": "prior",
+      "severity": "low_down",
+      "severity_ordinal": 0,
+      "auc_delta": -0.0031180842960529
+    },
+    {
+      "source": "T3.3",
+      "domain": "security",
+      "mechanism": "covariate",
+      "severity": "low",
+      "severity_ordinal": 0,
+      "auc_delta": 0.0
+    },
+    {
+      "source": "T3.3",
+      "domain": "security",
+      "mechanism": "covariate",
+      "severity": "medium",
+      "severity_ordinal": 1,
+      "auc_delta": 1.1102230246251563e-16
+    },
+    {
+      "source": "T3.3",
+      "domain": "security",
+      "mechanism": "covariate",
+      "severity": "high",
+      "severity_ordinal": 2,
+      "auc_delta": 0.0
+    },
+    {
+      "source": "T3.2/S1",
+      "domain": "security",
+      "mechanism": "novel_mechanism",
+      "severity": "low",
+      "severity_ordinal": 0,
+      "auc_delta": 0.0050593765907486
+    },
+    {
+      "source": "T3.2/S1",
+      "domain": "security",
+      "mechanism": "novel_mechanism",
+      "severity": "medium",
+      "severity_ordinal": 1,
+      "auc_delta": 0.0548984749339069
+    },
+    {
+      "source": "T3.2/S1",
+      "domain": "security",
+      "mechanism": "novel_mechanism",
+      "severity": "high",
+      "severity_ordinal": 2,
+      "auc_delta": 0.0521814420871716
+    }
+  ],
+  "n_mechanism_categories": 3,
+  "mechanism_categories": [
+    "covariate",
+    "novel_mechanism",
+    "prior"
+  ],
+  "M0_magnitude_only": {
+    "formula": "abs_delta_auc ~ severity_ordinal",
+    "r2": 0.08252375248668575,
+    "adj_r2": -0.032160778452478445,
+    "n_params": 2,
+    "loo_cv_r2": -0.40890306311549485
+  },
+  "M1_mechanism_only": {
+    "formula": "abs_delta_auc ~ C(mechanism)",
+    "r2": 0.47288940105732935,
+    "adj_r2": 0.3222863727879949,
+    "n_params": 3,
+    "loo_cv_r2": -0.06860954619460635
+  },
+  "M2_magnitude_plus_mechanism": {
+    "formula": "abs_delta_auc ~ severity_ordinal + C(mechanism)",
+    "r2": 0.52420729287349,
+    "adj_r2": 0.286310939310235,
+    "n_params": 4,
+    "loo_cv_r2": -0.37965671935067014
+  },
+  "power_assessment": {
+    "n_obs": 10,
+    "n_mechanism_params": 2,
+    "verdict": "UNDERPOWERED",
+    "reasoning": "n=10 rows across 3 mechanism categories means M2 fits 4 parameters to 10 observations -- adjusted-R2 and LOO-CV R2 are reported specifically because raw in-sample R2 is not trustworthy at this n:parameter ratio."
+  },
+  "verdict": "CANNOT formally establish that mechanism-category adds predictive power beyond magnitude at this sample size. Raw R2 may rank M1/M2 above M0 in-sample (more parameters mechanically fit better), but LOO-CV R2 -- the honest out-of-sample check -- is the number that should be trusted, and is reported here explicitly so it cannot be silently dropped in favor of the more flattering in-sample R2."
+}

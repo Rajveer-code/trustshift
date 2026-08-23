@@ -1,0 +1,33 @@
+{
+  "source_cicddos2019": {
+    "n": 431371,
+    "pos_rate": 0.7732091401600942,
+    "per_family_n": {
+      "ntp": 121368,
+      "tftp": 98917,
+      "benign": 97831,
+      "syn": 49373,
+      "udp": 37437,
+      "mssql": 14735,
+      "dns": 3669,
+      "ldap": 3346,
+      "snmp": 2717,
+      "netbios": 1242,
+      "portmap": 685,
+      "ddos": 51
+    }
+  },
+  "target_cicids2017": {
+    "n": 2299077,
+    "pos_rate": 0.13995138048877875,
+    "per_family_n": {
+      "benign": 1977318,
+      "hulk": 172846,
+      "ddos": 128014,
+      "goldeneye": 10286,
+      "slowloris": 5385,
+      "slowhttp": 5228
+    }
+  },
+  "note": "Computed on the harmonized, population-filtered data BEFORE any per-class or per-family sampling cap. This is the authoritative label-shift quantity; the capped predictions parquet's prevalence may differ because both sides are capped per-family at SAMPLE_N_PER_CLASS for training-compute reasons (see security_label_space.csv for the per-family cap effect)."
+}

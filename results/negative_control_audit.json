@@ -1,0 +1,82 @@
+{
+  "control": "NC1_lending_covariate_high",
+  "prevalence": {
+    "source_test": {
+      "n": 199999,
+      "pi": 0.8502842514212571
+    },
+    "natural_pool_2023_unresampled": {
+      "n": 200000,
+      "pi": 0.758845
+    },
+    "resampled_high_severity": {
+      "n": 200000,
+      "pi": 0.72636
+    }
+  },
+  "score_distribution": {
+    "natural_pool_p_hat_percentiles": {
+      "p0": 0.0014637383088371518,
+      "p10": 0.13983298782174514,
+      "p25": 0.29246882255873075,
+      "p50": 0.5725769941047945,
+      "p75": 0.7481646876874288,
+      "p90": 0.8224497571184253,
+      "p100": 0.9752284819832457
+    },
+    "resampled_p_hat_percentiles": {
+      "p0": 0.0014637383088371518,
+      "p10": 0.20031263653045292,
+      "p25": 0.4309217427824928,
+      "p50": 0.5899611059184999,
+      "p75": 0.7032988124219497,
+      "p90": 0.7839882766454894,
+      "p100": 0.9527964620977141
+    },
+    "resampled_std": 0.220157811771782,
+    "natural_std": 0.2564774535005358,
+    "note": "If the resample's p_hat distribution is materially NARROWER (lower std) or shifted toward a region the model already handles well, an ECE improvement can be mechanical (concentration into already-well-calibrated score ranges) rather than evidence the model is 'more calibrated' in any deployment-relevant sense."
+  },
+  "threshold_base_rate_analysis": {
+    "f1_positive_src": 0.8551567472215084,
+    "f1_positive_resampled": 0.8028811455296053,
+    "macro_f1_src": 0.6584265147278526,
+    "macro_f1_resampled": 0.6791894172410737,
+    "f1_by_class_src": {
+      "denied_0": 0.46169628223419684,
+      "approved_1": 0.8551567472215084
+    },
+    "f1_by_class_resampled": {
+      "denied_0": 0.5554976889525421,
+      "approved_1": 0.8028811455296053
+    },
+    "prevalence_src": 0.8502842514212571,
+    "prevalence_resampled": 0.72636,
+    "reading": "macro_f1 = mean(F1_denied, F1_approved). Compare how each CLASS's F1 moved: if denied-class F1 rose roughly as much as approved-class F1 fell (as in the base audit-layer finding for the real temporal shift), the near-flat macro_f1 here similarly reflects prevalence-driven offsetting movement across classes, not 'nothing happened' -- f1_positive alone would hide this."
+  },
+  "calibration_artifact_check": {
+    "ece_src": 0.25749404360952666,
+    "ece_resampled": 0.18425811473010398,
+    "delta_ece": -0.07323592887942268,
+    "source_per_bin_calibration_error": {
+      "0": 0.1354012154544213,
+      "1": 0.3231908349739312,
+      "2": 0.3962382967415583,
+      "3": 0.40484306377179485,
+      "4": 0.3707484879282009,
+      "5": 0.32212474498531485,
+      "6": 0.2609739345025468,
+      "7": 0.1951510148936163,
+      "8": 0.12998138912170354,
+      "9": 0.07187741883823562
+    },
+    "mass_shift_toward_low_source_error_bins": 0.015718211726633652,
+    "reading": "Positive mass_shift means resampling moved probability mass INTO bins that were already well-calibrated on the source model -- a real, but partly mechanical, contributor to the observed ECE improvement (the model was not 'newly recalibrated', the distribution of examples shifted into ranges where it was already accurate)."
+  },
+  "invariant_check": {
+    "propensity_outcome_pointbiserial_r": 0.19005665198748534,
+    "p_value": 0.0,
+    "reading": "A nonzero correlation here means the propensity score used to resample is itself informative about the outcome in the natural population -- resampling toward high-propensity rows WILL shift the marginal approval rate as a side effect, even though every individual resampled row's true label and features are completely unmodified (P(Y|X) at the row level is untouched by construction). This distinguishes 'the marginal prevalence moved' from 'the construction violated its own invariant' -- they are not the same claim."
+  },
+  "overall_reading": "The construction's P(Y|X) invariant holds at the row level (real, unmodified rows). The marginal prevalence DOES shift (propensity correlates with outcome in the natural pool), which mechanically explains part of the macro-F1/ECE movement -- this is a known, expected, and disclosed side effect of propensity-based resampling, not a construction failure. The ECE improvement is PARTLY a concentration artifact (mass shifted toward source-already-well-calibrated bins). Net assessment: CONSISTENT WITH ROBUSTNESS on discrimination/Brier (both stayed flat, as designed), but the ECE/macro-F1 movement should be described as 'a construction-linked prevalence side effect', not cited as unexplained/mysterious model behavior."
+}

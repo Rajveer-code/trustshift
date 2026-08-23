@@ -1,0 +1,127 @@
+{
+  "n_excluded": 11,
+  "note": "T3.3 severity cells with feasible=False (PHASE3_DESIGN.md's own failure-condition column) -- excluded from the fingerprint, logged here so no infeasible construction is silently dropped without a reason.",
+  "excluded": [
+    {
+      "source": "T3.3",
+      "domain": "lending",
+      "mechanism": "prior",
+      "severity": "low_up",
+      "reason": "feasible=False",
+      "reaches_target": true,
+      "replacement_frac": 3.0775829758880606,
+      "achieved_auc_dc": null,
+      "target_auc_dc": null
+    },
+    {
+      "source": "T3.3",
+      "domain": "lending",
+      "mechanism": "prior",
+      "severity": "medium_up",
+      "reason": "feasible=False",
+      "reaches_target": false,
+      "replacement_frac": 14.80668804397618,
+      "achieved_auc_dc": null,
+      "target_auc_dc": null
+    },
+    {
+      "source": "T3.3",
+      "domain": "lending",
+      "mechanism": "prior",
+      "severity": "medium_down",
+      "reason": "feasible=False",
+      "reaches_target": true,
+      "replacement_frac": 0.747803273227002,
+      "achieved_auc_dc": null,
+      "target_auc_dc": null
+    },
+    {
+      "source": "T3.3",
+      "domain": "lending",
+      "mechanism": "prior",
+      "severity": "high_up",
+      "reason": "feasible=False",
+      "reaches_target": false,
+      "replacement_frac": 14.80668804397618,
+      "achieved_auc_dc": null,
+      "target_auc_dc": null
+    },
+    {
+      "source": "T3.3",
+      "domain": "lending",
+      "mechanism": "prior",
+      "severity": "high_down",
+      "reason": "feasible=False",
+      "reaches_target": true,
+      "replacement_frac": 0.8626993711739475,
+      "achieved_auc_dc": null,
+      "target_auc_dc": null
+    },
+    {
+      "source": "T3.3",
+      "domain": "security",
+      "mechanism": "prior",
+      "severity": "low_up",
+      "reason": "feasible=False",
+      "reaches_target": true,
+      "replacement_frac": 10.951219512195122,
+      "achieved_auc_dc": null,
+      "target_auc_dc": null
+    },
+    {
+      "source": "T3.3",
+      "domain": "security",
+      "mechanism": "prior",
+      "severity": "low_down",
+      "reason": "feasible=False",
+      "reaches_target": false,
+      "replacement_frac": 0.02626641651031895,
+      "achieved_auc_dc": null,
+      "target_auc_dc": null
+    },
+    {
+      "source": "T3.3",
+      "domain": "security",
+      "mechanism": "prior",
+      "severity": "medium_up",
+      "reason": "feasible=False",
+      "reaches_target": true,
+      "replacement_frac": 32.93245778611632,
+      "achieved_auc_dc": null,
+      "target_auc_dc": null
+    },
+    {
+      "source": "T3.3",
+      "domain": "security",
+      "mechanism": "prior",
+      "severity": "medium_down",
+      "reason": "feasible=False",
+      "reaches_target": false,
+      "replacement_frac": 0.02626641651031895,
+      "achieved_auc_dc": null,
+      "target_auc_dc": null
+    },
+    {
+      "source": "T3.3",
+      "domain": "security",
+      "mechanism": "prior",
+      "severity": "high_up",
+      "reason": "feasible=False",
+      "reaches_target": true,
+      "replacement_frac": 66.09193245778611,
+      "achieved_auc_dc": null,
+      "target_auc_dc": null
+    },
+    {
+      "source": "T3.3",
+      "domain": "security",
+      "mechanism": "prior",
+      "severity": "high_down",
+      "reason": "feasible=False",
+      "reaches_target": false,
+      "replacement_frac": 0.02626641651031895,
+      "achieved_auc_dc": null,
+      "target_auc_dc": null
+    }
+  ]
+}

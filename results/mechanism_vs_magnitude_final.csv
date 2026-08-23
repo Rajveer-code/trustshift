@@ -1,0 +1,4 @@
+model,n,cv_scheme,r2_in,r2_out,rmse_out,mechanism_features,magnitude_feature
+M0_magnitude_only,10,leave-one-out,0.08252375248668575,-0.40890306311549485,0.024241780902256004,none,"severity_ordinal (within-mechanism rung, 0/1/2)"
+M1_mechanism_only,10,leave-one-out,0.47288940105732935,-0.06860954619460635,0.022206598351617507,C(mechanism): covariate/prior/novel_mechanism,none
+M2_magnitude_plus_mechanism,10,leave-one-out,0.52420729287349,-0.37965671935067014,0.02528079054976428,C(mechanism),severity_ordinal

@@ -1,0 +1,114 @@
+{
+  "generated": "2026-08-23, round-8 scientific freeze",
+  "status_definitions": {
+    "established": "Well-powered, out-of-sample or externally validated, no material caveat remaining",
+    "supported_but_limited": "Real, positive evidence exists but scope/power/generality is bounded",
+    "not_established": "Formally tested and inconclusive/underpowered, or never formally tested",
+    "contradicted": "Current wording is directly refuted by artifact data; a narrower true version may still exist"
+  },
+  "claims": [
+    {
+      "claim_id": "C-joint-audit",
+      "claim": "A joint discrimination/calibration/subgroup/operating-point audit protocol reveals failure patterns a single-axis evaluation would miss.",
+      "status": "supported_but_limited",
+      "evidence_artifacts": ["results/tables/T2_primary.csv", "results/tables/T4_diagnosis.csv"],
+      "current_wording": "main.tex Table 2/3, per-domain per-axis deltas already show independent axis movement (e.g. clinical: AUC nearly flat, ECE/macro-F1 move sharply)",
+      "phase4_action": "keep -- this is the core, defensible contribution; no change needed to the claim itself"
+    },
+    {
+      "claim_id": "C-mag-insufficiency",
+      "claim": "Scalar shift magnitude alone is insufficient to characterize deployment-failure variation.",
+      "status": "supported_but_limited",
+      "evidence_artifacts": ["results/lending_phase3_analysis.json", "results/phase3_h2_magnitude_vs_context.json", "results/magnitude_proxy_final_decision.json"],
+      "current_wording": "not directly stated in main.tex as a standalone claim; underlies the abstract's 'magnitude alone does not predict which metric moves'",
+      "phase4_action": "keep and strengthen with the out-of-sample context-generalization result (H2a) -- now the best-evidenced finding in the benchmark"
+    },
+    {
+      "claim_id": "C-context-heterogeneity",
+      "claim": "Deployment-context/population identity explains substantial failure variation a scalar shift score misses, when audit history for that population exists.",
+      "status": "supported_but_limited",
+      "evidence_artifacts": ["results/state_identity_generalization.json", "results/context_generalization_final.json"],
+      "current_wording": "not in main.tex at all -- entirely new for Phase 4",
+      "phase4_action": "add as a new Results subsection; must include the operational-availability caveat (does not extrapolate to a never-seen population) every time it is stated"
+    },
+    {
+      "claim_id": "H1",
+      "claim": "Different shift mechanisms produce distinguishable failure fingerprints.",
+      "status": "not_established",
+      "evidence_artifacts": ["results/phase3_final_hypothesis_gate.json", "results/phase3_T33_denominator_table.csv"],
+      "current_wording": "not in main.tex (Phase 3 result, pre-manuscript)",
+      "phase4_action": "report as mixed/not established -- only 1 of 4 possible mechanism-pair comparisons is both valid and informative"
+    },
+    {
+      "claim_id": "H2a",
+      "claim": "Within the evaluated deployment settings, scalar measures of marginal distribution change did not consistently explain variation in the observed failure fingerprint.",
+      "status": "supported_but_limited",
+      "evidence_artifacts": ["results/phase3_h2_magnitude_vs_context.json", "results/state_identity_generalization.json", "results/magnitude_proxy_sensitivity.csv"],
+      "current_wording": "not in main.tex (Phase 3 result, pre-manuscript)",
+      "phase4_action": "this is the frozen H2a wording -- use verbatim, do not strengthen to 'magnitude does not matter'"
+    },
+    {
+      "claim_id": "H2b",
+      "claim": "Shift mechanism provides information beyond scalar shift magnitude about which trustworthiness axis fails.",
+      "status": "not_established",
+      "evidence_artifacts": ["results/mechanism_vs_magnitude_final.csv", "results/phase3_h2_magnitude_vs_mechanism.json"],
+      "current_wording": "IMPLIED by the current title ('Shift Mechanism Is More Informative Than Shift Magnitude') -- title change required for Phase 4",
+      "phase4_action": "title and any 'mechanism beats/determines/more informative than magnitude' sentence must not survive Phase 4 unless a future formal test overturns this status"
+    },
+    {
+      "claim_id": "H3",
+      "claim": "The staged audit (screening + confirmation) is more actionable than a scalar shift score alone.",
+      "status": "not_established",
+      "evidence_artifacts": ["results/phase3_final_hypothesis_gate.json"],
+      "current_wording": "main.tex:549 'these cheap diagnostics, applied jointly, predict which trustworthiness axis a deployment will break' -- reads as an H3-level claim",
+      "phase4_action": "rewrite -- 'predict' is too strong given H3 is not_established; soften to 'is associated with' or scope explicitly to 'in the evaluated settings'"
+    },
+    {
+      "claim_id": "C-clinical-calibration",
+      "claim": "Clinical: discrimination holds while calibration breaks.",
+      "status": "supported_but_limited",
+      "evidence_artifacts": ["results/clinical_axis_audit.json", "results/audit_clinical.json"],
+      "current_wording": "main.tex Table 3/4: 'holds (approx.)' for AUC, 'falls (down 0.131)' for macro-F1 -- BOTH numbers stale (AUC move is real at 7.2 SE, not literally 'holds'; 0.131 is the pre-F1-correction value, corrected value is 0.102)",
+      "phase4_action": "rewrite -- replace 'holds' with a relative framing ('degrades far less than calibration'); correct 0.131 to 0.102"
+    },
+    {
+      "claim_id": "C-lending-aggregation",
+      "claim": "Lending temporal aggregate-vs-cell F1 disagreement is an aggregation-induced reversal (weighting effect), not a contradiction.",
+      "status": "supported_but_limited",
+      "evidence_artifacts": ["results/lending_aggregation_effect_final.json", "results/lending_f1_aggregation_reconciliation.csv"],
+      "current_wording": "not in main.tex -- entirely new for Phase 4",
+      "phase4_action": "add as a candidate secondary methodological result; use 'aggregation-induced reversal', never 'Simpson's paradox' (formal conditions not verified)"
+    },
+    {
+      "claim_id": "C-security-mechanism",
+      "claim": "Security exhibits severe degradation on unseen attack-family/mechanism deployment shift; recall collapses on families absent from training.",
+      "status": "supported_but_limited",
+      "evidence_artifacts": ["results/security_family_recall.json", "results/security_mechanism_ladder.csv", "results/phase3_S1_severity_quantification.json"],
+      "current_wording": "main.tex:337-339 recall numbers ALREADY match security_family_recall.json (verified this round); main.tex:502 still says 'Novel-label shift (security)' and 'classes absent from training' -- stale terminology and technically imprecise (no label-space change ever occurs; it is attack-FAMILIES within the positive class, not classes)",
+      "phase4_action": "rewrite line 502 only -- 'Novel-label shift' -> 'unseen attack-family deployment shift'; 'classes absent from training' -> 'attack families absent from training'. Lines 337-339 need no numeric change."
+    },
+    {
+      "claim_id": "C-remediation",
+      "claim": "Post-hoc isotonic recalibration substantially reduces ECE across domains.",
+      "status": "supported_but_limited",
+      "evidence_artifacts": ["results/remediation_clinical.json", "results/remediation_lending_lightgbm_temporal.json", "results/remediation_security.json", "results/tables/T5_remediation.csv"],
+      "current_wording": "main.tex Table 5 / relevant text -- reproduces identically across 3 run_all.py runs this session (e.g. clinical ECE 0.276->0.002)",
+      "phase4_action": "keep -- but NLP's 'gap: NaN' issue (M3, pre-existing, not touched this session) remains unresolved and should be fixed or the sentence scoped to exclude NLP's gap claim"
+    },
+    {
+      "claim_id": "C-staged-diagnosis",
+      "claim": "A staged, largely label-free diagnostic workflow (Delta-pi, AUC_dc, importance-reweighting) assigns a mechanistic diagnosis to each shift.",
+      "status": "supported_but_limited",
+      "evidence_artifacts": ["results/diagnosis_clinical.json", "results/diagnosis_nlp.json", "results/diagnosis_lending.json", "results/diagnosis_security.json", "results/tables/T_probe_availability.csv"],
+      "current_wording": "main.tex Table describes the protocol; probe availability is real but uneven",
+      "phase4_action": "keep, but the manuscript should show the probe-availability table plainly -- 3 of 5 targets in the corrected run return 'inconclusive' (clinical, lending-geo, security), not a clean mechanism label, which is the honest, correct behavior (not a defect) but must not be hidden"
+    }
+  ],
+  "status_counts": {
+    "established": 0,
+    "supported_but_limited": 9,
+    "not_established": 3,
+    "contradicted": 0
+  },
+  "note_on_contradicted": "No claim in this table is tagged CONTRADICTED outright -- the closest case (lending's abstract-level operating-point wording, tracked separately in docs/CLAIM_LEDGER.md's claim-status table) is a wording-scope issue already captured there, not duplicated here since this table's C-lending-aggregation and H2a entries already supersede it with the correct framing."
+}

@@ -1,19 +1,19 @@
 {
   "domain": "security",
-  "model": "lightgbm",
+  "model": "xgboost",
   "targets": {
     "target_cicids2017": {
-      "ece_L0": 0.4500762477598521,
-      "auc_L0": 0.6342318002794829,
+      "ece_L0": 0.6458643333866099,
+      "auc_L0": 0.6835574620548165,
       "gap_L0": NaN,
-      "ece_temperature": 0.13947587639671438,
-      "auc_temperature": 0.6229109987941607,
+      "ece_temperature": 0.31929366596481457,
+      "auc_temperature": 0.6835574620548165,
       "gap_temperature": NaN,
-      "ece_platt": 0.09673125700534707,
-      "auc_platt": 0.6229109987941607,
+      "ece_platt": 0.092825600266102,
+      "auc_platt": 0.6835574620548165,
       "gap_platt": NaN,
-      "ece_isotonic": 0.013174150792170481,
-      "auc_isotonic": 0.7075901818642798,
+      "ece_isotonic": 0.0034972613396169324,
+      "auc_isotonic": 0.7181713301231063,
       "gap_isotonic": NaN
     }
   },

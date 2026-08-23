@@ -28,6 +28,17 @@ DC_CLIP = 10.0       # importance-weight clip for the concept-shift test
 TARGET_CALIB_FRAC = 0.10          # held-out target calibration split (remediation L1)
 SMALL_N = [100, 500, 1000]        # labeled target sizes for remediation L3
 
+# Phase-1 IJDSA repair (PLAN_ijdsa.md T1.8, BLOCKER-5): source-only primary-model selection.
+# audit/primary_model.py applies this MECHANICALLY -- highest source_test AUC, ties broken by
+# lower source_test ECE, remaining ties broken by this fixed name-priority list. No target-split
+# quantity may enter the decision. Every other model is still reported in full in T2_master.csv.
+PRIMARY_MODEL_TIEBREAK_PRIORITY = {
+    "clinical": ["fedavg", "xgb"],
+    "nlp": ["bert", "roberta", "mentalbert", "mentalroberta"],
+    "lending": ["lightgbm_temporal", "lightgbm_geo"],
+    "security": ["lightgbm", "xgboost"],
+}
+
 OKABE = ["#0072B2", "#E69F00", "#009E73", "#D55E00", "#CC79A7", "#56B4E9", "#F0E442"]
 
 REQUIRED_COLUMNS = [

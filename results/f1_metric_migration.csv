@@ -1,0 +1,95 @@
+domain,model,seed,split,old_f1_field_value,old_field_was_actually,new_macro_f1,new_f1_positive,delta_macro_minus_old,changed
+clinical,fedavg,42,source_test,0.4789313640312772,f1_positive (mislabeled as macro_f1),0.6308743367322781,0.4789313640312772,0.15194297270100093,True
+clinical,fedavg,42,target_brfss,0.3479127536726808,f1_positive (mislabeled as macro_f1),0.5287403708334979,0.3479127536726808,0.18082761716081708,True
+clinical,xgb,42,source_test,0.4640806281495371,f1_positive (mislabeled as macro_f1),0.6316098664971342,0.4640806281495371,0.16752923834759714,True
+clinical,xgb,42,target_brfss,0.3017772046868868,f1_positive (mislabeled as macro_f1),0.43477340754095295,0.3017772046868868,0.13299620285406616,True
+nlp,bert,0,source_test,0.8706011932075586,"true_macro_f1 (NLP, multiclass -- unaffected)",0.8706011932075586,,0.0,False
+nlp,bert,0,target_reddit,0.2940180532685302,"true_macro_f1 (NLP, multiclass -- unaffected)",0.2940180532685302,,0.0,False
+nlp,bert,0,target_twitter,0.32610015239970086,"true_macro_f1 (NLP, multiclass -- unaffected)",0.32610015239970086,,0.0,False
+nlp,bert,1,source_test,0.8678955801405238,"true_macro_f1 (NLP, multiclass -- unaffected)",0.8678955801405238,,0.0,False
+nlp,bert,1,target_reddit,0.3098148017465995,"true_macro_f1 (NLP, multiclass -- unaffected)",0.3098148017465995,,0.0,False
+nlp,bert,1,target_twitter,0.3146822719670298,"true_macro_f1 (NLP, multiclass -- unaffected)",0.3146822719670298,,0.0,False
+nlp,bert,7,source_test,0.8719637864533509,"true_macro_f1 (NLP, multiclass -- unaffected)",0.8719637864533509,,0.0,False
+nlp,bert,7,target_reddit,0.302865213037014,"true_macro_f1 (NLP, multiclass -- unaffected)",0.302865213037014,,0.0,False
+nlp,bert,7,target_twitter,0.3203000180314496,"true_macro_f1 (NLP, multiclass -- unaffected)",0.3203000180314496,,0.0,False
+nlp,bert,42,source_test,0.8740447981370228,"true_macro_f1 (NLP, multiclass -- unaffected)",0.8740447981370228,,0.0,False
+nlp,bert,42,target_reddit,0.303676594088762,"true_macro_f1 (NLP, multiclass -- unaffected)",0.303676594088762,,0.0,False
+nlp,bert,42,target_twitter,0.3168356219751063,"true_macro_f1 (NLP, multiclass -- unaffected)",0.3168356219751063,,0.0,False
+nlp,bert,123,source_test,0.876120731766056,"true_macro_f1 (NLP, multiclass -- unaffected)",0.876120731766056,,0.0,False
+nlp,bert,123,target_reddit,0.30951041770291704,"true_macro_f1 (NLP, multiclass -- unaffected)",0.30951041770291704,,0.0,False
+nlp,bert,123,target_twitter,0.321247382649662,"true_macro_f1 (NLP, multiclass -- unaffected)",0.321247382649662,,0.0,False
+nlp,mentalbert,0,source_test,0.8706856177525074,"true_macro_f1 (NLP, multiclass -- unaffected)",0.8706856177525074,,0.0,False
+nlp,mentalbert,0,target_reddit,0.3231578775245722,"true_macro_f1 (NLP, multiclass -- unaffected)",0.3231578775245722,,0.0,False
+nlp,mentalbert,0,target_twitter,0.3139717902292381,"true_macro_f1 (NLP, multiclass -- unaffected)",0.3139717902292381,,0.0,False
+nlp,mentalbert,1,source_test,0.865522815177523,"true_macro_f1 (NLP, multiclass -- unaffected)",0.865522815177523,,0.0,False
+nlp,mentalbert,1,target_reddit,0.3236281951402402,"true_macro_f1 (NLP, multiclass -- unaffected)",0.3236281951402402,,0.0,False
+nlp,mentalbert,1,target_twitter,0.3140281068563273,"true_macro_f1 (NLP, multiclass -- unaffected)",0.3140281068563273,,0.0,False
+nlp,mentalbert,7,source_test,0.8658651874990396,"true_macro_f1 (NLP, multiclass -- unaffected)",0.8658651874990396,,0.0,False
+nlp,mentalbert,7,target_reddit,0.3227123290433286,"true_macro_f1 (NLP, multiclass -- unaffected)",0.3227123290433286,,0.0,False
+nlp,mentalbert,7,target_twitter,0.2793017740223662,"true_macro_f1 (NLP, multiclass -- unaffected)",0.2793017740223662,,0.0,False
+nlp,mentalbert,42,source_test,0.8616909544128568,"true_macro_f1 (NLP, multiclass -- unaffected)",0.8616909544128568,,0.0,False
+nlp,mentalbert,42,target_reddit,0.33061604809748757,"true_macro_f1 (NLP, multiclass -- unaffected)",0.33061604809748757,,0.0,False
+nlp,mentalbert,42,target_twitter,0.28958486234632147,"true_macro_f1 (NLP, multiclass -- unaffected)",0.28958486234632147,,0.0,False
+nlp,mentalbert,123,source_test,0.8587941446871303,"true_macro_f1 (NLP, multiclass -- unaffected)",0.8587941446871303,,0.0,False
+nlp,mentalbert,123,target_reddit,0.3266830185895965,"true_macro_f1 (NLP, multiclass -- unaffected)",0.3266830185895965,,0.0,False
+nlp,mentalbert,123,target_twitter,0.273429811589564,"true_macro_f1 (NLP, multiclass -- unaffected)",0.273429811589564,,0.0,False
+nlp,mentalroberta,0,source_test,0.8749346233571746,"true_macro_f1 (NLP, multiclass -- unaffected)",0.8749346233571746,,0.0,False
+nlp,mentalroberta,0,target_reddit,0.31623310480688244,"true_macro_f1 (NLP, multiclass -- unaffected)",0.31623310480688244,,0.0,False
+nlp,mentalroberta,0,target_twitter,0.31847368348546,"true_macro_f1 (NLP, multiclass -- unaffected)",0.31847368348546,,0.0,False
+nlp,mentalroberta,1,source_test,0.8759487113560286,"true_macro_f1 (NLP, multiclass -- unaffected)",0.8759487113560286,,0.0,False
+nlp,mentalroberta,1,target_reddit,0.33077354311116264,"true_macro_f1 (NLP, multiclass -- unaffected)",0.33077354311116264,,0.0,False
+nlp,mentalroberta,1,target_twitter,0.30769450820250216,"true_macro_f1 (NLP, multiclass -- unaffected)",0.30769450820250216,,0.0,False
+nlp,mentalroberta,7,source_test,0.87203407481969,"true_macro_f1 (NLP, multiclass -- unaffected)",0.87203407481969,,0.0,False
+nlp,mentalroberta,7,target_reddit,0.30902156528643876,"true_macro_f1 (NLP, multiclass -- unaffected)",0.30902156528643876,,0.0,False
+nlp,mentalroberta,7,target_twitter,0.2910972480404069,"true_macro_f1 (NLP, multiclass -- unaffected)",0.2910972480404069,,0.0,False
+nlp,mentalroberta,42,source_test,0.8705118579943324,"true_macro_f1 (NLP, multiclass -- unaffected)",0.8705118579943324,,0.0,False
+nlp,mentalroberta,42,target_reddit,0.3186115839380409,"true_macro_f1 (NLP, multiclass -- unaffected)",0.3186115839380409,,0.0,False
+nlp,mentalroberta,42,target_twitter,0.3055177220697545,"true_macro_f1 (NLP, multiclass -- unaffected)",0.3055177220697545,,0.0,False
+nlp,mentalroberta,123,source_test,0.8704944607396365,"true_macro_f1 (NLP, multiclass -- unaffected)",0.8704944607396365,,0.0,False
+nlp,mentalroberta,123,target_reddit,0.32631995941352737,"true_macro_f1 (NLP, multiclass -- unaffected)",0.32631995941352737,,0.0,False
+nlp,mentalroberta,123,target_twitter,0.31577418815205704,"true_macro_f1 (NLP, multiclass -- unaffected)",0.31577418815205704,,0.0,False
+nlp,roberta,0,source_test,0.883485495627707,"true_macro_f1 (NLP, multiclass -- unaffected)",0.883485495627707,,0.0,False
+nlp,roberta,0,target_reddit,0.31819463829623695,"true_macro_f1 (NLP, multiclass -- unaffected)",0.31819463829623695,,0.0,False
+nlp,roberta,0,target_twitter,0.28707456056606767,"true_macro_f1 (NLP, multiclass -- unaffected)",0.28707456056606767,,0.0,False
+nlp,roberta,1,source_test,0.8853932068244845,"true_macro_f1 (NLP, multiclass -- unaffected)",0.8853932068244845,,0.0,False
+nlp,roberta,1,target_reddit,0.3037034270794492,"true_macro_f1 (NLP, multiclass -- unaffected)",0.3037034270794492,,0.0,False
+nlp,roberta,1,target_twitter,0.2894152054804884,"true_macro_f1 (NLP, multiclass -- unaffected)",0.2894152054804884,,0.0,False
+nlp,roberta,7,source_test,0.8778707874043634,"true_macro_f1 (NLP, multiclass -- unaffected)",0.8778707874043634,,0.0,False
+nlp,roberta,7,target_reddit,0.30659605248591776,"true_macro_f1 (NLP, multiclass -- unaffected)",0.30659605248591776,,0.0,False
+nlp,roberta,7,target_twitter,0.29391400199277723,"true_macro_f1 (NLP, multiclass -- unaffected)",0.29391400199277723,,0.0,False
+nlp,roberta,42,source_test,0.8837611926747588,"true_macro_f1 (NLP, multiclass -- unaffected)",0.8837611926747588,,0.0,False
+nlp,roberta,42,target_reddit,0.3039531316116676,"true_macro_f1 (NLP, multiclass -- unaffected)",0.3039531316116676,,0.0,False
+nlp,roberta,42,target_twitter,0.2844350241431797,"true_macro_f1 (NLP, multiclass -- unaffected)",0.2844350241431797,,0.0,False
+nlp,roberta,123,source_test,0.8857258177500223,"true_macro_f1 (NLP, multiclass -- unaffected)",0.8857258177500223,,0.0,False
+nlp,roberta,123,target_reddit,0.3099193998681037,"true_macro_f1 (NLP, multiclass -- unaffected)",0.3099193998681037,,0.0,False
+nlp,roberta,123,target_twitter,0.298202358744601,"true_macro_f1 (NLP, multiclass -- unaffected)",0.298202358744601,,0.0,False
+lending,lightgbm_geo,7,source_test,0.8329640612344621,f1_positive (mislabeled as macro_f1),0.6699351102307233,0.8329640612344621,-0.16302895100373882,True
+lending,lightgbm_geo,7,target_heldout_states,0.8439349556606858,f1_positive (mislabeled as macro_f1),0.6886979747086466,0.8439349556606858,-0.1552369809520392,True
+lending,lightgbm_geo,42,source_test,0.8694783220912539,f1_positive (mislabeled as macro_f1),0.7155863767609555,0.8694783220912539,-0.15389194533029837,True
+lending,lightgbm_geo,42,target_heldout_states,0.8564053253483225,f1_positive (mislabeled as macro_f1),0.6812053489961203,0.8564053253483225,-0.1751999763522022,True
+lending,lightgbm_geo,123,source_test,0.8546443197182961,f1_positive (mislabeled as macro_f1),0.6825929893255687,0.8546443197182961,-0.17205133039272746,True
+lending,lightgbm_geo,123,target_heldout_states,0.8650786493693879,f1_positive (mislabeled as macro_f1),0.6985214934778474,0.8650786493693879,-0.16655715589154052,True
+lending,lightgbm_temporal,7,source_test,0.8533862265947318,f1_positive (mislabeled as macro_f1),0.654620086206671,0.8533862265947318,-0.19876614038806084,True
+lending,lightgbm_temporal,7,target_2022,0.7999957431562368,f1_positive (mislabeled as macro_f1),0.661303680914037,0.7999957431562368,-0.13869206224219977,True
+lending,lightgbm_temporal,7,target_2023,0.7779948804168371,f1_positive (mislabeled as macro_f1),0.6733201100927588,0.7779948804168371,-0.10467477032407824,True
+lending,lightgbm_temporal,7,target_2024,0.7814686883186793,f1_positive (mislabeled as macro_f1),0.6701347879396231,0.7814686883186793,-0.11133390037905622,True
+lending,lightgbm_temporal,42,source_test,0.8551567472215084,f1_positive (mislabeled as macro_f1),0.6584265147278526,0.8551567472215084,-0.19673023249365573,True
+lending,lightgbm_temporal,42,target_2022,0.7995380980298105,f1_positive (mislabeled as macro_f1),0.6618286490385226,0.7995380980298105,-0.1377094489912879,True
+lending,lightgbm_temporal,42,target_2023,0.7768784813004433,f1_positive (mislabeled as macro_f1),0.6720971141163103,0.7768784813004433,-0.104781367184133,True
+lending,lightgbm_temporal,42,target_2024,0.7818754300415831,f1_positive (mislabeled as macro_f1),0.6709672807366288,0.7818754300415831,-0.1109081493049543,True
+lending,lightgbm_temporal,123,source_test,0.8534781310169093,f1_positive (mislabeled as macro_f1),0.6563020595738062,0.8534781310169093,-0.19717607144310312,True
+lending,lightgbm_temporal,123,target_2022,0.7968436624326131,f1_positive (mislabeled as macro_f1),0.6579554619933079,0.7968436624326131,-0.13888820043930517,True
+lending,lightgbm_temporal,123,target_2023,0.77550834286496,f1_positive (mislabeled as macro_f1),0.6718941587169927,0.77550834286496,-0.1036141841479673,True
+lending,lightgbm_temporal,123,target_2024,0.7782690808801487,f1_positive (mislabeled as macro_f1),0.6669139873297678,0.7782690808801487,-0.11135509355038087,True
+security,lightgbm,7,source_test,0.9528156798853925,f1_positive (mislabeled as macro_f1),0.9043542206397472,0.9528156798853925,-0.048461459245645266,True
+security,lightgbm,7,target_cicids2017,0.24920675034397552,f1_positive (mislabeled as macro_f1),0.3293907266713474,0.24920675034397552,0.08018397632737187,True
+security,lightgbm,42,source_test,0.9525240891086327,f1_positive (mislabeled as macro_f1),0.9037858459094926,0.9525240891086327,-0.04873824319914011,True
+security,lightgbm,42,target_cicids2017,0.24843066920748794,f1_positive (mislabeled as macro_f1),0.3276434005110756,0.24843066920748794,0.07921273130358766,True
+security,lightgbm,123,source_test,0.952714093054619,f1_positive (mislabeled as macro_f1),0.9042119847989144,0.952714093054619,-0.04850210825570456,True
+security,lightgbm,123,target_cicids2017,0.2219915832575068,f1_positive (mislabeled as macro_f1),0.3118442314179555,0.2219915832575068,0.08985264816044866,True
+security,xgboost,7,source_test,0.9528445690121453,f1_positive (mislabeled as macro_f1),0.9044947156643284,0.9528445690121453,-0.04834985334781694,True
+security,xgboost,7,target_cicids2017,0.2486548754618378,f1_positive (mislabeled as macro_f1),0.3292162530484712,0.2486548754618378,0.0805613775866334,True
+security,xgboost,42,source_test,0.9529248145650708,f1_positive (mislabeled as macro_f1),0.9046388476117535,0.9529248145650708,-0.04828596695331733,True
+security,xgboost,42,target_cicids2017,0.24922821015238444,f1_positive (mislabeled as macro_f1),0.3315281146954925,0.24922821015238444,0.08229990454310804,True
+security,xgboost,123,source_test,0.952902088323511,f1_positive (mislabeled as macro_f1),0.9046030340462414,0.952902088323511,-0.04829905427726955,True
+security,xgboost,123,target_cicids2017,0.2492886722821647,f1_positive (mislabeled as macro_f1),0.33117708800223383,0.2492886722821647,0.08188841572006914,True

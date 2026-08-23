@@ -1,0 +1,79 @@
+{
+  "rows": [
+    {
+      "domain": "lending",
+      "control": "NC1_large_covariate_PYX_preserved",
+      "status": "OK",
+      "achieved_auc_dc": 0.8969288900000001,
+      "delta_auc": 0.015492992435776287,
+      "delta_ece": -0.0738581121769363,
+      "delta_macro_f1": -0.02057088245786931,
+      "delta_brier": 0.012669396529395666,
+      "expected_direction": "little discrimination/calibration degradation even at High severity",
+      "expected_direction_held": false,
+      "tolerance": 0.02
+    },
+    {
+      "domain": "lending",
+      "control": "NC2_small_prior_PYX_altered",
+      "status": "OK",
+      "direction_used": "low_down",
+      "achieved_delta_pi": -0.0999981039624187,
+      "delta_auc": -0.003118084296052981,
+      "delta_macro_f1": -0.09123871179423382,
+      "delta_ece": -0.1223849773532969,
+      "expected_direction": "operating-point performance (macro-F1) moves measurably even at Low severity",
+      "expected_direction_held": true,
+      "tolerance": 0.02
+    },
+    {
+      "domain": "security",
+      "control": "NC1_large_covariate_PYX_preserved",
+      "status": "OK",
+      "achieved_auc_dc": 0.89675888625,
+      "delta_auc": 0.0,
+      "delta_ece": -5.788699684343105e-05,
+      "delta_macro_f1": 0.0,
+      "delta_brier": -1.3797164655215965e-07,
+      "expected_direction": "little discrimination/calibration degradation even at High severity",
+      "expected_direction_held": true,
+      "tolerance": 0.02
+    },
+    {
+      "domain": "security",
+      "control": "NC2_small_prior_PYX_altered",
+      "status": "INFEASIBLE",
+      "reason": "no feasible low-severity direction (see phase3_T33_*.json 'low_up'/'low_down')"
+    },
+    {
+      "domain": "security",
+      "control": "S1_own_negative_control_low",
+      "status": "OK",
+      "negative_control_target_recall_mean": 0.1457604667838005,
+      "mechanism_holdout_target_recall_mean": 0.14577688741468114,
+      "expected_direction": "negative control degrades LESS than the matched mechanism-holdout condition",
+      "expected_direction_held": true
+    },
+    {
+      "domain": "security",
+      "control": "S1_own_negative_control_medium",
+      "status": "OK",
+      "negative_control_target_recall_mean": 0.14604509105239824,
+      "mechanism_holdout_target_recall_mean": 0.1455469985823522,
+      "expected_direction": "negative control degrades LESS than the matched mechanism-holdout condition",
+      "expected_direction_held": true
+    },
+    {
+      "domain": "security",
+      "control": "S1_own_negative_control_high",
+      "status": "OK",
+      "negative_control_target_recall_mean": 0.146373503670011,
+      "mechanism_holdout_target_recall_mean": 0.14631329469011534,
+      "expected_direction": "negative control degrades LESS than the matched mechanism-holdout condition",
+      "expected_direction_held": true
+    }
+  ],
+  "n_controls_evaluated": 6,
+  "n_expected_direction_held": 5,
+  "summary": "5/6 evaluated negative controls showed the expected direction -- see 'expected_direction_held' per row for which did not"
+}

@@ -1,0 +1,77 @@
+{
+  "stratum": "security syn-vs-benign (fixed_mechanism='syn')",
+  "natural_pi_from_pipeline": 0.01026243333269153,
+  "n_train": 95267,
+  "n_pos0_independent_estimate": 978,
+  "n_neg0_independent_estimate": 94289,
+  "per_severity_independent_recheck": {
+    "low_up": {
+      "target_pi_clamped": 0.11026243333269153,
+      "clamped_by_floor_or_ceiling": false,
+      "n_pos_needed_independent_calc": 11685,
+      "replace_frac_independent_calc": 10.947852760736197,
+      "replace_frac_pipeline_reported": 10.951219512195122,
+      "matches_pipeline": true,
+      "pipeline_feasible": false,
+      "pipeline_reaches_target": true
+    },
+    "low_down": {
+      "target_pi_clamped": 0.01,
+      "clamped_by_floor_or_ceiling": true,
+      "n_pos_needed_independent_calc": 952,
+      "replace_frac_independent_calc": 0.026584867075664622,
+      "replace_frac_pipeline_reported": 0.02626641651031895,
+      "matches_pipeline": true,
+      "pipeline_feasible": false,
+      "pipeline_reaches_target": false
+    },
+    "medium_up": {
+      "target_pi_clamped": 0.26026243333269156,
+      "clamped_by_floor_or_ceiling": false,
+      "n_pos_needed_independent_calc": 33174,
+      "replace_frac_independent_calc": 32.920245398773005,
+      "replace_frac_pipeline_reported": 32.93245778611632,
+      "matches_pipeline": true,
+      "pipeline_feasible": false,
+      "pipeline_reaches_target": true
+    },
+    "medium_down": {
+      "target_pi_clamped": 0.01,
+      "clamped_by_floor_or_ceiling": true,
+      "n_pos_needed_independent_calc": 952,
+      "replace_frac_independent_calc": 0.026584867075664622,
+      "replace_frac_pipeline_reported": 0.02626641651031895,
+      "matches_pipeline": true,
+      "pipeline_feasible": false,
+      "pipeline_reaches_target": false
+    },
+    "high_up": {
+      "target_pi_clamped": 0.4102624333326916,
+      "clamped_by_floor_or_ceiling": false,
+      "n_pos_needed_independent_calc": 65594,
+      "replace_frac_independent_calc": 66.06952965235173,
+      "replace_frac_pipeline_reported": 66.09193245778611,
+      "matches_pipeline": true,
+      "pipeline_feasible": false,
+      "pipeline_reaches_target": true
+    },
+    "high_down": {
+      "target_pi_clamped": 0.01,
+      "clamped_by_floor_or_ceiling": true,
+      "n_pos_needed_independent_calc": 952,
+      "replace_frac_independent_calc": 0.026584867075664622,
+      "replace_frac_pipeline_reported": 0.02626641651031895,
+      "matches_pipeline": true,
+      "pipeline_feasible": false,
+      "pipeline_reaches_target": false
+    }
+  },
+  "root_cause_classification": {
+    "is_this_an_unnecessarily_restrictive_sampling_rule": false,
+    "is_this_an_avoidable_cap": false,
+    "is_this_a_duplicated_examples_artifact": "PARTIALLY -- the 'up' directions ARE only reachable via heavy duplication (10-66x replacement of the ~978 native positive rows), but that duplication requirement is a symptom, not the root cause -- see next line",
+    "root_cause": "INTRINSIC to the natural class balance of this stratum. natural_pi=0.01026 means only ~978 of 95267 rows are positive (SYN-vs-benign, this fixed mechanism only). For the 'down' direction, the mathematical floor on |delta_pi| is natural_pi itself (0.01026, since prevalence cannot go below 0 regardless of ANY code choice) -- the pipeline's 0.01 epsilon-floor is essentially irrelevant here because natural_pi is already only 0.003 above that floor; even a floor of 0.0 would not let 'down' reach anywhere near the -0.10/-0.25/-0.40 targets. For the 'up' direction, reaching even +0.10 requires the positive class to grow ~11x via replacement, because there are so few native SYN rows in this stratum relative to benign -- again a property of the raw data, not the resampling rule (max_replacement_frac=0.5 is a generous, not restrictive, cap; reaches_target tolerance +-0.02 matches AUC_DC_TOL used identically elsewhere in this codebase, not a bespoke stricter number invented for this cell).",
+    "would_a_different_dataset_choice_avoid_this": "Possibly -- a mechanism with a less extreme natural imbalance than syn-vs-benign (natural_pi~1%) would have more headroom in both directions. This was not explored as an alternative because PHASE3_DESIGN.md fixed 'syn' as the prior cell's mechanism in advance (the only protocol_exhaustion-category family with enough native rows) before any Phase 3 result existed -- changing it now would be exactly the kind of post-hoc construction change the design gate exists to prevent."
+  },
+  "verdict": "Security's prior-shift infeasibility is INTRINSIC to the target distribution under the frozen design, not an artifact of an avoidable rule, cap, or sampling bug. Independently re-derived from natural_pi/n_train via closed-form arithmetic (not by re-reading the pipeline's own feasibility flag) -- all 6 severity x direction combinations' replacement_frac values match the pipeline's reported values to within rounding, confirming no computational error either."
+}

@@ -1,0 +1,31 @@
+{
+  "random_row_split": {
+    "auc": 0.9999928190614872,
+    "n_train": 101156,
+    "n_test": 25289,
+    "note": "80/20 stratified row split ignoring capture-file identity; same rows pool as the file-level split below"
+  },
+  "native_file_split": {
+    "auc_by_model": {
+      "lightgbm": 0.9979963663570969,
+      "xgboost": 0.9980234757488726
+    },
+    "n_train": 69903,
+    "n_test": 94512,
+    "note": "source_test = dataset's native '-testing' files, disjoint capture sessions from '-training' files used to fit the model"
+  },
+  "families_train_file_only": [
+    "portmap"
+  ],
+  "families_test_file_only": [
+    "ddos",
+    "dns",
+    "ntp",
+    "snmp",
+    "tftp"
+  ],
+  "delta_auc_random_minus_native": {
+    "lightgbm": 0.0019964527043903058,
+    "xgboost": 0.0019693433126145576
+  }
+}

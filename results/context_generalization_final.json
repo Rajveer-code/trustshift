@@ -1,0 +1,26 @@
+{
+  "context_variable_used": "state_fips (categorical, one-hot/fixed-effect encoded)",
+  "representation": "51-level categorical dummy encoding via statsmodels C(state_fips); no state-level continuous covariates (e.g. regulatory index, median income, population) were available in the current lending feature set (CATE-HMDA feature_sets.json carries state_fips and cbsa_code as IDs, not economic/regulatory covariates) -- a bare identifier was tested, not a richer context representation. Flagged as a scope limit, not resolved here.",
+  "framing": "Deployment context/population composition (as captured by which U.S. state a loan-approval model is deployed in) explains substantial within-domain heterogeneity in failure pattern that a scalar shift score (AUC_dc) does not capture -- NOT phrased as 'state identity is predictive' without qualification.",
+  "operational_availability_classification": {
+    "the_identifier_itself": "AVAILABLE BEFORE DEPLOYMENT, TRIVIALLY -- you always know which state you are about to deploy a lending model into; this requires no target data or feature computation, unlike AUC_dc which needs target-side feature vectors.",
+    "the_PREDICTIVE_VALUE_of_the_identifier": "AVAILABLE ONLY IF THAT SPECIFIC STATE HAS PRIOR AUDIT HISTORY -- scheme (b)'s R2=0.63-0.84 comes entirely from a state's OWN other (year,seed) observations being present in training. Scheme (a) (leave-entire-state-out) shows the predictive value collapses to ~0 for a state with ZERO prior audit history (R2_out range: [-0.035, -0.020]).",
+    "conclusion": "State identity is NOT a general, universally-applicable TrustShift diagnostic usable on day one of a first-ever deployment to a new population -- it is a diagnostic that requires an existing audit history for THAT population to be useful, which is a materially different (and narrower) kind of signal than a feature-computable probe like AUC_dc that works on any target with available data, seen or unseen. Presented as: 'evidence that scalar marginal shift metrics can miss structured, learnable deployment heterogeneity, when audit history for the specific population exists' -- not as a general pre-deployment diagnostic."
+  },
+  "within_state_10fold_r2_out_by_axis": {
+    "delta_auc": 0.7735294786030533,
+    "delta_macro_f1": 0.8127771986233292,
+    "delta_f1_positive": 0.8124538470715851,
+    "delta_ece": 0.7964634450360716,
+    "delta_brier": 0.8391453428958102,
+    "delta_gap_auc": 0.624839696266061
+  },
+  "leave_entire_state_out_r2_out_by_axis": {
+    "delta_auc": -0.0334669961849714,
+    "delta_macro_f1": -0.034565757264245045,
+    "delta_f1_positive": -0.03447051717448568,
+    "delta_ece": -0.03420147887944269,
+    "delta_brier": -0.03491620686013874,
+    "delta_gap_auc": -0.02026626194567216
+  }
+}

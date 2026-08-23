@@ -1,0 +1,18 @@
+{
+  "n_states_total_considered": 54,
+  "n_states_included": 51,
+  "n_years": 3,
+  "n_seeds": 3,
+  "n_cells_state_year": 149,
+  "n_cells_scored_rows": 447,
+  "n_excluded_state_year_cells": 13,
+  "repeated_factors": {
+    "year": "repeated within each resampled state (2022/2023/2024, kept together per state per PHASE3_DESIGN.md)",
+    "seed": "repeated model realization -- 3 independently-trained frozen source models (42/7/123), not a source of state-level dependence, kept together per state"
+  },
+  "cluster_unit": "state (state_fips) -- states plausibly share regulatory/economic confounders across years, so year-within-state observations are not independent",
+  "bootstrap_unit": "state, resampled with replacement; ALL (year x seed) rows for a resampled state are kept together (block/cluster bootstrap, not an i.i.d. resample of (state,year,seed) triples)",
+  "primary_CI_method": "cluster (block) bootstrap over states, 2000 resamples, 2.5th/97.5th percentile CI -- PRE-REGISTERED in PHASE3_DESIGN.md before any Phase 3 result existed; no alternative method substituted after seeing results",
+  "explicitly_NOT_used_as_primary": "plain i.i.d. bootstrap over (state,year,seed) triples (would treat same-state-different-year rows as independent); closed-form/analytic OLS CI (assumes i.i.d. residuals, false here); a mixed-effects model (would add an un-pre-registered distributional assumption)",
+  "verification": "every quantity above is read from results/phase3_T31_verification.json (written at T3.1 execution time, before any hypothesis-gate analysis) and cross-checked against a fresh groupby of results/lending_shiftpoints.csv (independent recount, not just re-reading the same claim twice)"
+}

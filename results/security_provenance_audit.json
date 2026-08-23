@@ -1,0 +1,221 @@
+{
+  "file_grouping": {
+    "source_cicddos2019": [
+      {
+        "file": "DNS-testing",
+        "native_split": "testing",
+        "n_rows_raw": 6703
+      },
+      {
+        "file": "LDAP-testing",
+        "native_split": "testing",
+        "n_rows_raw": 2831
+      },
+      {
+        "file": "LDAP-training",
+        "native_split": "training",
+        "n_rows_raw": 6715
+      },
+      {
+        "file": "MSSQL-testing",
+        "native_split": "testing",
+        "n_rows_raw": 8083
+      },
+      {
+        "file": "MSSQL-training",
+        "native_split": "training",
+        "n_rows_raw": 10974
+      },
+      {
+        "file": "NTP-testing",
+        "native_split": "testing",
+        "n_rows_raw": 134674
+      },
+      {
+        "file": "NetBIOS-testing",
+        "native_split": "testing",
+        "n_rows_raw": 2225
+      },
+      {
+        "file": "NetBIOS-training",
+        "native_split": "training",
+        "n_rows_raw": 1631
+      },
+      {
+        "file": "Portmap-training",
+        "native_split": "training",
+        "n_rows_raw": 5105
+      },
+      {
+        "file": "SNMP-testing",
+        "native_split": "testing",
+        "n_rows_raw": 4018
+      },
+      {
+        "file": "Syn-testing",
+        "native_split": "testing",
+        "n_rows_raw": 907
+      },
+      {
+        "file": "Syn-training",
+        "native_split": "training",
+        "n_rows_raw": 70336
+      },
+      {
+        "file": "TFTP-testing",
+        "native_split": "testing",
+        "n_rows_raw": 121833
+      },
+      {
+        "file": "UDP-testing",
+        "native_split": "testing",
+        "n_rows_raw": 12462
+      },
+      {
+        "file": "UDP-training",
+        "native_split": "training",
+        "n_rows_raw": 17770
+      },
+      {
+        "file": "UDPLag-testing",
+        "native_split": "testing",
+        "n_rows_raw": 12465
+      },
+      {
+        "file": "UDPLag-training",
+        "native_split": "training",
+        "n_rows_raw": 12639
+      }
+    ],
+    "target_cicids2017": [
+      {
+        "file": "Benign-Monday-no-metadata",
+        "n_rows_raw": 458831
+      },
+      {
+        "file": "Botnet-Friday-no-metadata",
+        "n_rows_raw": 176038
+      },
+      {
+        "file": "Bruteforce-Tuesday-no-metadata",
+        "n_rows_raw": 389714
+      },
+      {
+        "file": "DDoS-Friday-no-metadata",
+        "n_rows_raw": 221264
+      },
+      {
+        "file": "DoS-Wednesday-no-metadata",
+        "n_rows_raw": 584991
+      },
+      {
+        "file": "Infiltration-Thursday-no-metadata",
+        "n_rows_raw": 207630
+      },
+      {
+        "file": "Portscan-Friday-no-metadata",
+        "n_rows_raw": 119522
+      },
+      {
+        "file": "WebAttacks-Thursday-no-metadata",
+        "n_rows_raw": 155820
+      }
+    ]
+  },
+  "attack_family_definition": "domains/security/run_pipeline.py::_family() -- substring match against the lowercased raw label, checked in this fixed order: syn, udp, ldap, mssql, netbios, snmp, ssdp, ntp, dns, tftp, portmap, hulk, goldeneye, slowloris, slowhttp, ddos (first match wins; 'benign'/'normal' -> 'benign'; no match -> 'other_attack'). NOTE: 'udplag'-labeled rows match 'udp' (checked before any udplag-specific key), so the 'udp' family bucket includes both UDP and UDPLag raw labels.",
+  "mechanism_category_definition": {
+    "dns": "reflection_volumetric",
+    "ldap": "reflection_volumetric",
+    "mssql": "reflection_volumetric",
+    "netbios": "reflection_volumetric",
+    "ntp": "reflection_volumetric",
+    "snmp": "reflection_volumetric",
+    "tftp": "reflection_volumetric",
+    "portmap": "reflection_volumetric",
+    "udp": "reflection_volumetric",
+    "syn": "protocol_exhaustion",
+    "hulk": "application_flood",
+    "goldeneye": "application_flood",
+    "slowloris": "application_slow",
+    "slowhttp": "application_slow",
+    "benign": "benign"
+  },
+  "ddos_label_collision_note": "The string label 'ddos' denotes two DIFFERENT populations that must not be treated as the same family for overlap/coverage purposes: in CIC-DDoS2019 (source) it is a residual/catch-all bucket with n=51 raw rows (negligible, likely mislabeled or leftover rows not assigned to a specific reflection family); in CICIDS2017 (target) it is the dataset's own LOIC/HOIC-generated volumetric flood label with n=128,014 raw rows -- a real, large, well-defined attack population. Reporting 'ddos is a shared family' without this distinction would misrepresent the mechanism-overlap finding.",
+  "family_coverage": {
+    "source_training_files": {
+      "syn": 48840,
+      "benign": 46427,
+      "udp": 18145,
+      "mssql": 8523,
+      "ldap": 1906,
+      "portmap": 685,
+      "netbios": 644
+    },
+    "source_testing_files": {
+      "ntp": 121368,
+      "tftp": 98917,
+      "benign": 51404,
+      "udp": 19292,
+      "mssql": 6212,
+      "dns": 3669,
+      "snmp": 2717,
+      "ldap": 1440,
+      "netbios": 598,
+      "syn": 533,
+      "ddos": 51
+    }
+  },
+  "mechanism_coverage": {
+    "source_training_files": {
+      "protocol_exhaustion": 48840,
+      "benign": 46427,
+      "reflection_volumetric": 29903
+    },
+    "source_testing_files": {
+      "reflection_volumetric": 254213,
+      "benign": 51404,
+      "protocol_exhaustion": 533,
+      "UNMAPPED(ddos-collision)": 51
+    },
+    "note": "source TRAINING files contain ONLY reflection_volumetric and protocol_exhaustion mechanism categories -- zero application_flood or application_slow representation exists anywhere in CIC-DDoS2019 as loaded here. Any 'novel mechanism' severity ladder built from S1 can therefore only vary WITHIN reflection_volumetric/protocol_exhaustion coverage (e.g. holding out increasing numbers of reflection families); it cannot construct a within-source application-layer holdout because that mechanism category is entirely absent from the source dataset."
+  },
+  "duplicate_check": {
+    "within_source_training_files": {
+      "exact": {
+        "n_rows": 125170,
+        "n_duplicate_rows": 7396,
+        "duplicate_rate": 0.05908764080850044
+      },
+      "near_6dp": {
+        "n_rows": 125170,
+        "n_duplicate_rows": 7396,
+        "duplicate_rate": 0.05908764080850044
+      }
+    },
+    "within_source_testing_files": {
+      "exact": {
+        "n_rows": 306201,
+        "n_duplicate_rows": 6442,
+        "duplicate_rate": 0.021038468195727644
+      },
+      "near_6dp": {
+        "n_rows": 306201,
+        "n_duplicate_rows": 6651,
+        "duplicate_rate": 0.021721026384629704
+      }
+    },
+    "across_training_vs_testing_files": {
+      "exact": {
+        "n_rows_b": 306201,
+        "n_overlapping_with_a": 6199,
+        "overlap_rate_of_b": 0.020244871832554433
+      },
+      "near_6dp": {
+        "n_rows_b": 306201,
+        "n_overlapping_with_a": 6243,
+        "overlap_rate_of_b": 0.02038856829337592
+      }
+    },
+    "reading": "Each cell reports BOTH an exact duplicate rate (full float precision, bit-for-bit identical rows) and a near-duplicate rate (rounded to 6 decimals, catching rows that differ only in floating-point noise from harmonization). Neither is claimed as proof the split is leakage-free. A nonzero WITHIN-split rate (either kind) is expected and not itself evidence of leakage -- repeated automated flows legitimately produce identical or near-identical feature vectors. The leakage-relevant comparison is whether the ACROSS-split rate exceeds the matching WITHIN-split rate (exact vs. exact, near vs. near); if it does not, this check found no evidence the native file-level split inflates apparent performance beyond what within-split duplication alone would produce."
+  }
+}

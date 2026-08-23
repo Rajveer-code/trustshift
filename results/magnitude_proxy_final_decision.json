@@ -1,0 +1,37 @@
+{
+  "proxies_tested": [
+    "AUC_dc (domain-classifier AUC)",
+    "|Delta-pi| (absolute prevalence shift)"
+  ],
+  "proxies_NOT_implemented": {
+    "PSI": "population stability index -- not computed anywhere in this codebase",
+    "score_distribution_drift": "not computed as a standalone scalar anywhere in this codebase",
+    "reason_not_added": "explicit user instruction: do not implement PSI/score-drift merely to inflate the sensitivity analysis. Two proxies, honestly analyzed with one real, explained exception, is treated as sufficient evidence for H2a's robustness claim; the proxy analysis is marked LIMITED (2 of 4 conceivable proxies) rather than papered over."
+  },
+  "decision": "AUC_dc and |Delta-pi| are treated as sufficient for the final H2a claim.",
+  "final_sentence": "The conclusion that scalar shift magnitude is insufficient to characterize the observed failure fingerprint is supported by two available magnitude proxies (AUC_dc and |Delta-pi|), with one expected exception: |Delta-pi| vs. ECE (R2=0.18), which is a known, mechanistically-explained relationship (a split's calibration is judged against its own base rate, so prevalence shift mechanically affects apparent calibration error) rather than a counterexample to H2a.",
+  "scope_status": "LIMITED (2 of >=4 conceivable magnitude proxies tested) -- not claimed as exhaustive.",
+  "source_summary": {
+    "both_proxies_weak_every_endpoint": false,
+    "conclusion": "At least one endpoint shows a magnitude proxy with R2>=0.10 -- H2a's 'insufficient regardless of proxy' framing needs the per-endpoint exception stated explicitly, not asserted as universal.",
+    "scope_note": "SCOPE LIMIT, stated rather than silently narrowed: only AUC_dc and |Delta-pi| are compared here -- both are already-computed columns in lending_shiftpoints.csv. PSI (population stability index) and a raw score-distribution-drift statistic are NOT currently computed anywhere in this codebase and would require new instrumentation; they are not fabricated or approximated here.",
+    "r2_table": {
+      "AUC_dc": {
+        "$\\Delta$AUC (discrimination)": 1.6870412244962552e-07,
+        "$\\Delta$Brier (calibration, diagnostic)": 0.026891176833858443,
+        "$\\Delta$ECE (calibration)": 0.0020480166629843755,
+        "$\\Delta$F1$_{positive}$ (diagnostic)": 0.06412418437912781,
+        "$\\Delta$G (subgroup gap, race_black)": 0.04617526864338517,
+        "$\\Delta$macro-F1 (operating point)": 0.0004454306466693536
+      },
+      "|Delta-pi|": {
+        "$\\Delta$AUC (discrimination)": 0.013812121190551196,
+        "$\\Delta$Brier (calibration, diagnostic)": 0.0001595902630547874,
+        "$\\Delta$ECE (calibration)": 0.178957785821112,
+        "$\\Delta$F1$_{positive}$ (diagnostic)": 0.046463407477750684,
+        "$\\Delta$G (subgroup gap, race_black)": 0.0005762347384346,
+        "$\\Delta$macro-F1 (operating point)": 0.08416198291100019
+      }
+    }
+  }
+}

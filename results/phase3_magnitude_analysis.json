@@ -1,0 +1,65 @@
+{
+  "within_domain": {
+    "lending_T31_covariate_like": {
+      "mechanism": "covariate_like (geographic/temporal, real-world)",
+      "x": "continuous auc_dc",
+      "y": "delta_gap_auc",
+      "ols_slope": 0.12642974916410502,
+      "ols_slope_ci95": [
+        0.024977666733509696,
+        0.23308275707883516
+      ],
+      "r2": 0.04617526864338517,
+      "classification": "non-monotonic",
+      "n_cells": 447,
+      "clustering": "cluster (block) bootstrap over states -- see lending_phase3_analysis.json"
+    },
+    "security_S1_novel_mechanism_auc": {
+      "mechanism": "novel_mechanism (mechanism-coverage holdout)",
+      "x": "coverage_reduction_frac (0.2/0.4/0.6)",
+      "y": "delta_auc (target_cicids2017)",
+      "slope": -0.11780516374105751,
+      "slope_ci95": [
+        -0.156765033087571,
+        -0.06447719276999607
+      ],
+      "r2": 0.3820579895973586,
+      "n": 9,
+      "clustering": "bootstrap over the 3 model seeds (only 3 severity levels x 3 seeds = 9 points -- explicitly a thin-data caveat, not a cluster-bootstrap-over-states like T3.1)"
+    },
+    "security_S1_novel_mechanism_recall": {
+      "mechanism": "novel_mechanism (mechanism-coverage holdout)",
+      "x": "coverage_reduction_frac (0.2/0.4/0.6)",
+      "y": "delta_overall_attack_recall (target_cicids2017) -- the design doc's own MANDATORY S1 reporting metric, less noisy than AUC here (see per-seed std in security_mechanism_ladder.csv)",
+      "slope": -0.0013410181885854797,
+      "slope_ci95": [
+        -0.009852378528383067,
+        0.005336705036207489
+      ],
+      "r2": 0.025569664289441962,
+      "n": 9,
+      "clustering": "bootstrap over the 3 model seeds (only 3 severity levels x 3 seeds = 9 points -- explicitly a thin-data caveat, not a cluster-bootstrap-over-states like T3.1)",
+      "note": "Target overall_attack_recall is ~0.145-0.146 across EVERY condition (baseline, every holdout severity, every matched negative-control severity) -- essentially flat. Cross-dataset recall failure is already near-total at baseline (0 families held out) and does not scale with in-source mechanism-coverage severity; something other than which specific reflection_volumetric families were trained on dominates the cross-testbed gap. This is an unexpected result relative to h2's stated expectation and is reported plainly, not smoothed over -- see security_mechanism_ladder.csv."
+    }
+  },
+  "cross_domain": {
+    "covariate_mechanism_only": {
+      "scope": "covariate mechanism ONLY -- the sole mechanism with a common continuous magnitude scale (target auc_dc) across domains; prior uses domain-specific |Delta-pi| targets and novel-mechanism uses coverage_reduction_frac, neither of which is comparable across domains on one axis, so no cross-domain number is computed for them.",
+      "x": "target_auc_dc (0.60/0.75/0.90)",
+      "y": "delta_auc",
+      "domains_included": [
+        "lending",
+        "security"
+      ],
+      "slope": 0.07045142782836077,
+      "slope_ci95": [
+        1.83725940345506e-31,
+        0.14090285565672148
+      ],
+      "r2": 0.4794367771087975,
+      "n": 6,
+      "clustering": "bootstrap over domain (lending vs security) -- only 2 clusters, explicitly thin; interpret as descriptive, not a hypothesis test."
+    }
+  },
+  "note": "Within-domain and cross-domain relationships are reported SEPARATELY and clustered appropriately -- PHASE3_DESIGN.md explicitly rejects a single pooled omnibus regression across mechanisms/domains as the primary inferential tool (Simpson-style clustering risk, the exact failure mode that already invalidated the original cross-domain M2 slope)."
+}

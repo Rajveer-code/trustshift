@@ -1,0 +1,12 @@
+source,domain,mechanism,severity,auc_delta,auc_failed,auc_available,macro_f1_delta,macro_f1_failed,macro_f1_available,ece_delta,ece_failed,ece_available,brier_delta,brier_failed,brier_available,gap_auc_delta,gap_auc_failed,gap_auc_available,overall_attack_recall_mean
+T3.3,lending,covariate,low,-0.02677786426124018,True,True,-0.030475714729167103,True,True,-0.035567807484237934,True,True,0.005089440338768486,False,True,-0.021342762570124796,True,True,
+T3.3,lending,covariate,medium,-0.0026273320454743843,False,True,-0.02953107878609207,True,True,-0.06332684066615732,True,True,-0.007191312808123462,False,True,-0.028395676127898728,True,True,
+T3.3,lending,covariate,high,0.015492992435776287,False,True,-0.02057088245786931,True,True,-0.0738581121769363,True,True,0.012669396529395666,False,True,-0.0034030238671673985,False,True,
+T3.3,lending,prior,low_down,-0.003118084296052981,False,True,-0.09123871179423382,True,True,-0.1223849773532969,True,True,-0.027271735894719845,True,True,-0.01623914538471216,False,True,
+T3.3,lending,concept_natural,discovered,-0.0888928858689128,True,True,-0.132866183554699,True,True,-0.1070463773255544,True,True,-0.0460203006669962,True,True,-0.0098316100315509,False,True,
+T3.3,security,covariate,low,0.0,False,True,0.0,False,True,-1.4759019289257351e-05,False,True,-3.4300740026083076e-08,False,True,,,False,
+T3.3,security,covariate,medium,1.1102230246251565e-16,False,True,0.0,False,True,-4.13203719467653e-05,False,True,-9.792130839514357e-08,False,True,,,False,
+T3.3,security,covariate,high,0.0,False,True,0.0,False,True,-5.788699684343105e-05,False,True,-1.3797164655215965e-07,False,True,,,False,
+T3.2/S1,security,novel_mechanism,low,0.005059376590748658,False,True,,,False,,,False,,,False,,,False,0.14577688741468117
+T3.2/S1,security,novel_mechanism,medium,0.05489847493390698,True,True,,,False,,,False,,,False,,,False,0.1455469985823522
+T3.2/S1,security,novel_mechanism,high,0.05218144208717168,True,True,,,False,,,False,,,False,,,False,0.14631329469011534

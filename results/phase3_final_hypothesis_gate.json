@@ -1,0 +1,281 @@
+{
+  "evidence_hierarchy_policy": "Level 1 (T3.1 + original benchmark) is decisive. Level 2 (T3.3) corroborates only where a cell is both feasible AND informative (not ceiling/floor-limited). Level 3 (S1) is supporting context only and never outvotes Level 1/2 (item M).",
+  "H1_mechanism_distinguishable_fingerprints": {
+    "status": "mixed",
+    "n_mechanisms_compared": 2,
+    "mechanisms_compared": [
+      "covariate",
+      "novel_mechanism"
+    ],
+    "by_mechanism_signature": {
+      "covariate": {
+        "failure_signature": [
+          "macro_f1",
+          "ece"
+        ],
+        "n_rows": 3,
+        "axes_measured": [
+          "auc",
+          "macro_f1",
+          "ece",
+          "brier"
+        ]
+      },
+      "novel_mechanism": {
+        "failure_signature": [
+          "auc"
+        ],
+        "n_rows": 3,
+        "axes_measured": [
+          "auc"
+        ]
+      }
+    },
+    "by_mechanism_domain_signature": {
+      "covariate/lending": {
+        "failure_signature": [
+          "macro_f1",
+          "ece"
+        ],
+        "n_rows": 3,
+        "axes_measured": [
+          "auc",
+          "macro_f1",
+          "ece",
+          "brier"
+        ]
+      },
+      "novel_mechanism/security": {
+        "failure_signature": [
+          "auc"
+        ],
+        "n_rows": 3,
+        "axes_measured": [
+          "auc"
+        ]
+      }
+    },
+    "pairwise_differences": [
+      {
+        "mechanism_a": "covariate",
+        "mechanism_b": "novel_mechanism",
+        "differ": true,
+        "signature_a": [
+          "macro_f1",
+          "ece"
+        ],
+        "signature_b": [
+          "auc"
+        ]
+      }
+    ],
+    "within_mechanism_cross_domain_consistency": {},
+    "n_mechanism_pairs_differing": 1,
+    "n_mechanism_pairs_total": 1,
+    "coverage_caveat": "novel_mechanism rows here are S1's CROSS-DATASET AUC delta, which item M's analysis marks non-informative -- included in the fingerprint CSV for completeness but its failure_signature should be read with that caveat; S1's actually-informative signal (in-source unseen-family recall) is not a delta_X/failed column in this schema and is reported separately in the evidence-hierarchy section instead.",
+    "denominator": {
+      "total_planned": 24,
+      "valid": 11,
+      "infeasible": 11,
+      "n_a": 1,
+      "identified_not_executed": 1,
+      "informative": 6,
+      "non_informative_or_single_point": 18,
+      "_consistency_check": "valid+infeasible should equal fingerprint rows + infeasible-log rows: 11 valid vs 11 logged-infeasible (expect valid+infeasible=22)"
+    }
+  },
+  "H2_magnitude_insufficient_within_mechanism": {
+    "status": "supported",
+    "reason": "Decisive evidence is Level 1 (T3.1, 447 real cells): supported, CORROBORATED by a real head-to-head comparison (supported: state identity R2=0.72-0.88 vs. magnitude R2=0.00-0.06, p<0.001 on every axis) -- this is what makes the verdict more than 'magnitude's R2 happens to be near zero'. Level 2's direct mechanism-vs-magnitude test exists but is underpowered (n=10, negative LOO-CV) and is excluded from the vote, not treated as either confirming or denying. Level 2 security-covariate is non-informative (ceiling) and excluded. Level 3 (S1) cross-dataset result is non-informative and excluded; S1's thin in-source signal does not override Level 1 either way (evidence hierarchy, item M).",
+    "evidence_hierarchy": {
+      "level_1_naturally_occurring": {
+        "T3.1_lending_covariate_like": {
+          "status": "supported",
+          "reason": "4/4 axes: flat or R2<0.3 -- within-mechanism variance dominates any magnitude-driven trend",
+          "weight": "PRIMARY -- 447 real (state,year,seed) cells, no construction to question"
+        },
+        "T3.1_state_identity_vs_magnitude_headtohead": {
+          "status": "supported",
+          "reason": "Nested F-test on all 6 axes (n=447): state fixed effects R2=0.72-0.88 vs. continuous auc_dc R2=0.00-0.06; worst-axis p=6.8e-78 for 'state adds nothing beyond magnitude'. This is a REAL HEAD-TO-HEAD comparison (not just magnitude's R2~=0 in isolation) -- directly answers the objection that a low R2 for magnitude alone does not establish anything beats it.",
+          "scope_caveat": "This is CONTEXT/POPULATION-IDENTITY evidence (which STATE), not MECHANISM evidence -- mechanism is constant (covariate) throughout T3.1. It strengthens H2 exactly as defined ('within a fixed mechanism, magnitude is not a sufficient predictor') but must NOT be read as support for the title's narrower claim that shift MECHANISM specifically beats magnitude -- see H2_magnitude_vs_mechanism_direct_test below for that separate, weaker-powered test.",
+          "weight": "PRIMARY -- same 447 cells as T3.1's own fingerprint, standard nested F-test, reported alongside (not instead of) the bootstrap-based fingerprint",
+          "artifact": "results/phase3_h2_magnitude_vs_context.json"
+        }
+      },
+      "level_2_controlled": {
+        "H2_magnitude_vs_mechanism_direct_test": {
+          "status": "underpowered_inconclusive",
+          "n": 10,
+          "n_mechanism_categories": 3,
+          "in_sample_r2_mechanism_vs_magnitude": {
+            "magnitude_only": 0.08252375248668575,
+            "mechanism_only": 0.47288940105732935
+          },
+          "loo_cv_r2_all_models": {
+            "magnitude_only": -0.40890306311549485,
+            "mechanism_only": -0.06860954619460635,
+            "both": -0.37965671935067014
+          },
+          "reason": "This IS the direct, title-literal test (mechanism category vs. magnitude). In-sample R2 favors mechanism, but ALL THREE models have NEGATIVE out-of-sample (LOO-CV) R2 at n=10 -- cannot be used to claim mechanism beats magnitude. Reported for transparency, not counted toward H2's vote in either direction.",
+          "weight": "EXCLUDED from vote -- underpowered, contradicted by its own out-of-sample check",
+          "artifact": "results/phase3_h2_magnitude_vs_mechanism.json"
+        },
+        "T3.3_covariate_cross_domain_fit": {
+          "r2": 0.4794367771087975,
+          "weight": "SECONDARY, CAUTION -- pools lending (informative) with security (non-informative, ceiling-limited); not a clean single-mechanism estimate"
+        },
+        "T3.3_security_covariate": {
+          "status": "non_informative",
+          "all_deltas_near_zero": true,
+          "reason": "in-domain AUC already 1.0 pre-resampling -- a ceiling effect, not evidence of robustness or of magnitude-sufficiency either way",
+          "weight": "EXCLUDED from vote -- non-informative by construction"
+        }
+      },
+      "level_3_supporting_stress_test": {
+        "S1_cross_dataset_target_recall": {
+          "status": "non_informative",
+          "r2": 0.025569664289441962,
+          "reason": "target recall is ~0.145-0.146 across baseline/every holdout severity/every matched negative control -- the cross-testbed gap is already saturated before any family is held out; this is NOT evidence that magnitude is insufficient WITHIN this mechanism, it is evidence that the cross-dataset channel cannot identify the mechanism manipulation at all",
+          "weight": "EXCLUDED from vote -- reclassified non-informative (item I)"
+        },
+        "S1_in_source_unseen_family_recall": {
+          "values_by_severity": {
+            "low": 0.9938684503901896,
+            "medium": 0.8678929765886286,
+            "high": 0.9461890742558063
+          },
+          "pattern": "non-monotonic (low > high > medium)",
+          "weight": "TERTIARY, thin -- 3 severity points, non-monotonic, same-testbed only; reported as supplementary context, never counted toward the H2 vote"
+        }
+      }
+    }
+  },
+  "H2a_scalar_magnitude_insufficient": {
+    "claim": "Scalar shift magnitude alone is insufficient to explain deployment-failure variation within the evaluated settings.",
+    "status": "supported",
+    "in_sample_evidence": {
+      "T3.1_fingerprint": {
+        "status": "supported",
+        "reason": "4/4 axes: flat or R2<0.3 -- within-mechanism variance dominates any magnitude-driven trend",
+        "weight": "PRIMARY -- 447 real (state,year,seed) cells, no construction to question"
+      },
+      "state_identity_headtohead_in_sample": {
+        "status": "supported",
+        "reason": "Nested F-test on all 6 axes (n=447): state fixed effects R2=0.72-0.88 vs. continuous auc_dc R2=0.00-0.06; worst-axis p=6.8e-78 for 'state adds nothing beyond magnitude'. This is a REAL HEAD-TO-HEAD comparison (not just magnitude's R2~=0 in isolation) -- directly answers the objection that a low R2 for magnitude alone does not establish anything beats it.",
+        "scope_caveat": "This is CONTEXT/POPULATION-IDENTITY evidence (which STATE), not MECHANISM evidence -- mechanism is constant (covariate) throughout T3.1. It strengthens H2 exactly as defined ('within a fixed mechanism, magnitude is not a sufficient predictor') but must NOT be read as support for the title's narrower claim that shift MECHANISM specifically beats magnitude -- see H2_magnitude_vs_mechanism_direct_test below for that separate, weaker-powered test.",
+        "weight": "PRIMARY -- same 447 cells as T3.1's own fingerprint, standard nested F-test, reported alongside (not instead of) the bootstrap-based fingerprint",
+        "artifact": "results/phase3_h2_magnitude_vs_context.json"
+      }
+    },
+    "out_of_sample_evidence": {
+      "within_state_10fold_r2_out": {
+        "state_identity_range": [
+          0.624839696266061,
+          0.8391453428958102
+        ],
+        "magnitude_range": [
+          -0.011264571561247605,
+          0.05512512818289139
+        ],
+        "interpretation": "State identity generalizes strongly (R2_out=0.63-0.84 across all 6 axes) when a state's OTHER (year,seed) rows are available -- this is real, learnable, persistent signal, not in-sample overfitting. Magnitude does NOT generalize under the identical CV scheme (R2_out<=0.06 everywhere). This is the strongest evidence in the entire benchmark that magnitude alone is insufficient."
+      },
+      "leave_entire_state_out_r2_out": {
+        "state_identity_range": [
+          -0.03491620686013874,
+          -0.02026626194567216
+        ],
+        "magnitude_range": [
+          -0.07852481781532616,
+          0.010924600260795558
+        ],
+        "interpretation": "Neither magnitude nor state identity extrapolates to a wholly unseen state (both near/below 0) -- expected for a fixed-effect encoding, reported as a mechanical fact, not counted against H2a (both models fail this test equally, so it does not favor magnitude over state identity either)."
+      }
+    },
+    "magnitude_proxy_sensitivity": {
+      "both_proxies_weak_every_endpoint": false,
+      "conclusion": "At least one endpoint shows a magnitude proxy with R2>=0.10 -- H2a's 'insufficient regardless of proxy' framing needs the per-endpoint exception stated explicitly, not asserted as universal.",
+      "scope_note": "SCOPE LIMIT, stated rather than silently narrowed: only AUC_dc and |Delta-pi| are compared here -- both are already-computed columns in lending_shiftpoints.csv. PSI (population stability index) and a raw score-distribution-drift statistic are NOT currently computed anywhere in this codebase and would require new instrumentation; they are not fabricated or approximated here.",
+      "r2_table": {
+        "AUC_dc": {
+          "$\\Delta$AUC (discrimination)": 1.6870412244962552e-07,
+          "$\\Delta$Brier (calibration, diagnostic)": 0.026891176833858443,
+          "$\\Delta$ECE (calibration)": 0.0020480166629843755,
+          "$\\Delta$F1$_{positive}$ (diagnostic)": 0.06412418437912781,
+          "$\\Delta$G (subgroup gap, race_black)": 0.04617526864338517,
+          "$\\Delta$macro-F1 (operating point)": 0.0004454306466693536
+        },
+        "|Delta-pi|": {
+          "$\\Delta$AUC (discrimination)": 0.013812121190551196,
+          "$\\Delta$Brier (calibration, diagnostic)": 0.0001595902630547874,
+          "$\\Delta$ECE (calibration)": 0.178957785821112,
+          "$\\Delta$F1$_{positive}$ (diagnostic)": 0.046463407477750684,
+          "$\\Delta$G (subgroup gap, race_black)": 0.0005762347384346,
+          "$\\Delta$macro-F1 (operating point)": 0.08416198291100019
+        }
+      }
+    },
+    "scope": "Evidence here is about MAGNITUDE being insufficient, using CONTEXT/STATE IDENTITY as the demonstrated alternative. It says nothing about MECHANISM specifically -- see H2b."
+  },
+  "H2b_mechanism_beyond_magnitude": {
+    "claim": "Shift mechanism provides information beyond scalar shift magnitude about which trustworthiness axis fails.",
+    "status": "not_established",
+    "reason": "The current cross-dataset controlled evidence is insufficient to establish that mechanism outperforms magnitude as an out-of-sample predictor.",
+    "artifact": "results/mechanism_vs_magnitude_final.csv",
+    "n": 10,
+    "explicitly_not_conflatable_with": "H2a's state-identity finding (H2a is about CONTEXT, this is about MECHANISM CATEGORY -- they use different predictors and different, non-overlapping evidence)"
+  },
+  "H2_split_note": "round-6: H2 is now reported as two SEPARATE top-level verdicts, H2a and H2b, specifically so they cannot be silently collapsed back into one 'H2: supported' headline. The legacy H2_magnitude_insufficient_within_mechanism key above is kept for backward compatibility with existing readers and is equivalent to H2a, NOT to H2a+H2b combined.",
+  "H3_staged_audit_beats_scalar": {
+    "status": "not_formally_tested",
+    "status_reason": "H3 redefined (item 14): 'mechanism-aware diagnosis identifies a more specific audit response than scalar shift magnitude alone.' The one analysis that would formally test this (results/phase3_h2_magnitude_vs_mechanism.json: magnitude-only vs. mechanism-only vs. both, predicting |delta_auc| across T3.3+S1's n=10 mechanism-labeled cells, leave-one-out cross-validated) returns NEGATIVE out-of-sample R2 for EVERY candidate model -- none of them predict held-out cells better than the naive mean. Per the user's explicit instruction, a formal result is not claimed without a formal comparison that actually works; the within-mechanism trends and qualitative narrative below are retained as exploratory/descriptive context, not as evidence for or against H3.",
+    "within_mechanism_trends": {
+      "lending/covariate": {
+        "n_severity_points": 3,
+        "auc_delta_by_severity": {
+          "low": -0.0267778642612401,
+          "medium": -0.0026273320454743,
+          "high": 0.0154929924357762
+        },
+        "monotonic_degradation": false
+      },
+      "security/covariate": {
+        "n_severity_points": 3,
+        "auc_delta_by_severity": {
+          "low": 0.0,
+          "medium": 1.1102230246251563e-16,
+          "high": 0.0
+        },
+        "monotonic_degradation": true
+      },
+      "security/novel_mechanism": {
+        "n_severity_points": 3,
+        "auc_delta_by_severity": {
+          "low": 0.0050593765907486,
+          "medium": 0.0548984749339069,
+          "high": 0.0521814420871716
+        },
+        "monotonic_degradation": false
+      }
+    },
+    "n_mechanisms_with_severity_trend_data": 3,
+    "qualitative_cross_mechanism_comparison": {
+      "covariate_cells (lending + security, high nominal severity)": "near-zero AUC movement at the HIGH end of a deliberately large constructed shift (lending high |delta_auc|=0.015; security high |delta_auc|~0) -- consistent with the covariate mechanism's designed negative-control role (P(Y|X) preserved).",
+      "prior/novel_mechanism cells (low nominal severity)": "lending's one feasible prior cell (low_down) and S1's low-severity holdout both show non-trivial movement on SOME axis (lending: ECE/Brier move meaningfully even though corrected macro-F1 barely moves -- see item L's NC1 audit; S1: in-source unseen-family recall already at 0.994, i.e. not degraded, complicating a clean 'small nominal severity still hurts' story here too).",
+      "reading": "The qualitative pattern is MESSIER than a clean 'mechanism beats scalar magnitude' story once the F1 correction and the S1 non-informative finding are both accounted for. Some support remains (covariate genuinely looks more robust than prior/novel-mechanism in the calibration axes), but this is now reported as a qualitative, hedged observation, not a quantitative case with a mechanical correct/incorrect verdict."
+    },
+    "formal_test_attempted": true,
+    "formal_test_artifact": "results/phase3_h2_magnitude_vs_mechanism.json",
+    "note": "H3's mechanical single-case check from the first-pass gate was withdrawn (item K) -- it compared severity LABELS across non-commensurate scales, which PHASE3_DESIGN.md itself does not license as a valid comparison. The round-4 'mixed' status is further downgraded to 'not_formally_tested' in round-5 (item 14) because the formal comparison that would justify 'mixed' was run and failed its own out-of-sample check."
+  },
+  "exact_denominator": {
+    "total_planned": 24,
+    "valid": 11,
+    "infeasible": 11,
+    "n_a": 1,
+    "identified_not_executed": 1,
+    "informative": 6,
+    "non_informative_or_single_point": 18,
+    "_consistency_check": "valid+infeasible should equal fingerprint rows + infeasible-log rows: 11 valid vs 11 logged-infeasible (expect valid+infeasible=22)"
+  },
+  "standing_rule": "The title and central claim are NOT protected from this outcome (PHASE3_DESIGN.md). This gate is Claude's mechanical application of the frozen criteria to the actual, F1-corrected Phase 3 numbers; the user reviews this evidence directly before any narrative section is rewritten."
+}

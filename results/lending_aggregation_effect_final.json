@@ -1,0 +1,100 @@
+{
+  "by_year": [
+    {
+      "year": 2022,
+      "aggregate_effect": -0.0034021343106699,
+      "weighted_cell_effect": 0.0037472134744121,
+      "unweighted_cell_effect": 0.046351717550458,
+      "median_cell_effect": 0.0559031479750039,
+      "fraction_worsening": 0.8,
+      "fraction_improving": 0.2,
+      "n_cells": 50,
+      "n_rows_total": 7568650,
+      "largest_states_by_n_rows_and_their_cell_delta": [
+        {
+          "state_fips": 12,
+          "n_rows": 1580223,
+          "delta_macro_f1": 0.0041409274666154
+        },
+        {
+          "state_fips": 6,
+          "n_rows": 1438530,
+          "delta_macro_f1": -0.0444504898047769
+        },
+        {
+          "state_fips": 48,
+          "n_rows": 1019874,
+          "delta_macro_f1": -0.1144770832437563
+        }
+      ],
+      "gap_weighted_vs_aggregate": 0.0071493477850821
+    },
+    {
+      "year": 2023,
+      "aggregate_effect": -0.0136705993884577,
+      "weighted_cell_effect": -0.0085114377205668,
+      "unweighted_cell_effect": 0.0307725491813005,
+      "median_cell_effect": 0.0379491321461104,
+      "fraction_worsening": 0.66,
+      "fraction_improving": 0.34,
+      "n_cells": 50,
+      "n_rows_total": 5391890,
+      "largest_states_by_n_rows_and_their_cell_delta": [
+        {
+          "state_fips": 12,
+          "n_rows": 1508709,
+          "delta_macro_f1": -0.0163693938628605
+        },
+        {
+          "state_fips": 48,
+          "n_rows": 936002,
+          "delta_macro_f1": -0.1406803950540779
+        },
+        {
+          "state_fips": 6,
+          "n_rows": 337144,
+          "delta_macro_f1": 0.0100534033825868
+        }
+      ],
+      "gap_weighted_vs_aggregate": 0.0051591616678908
+    },
+    {
+      "year": 2024,
+      "aggregate_effect": -0.0125407660087761,
+      "weighted_cell_effect": -0.0048555703122556,
+      "unweighted_cell_effect": 0.023908584219425,
+      "median_cell_effect": 0.0249350419926069,
+      "fraction_worsening": 0.7142857142857143,
+      "fraction_improving": 0.2857142857142857,
+      "n_cells": 49,
+      "n_rows_total": 5638021,
+      "largest_states_by_n_rows_and_their_cell_delta": [
+        {
+          "state_fips": 12,
+          "n_rows": 1576739,
+          "delta_macro_f1": -0.0063102667898572
+        },
+        {
+          "state_fips": 48,
+          "n_rows": 938754,
+          "delta_macro_f1": -0.1255335786674437
+        },
+        {
+          "state_fips": 6,
+          "n_rows": 572762,
+          "delta_macro_f1": 0.0113464036932094
+        }
+      ],
+      "gap_weighted_vs_aggregate": 0.0076851956965205
+    }
+  ],
+  "terminology_check": {
+    "majority_of_individual_cells_direction": "degrading",
+    "pooled_aggregate_direction": "improving (all 3 years negative delta)",
+    "sign_reversal_confirmed": true,
+    "formal_simpsons_paradox_conditions_verified": false,
+    "reason_not_asserted_as_formal_simpsons_paradox": "the classic two-group textbook construction and a demonstrated causal/structural lurking-variable link were not formally verified here -- only the population-size correlation with inclusion weight. The safer, precise term 'aggregation-induced reversal' (equivalently: a weighting/composition effect) is used throughout instead.",
+    "mechanism": "N-weighting by target-cell row count reproduces the pooled aggregate to within 0.005-0.008; the unweighted 447-cell mean differs by 0.024-0.043 -- large states dominate the true aggregate while the unweighted mean gives every state, however small, equal vote."
+  },
+  "candidate_status": "potential secondary methodological result for Phase 4 -- not yet written into the manuscript."
+}

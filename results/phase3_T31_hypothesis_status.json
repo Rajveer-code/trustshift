@@ -1,0 +1,155 @@
+{
+  "H1_status": "not_assessable_from_T31_alone",
+  "H1_note": "T3.1 manipulates a single mechanism (covariate-like shift within lending: state x year). H1 requires >=2 distinguishable mechanisms and is decided at the Phase 3H global synthesis once T3.2/T3.3 exist.",
+  "H2_status": "supported",
+  "H2_reason": "4/4 axes: flat or R2<0.3 -- within-mechanism variance dominates any magnitude-driven trend",
+  "evidence": {
+    "delta_auc": {
+      "classification": "flat",
+      "r2": 1.6870412244962552e-07,
+      "spearman_rho": -0.00957886013526005
+    },
+    "delta_macro_f1": {
+      "classification": "flat",
+      "r2": 0.0004454306466693536,
+      "spearman_rho": 0.07832485629157011
+    },
+    "delta_f1_positive": {
+      "classification": "non-monotonic",
+      "r2": 0.06412418437912781,
+      "spearman_rho": 0.25511014063433773
+    },
+    "delta_ece": {
+      "classification": "flat",
+      "r2": 0.0020480166629843755,
+      "spearman_rho": -0.04662583462674502
+    },
+    "delta_brier": {
+      "classification": "flat",
+      "r2": 0.026891176833858443,
+      "spearman_rho": 0.17803843367485134
+    },
+    "delta_gap_auc": {
+      "classification": "non-monotonic",
+      "r2": 0.04617526864338517,
+      "spearman_rho": 0.22346459312349248
+    }
+  },
+  "effect_sizes": {
+    "delta_auc": {
+      "ols_slope": -0.0003176884650905412,
+      "fraction_degrading": 0.2505592841163311
+    },
+    "delta_macro_f1": {
+      "ols_slope": 0.024905527011473458,
+      "fraction_degrading": 0.7114093959731543
+    },
+    "delta_f1_positive": {
+      "ols_slope": 0.38126740485302707,
+      "fraction_degrading": 0.8187919463087249
+    },
+    "delta_ece": {
+      "ols_slope": -0.03997133176271134,
+      "fraction_degrading": 0.6957494407158836
+    },
+    "delta_brier": {
+      "ols_slope": 0.11563318182049948,
+      "fraction_degrading": 0.756152125279642
+    },
+    "delta_gap_auc": {
+      "ols_slope": 0.12642974916410502,
+      "fraction_degrading": 0.39373601789709173
+    }
+  },
+  "uncertainty": {
+    "delta_auc": {
+      "spearman_rho_ci95": [
+        -0.24914561127583046,
+        0.21752221880137917
+      ],
+      "ols_slope_ci95": [
+        -0.1911639520679718,
+        0.23074109846591406
+      ],
+      "fraction_degrading_ci95": [
+        0.16091954022988506,
+        0.34444630872483223
+      ]
+    },
+    "delta_macro_f1": {
+      "spearman_rho_ci95": [
+        -0.15789579480227375,
+        0.29466546612022065
+      ],
+      "ols_slope_ci95": [
+        -0.2511606090731307,
+        0.307834275851119
+      ],
+      "fraction_degrading_ci95": [
+        0.6129663220267247,
+        0.8091957803992741
+      ]
+    },
+    "delta_f1_positive": {
+      "spearman_rho_ci95": [
+        0.0392670647176145,
+        0.4463604171766225
+      ],
+      "ols_slope_ci95": [
+        0.09859677767420089,
+        0.6723282362651496
+      ],
+      "fraction_degrading_ci95": [
+        0.7133333333333334,
+        0.9115646258503401
+      ]
+    },
+    "delta_ece": {
+      "spearman_rho_ci95": [
+        -0.3043679117752018,
+        0.1996279975176843
+      ],
+      "ols_slope_ci95": [
+        -0.2864176358258953,
+        0.1931359791355129
+      ],
+      "fraction_degrading_ci95": [
+        0.5855263157894737,
+        0.8008948545861297
+      ]
+    },
+    "delta_brier": {
+      "spearman_rho_ci95": [
+        -0.050360455412332694,
+        0.3768220660373841
+      ],
+      "ols_slope_ci95": [
+        -0.024186192360338022,
+        0.25960631656189853
+      ],
+      "fraction_degrading_ci95": [
+        0.6434980936819172,
+        0.8558646882176294
+      ]
+    },
+    "delta_gap_auc": {
+      "spearman_rho_ci95": [
+        0.037873471257910116,
+        0.39720543220866017
+      ],
+      "ols_slope_ci95": [
+        0.024977666733509696,
+        0.23308275707883516
+      ],
+      "fraction_degrading_ci95": [
+        0.30263080129401515,
+        0.4897959183673469
+      ]
+    }
+  },
+  "caveats": [
+    "H2 combining rule (R2<0.3 weak / >0.7 strong, >=3-of-4-axes majority) votes over the 4 non-redundant canonical dimensions (H2_VOTING_AXES: delta_auc, delta_macro_f1, delta_ece, delta_gap_auc), fixed before this script was run against real T3.1 output. delta_f1_positive and delta_brier are reported in full (see 'evidence' below) but excluded from the vote to avoid double-counting operating-point and calibration evidence (2026-08-23 F1-definition correction, round-4 hostile audit).",
+    "T3.1 covers ONE mechanism only (covariate-like geographic/temporal shift); H2's verdict here applies to that mechanism, not to prior/concept/novel-mechanism shift.",
+    "n_cells=447 rows across 149 included (state,year) cells x 3 seeds; 13 cells excluded (see lending_excluded_cells.json for exact reasons)."
+  ]
+}

@@ -1,0 +1,501 @@
+{
+  "domain": "security",
+  "multiclass": false,
+  "primary_axis": "attack_family",
+  "models": {
+    "lightgbm": {
+      "7": {
+        "splits": {
+          "source_test": {
+            "auc": 0.9982722954020828,
+            "auc_se": 8.43871846511083e-05,
+            "macro_f1": 0.9528156798853925,
+            "ece": 0.07024743985029262,
+            "brier": 0.07025065752089793,
+            "brier_decomposition": {
+              "reliability": 0.01755716850466401,
+              "resolution": 0.11382762614045998,
+              "uncertainty": 0.16683313439458267,
+              "brier_binned": 0.07056267675878669,
+              "grouping_loss": -0.00031201923788876096
+            },
+            "axis_gaps": {
+              "attack_family": {
+                "gap_auc": NaN,
+                "gap_ece": 0.9992148375528812,
+                "subgroup_auc": {},
+                "subgroup_ece": {
+                  "benign": 0.002591181408076638,
+                  "ddos": 0.9995426964432119,
+                  "dns": 0.059423557478798204,
+                  "ldap": 0.0032819333151269158,
+                  "mssql": 0.00032785889033067154,
+                  "netbios": 0.005002758480336376,
+                  "ntp": 0.004882533577194795,
+                  "snmp": 0.0007975947542213354,
+                  "syn": 0.6229277341872437,
+                  "tftp": 0.0020366430634259232,
+                  "udp": 0.30707825375852554
+                }
+              }
+            }
+          },
+          "target_cicids2017": {
+            "auc": 0.5648570941230564,
+            "auc_se": 0.002575063267899655,
+            "macro_f1": 0.24920675034397552,
+            "ece": 0.661746532199493,
+            "brier": 0.658040251435677,
+            "brier_decomposition": {
+              "reliability": 0.4763924639935464,
+              "resolution": 0.0037093741002598504,
+              "uncertainty": 0.18610320411323206,
+              "brier_binned": 0.6587862940065186,
+              "grouping_loss": -0.000746042570841654
+            },
+            "axis_gaps": {
+              "attack_family": {
+                "gap_auc": NaN,
+                "gap_ece": 0.922299228397388,
+                "subgroup_auc": {},
+                "subgroup_ece": {
+                  "benign": 0.07743455344573366,
+                  "ddos": 0.6336032550892301,
+                  "goldeneye": 0.9864640424110324,
+                  "hulk": 0.9997337818431217,
+                  "slowhttp": 0.9277952643949051,
+                  "slowloris": 0.8431036492187957
+                }
+              }
+            }
+          }
+        },
+        "deltas": {
+          "target_cicids2017": {
+            "delta_auc": 0.43341520127902644,
+            "delta_auc_p": 0.0,
+            "delta_gap_auc": NaN,
+            "delta_gap_point": NaN,
+            "delta_gap_ci": [
+              NaN,
+              NaN
+            ],
+            "delta_gap_p": null
+          }
+        }
+      },
+      "42": {
+        "splits": {
+          "source_test": {
+            "auc": 0.9979963663570968,
+            "auc_se": 9.974814549198171e-05,
+            "macro_f1": 0.9525240891086327,
+            "ece": 0.07065156298399697,
+            "brier": 0.07045821813359876,
+            "brier_decomposition": {
+              "reliability": 0.017954685953143916,
+              "resolution": 0.11417133102765155,
+              "uncertainty": 0.16683313439458267,
+              "brier_binned": 0.07061648932007503,
+              "grouping_loss": -0.00015827118647629423
+            },
+            "axis_gaps": {
+              "attack_family": {
+                "gap_auc": NaN,
+                "gap_ece": 0.9995661080781267,
+                "subgroup_auc": {},
+                "subgroup_ece": {
+                  "benign": 0.002805155346950044,
+                  "ddos": 0.9998905128420189,
+                  "dns": 0.06190904178642271,
+                  "ldap": 0.003212879108389631,
+                  "mssql": 0.0003244047638921218,
+                  "netbios": 0.004481870629291384,
+                  "ntp": 0.005280520443010365,
+                  "snmp": 0.0007962992076358388,
+                  "syn": 0.6241221119811401,
+                  "tftp": 0.002376607898321971,
+                  "udp": 0.30708186087131695
+                }
+              }
+            }
+          },
+          "target_cicids2017": {
+            "auc": 0.5445133725512732,
+            "auc_se": 0.0024752325641646,
+            "macro_f1": 0.24843066920748794,
+            "ece": 0.662213195276042,
+            "brier": 0.6598369505079832,
+            "brier_decomposition": {
+              "reliability": 0.47740971143545896,
+              "resolution": 0.0033002164277870115,
+              "uncertainty": 0.18610320411323206,
+              "brier_binned": 0.6602126991209041,
+              "grouping_loss": -0.00037574861292077877
+            },
+            "axis_gaps": {
+              "attack_family": {
+                "gap_auc": NaN,
+                "gap_ece": 0.9211051416115119,
+                "subgroup_auc": {},
+                "subgroup_ece": {
+                  "benign": 0.07868813892379148,
+                  "ddos": 0.6336027114650573,
+                  "goldeneye": 0.9950158138628653,
+                  "hulk": 0.9997932805353034,
+                  "slowhttp": 0.9261206571830226,
+                  "slowloris": 0.8309850987233993
+                }
+              }
+            }
+          }
+        },
+        "deltas": {
+          "target_cicids2017": {
+            "delta_auc": 0.4534829938058236,
+            "delta_auc_p": 0.0,
+            "delta_gap_auc": NaN,
+            "delta_gap_point": NaN,
+            "delta_gap_ci": [
+              NaN,
+              NaN
+            ],
+            "delta_gap_p": null
+          }
+        }
+      },
+      "123": {
+        "splits": {
+          "source_test": {
+            "auc": 0.9965646835409063,
+            "auc_se": 0.00011997701506398552,
+            "macro_f1": 0.952714093054619,
+            "ece": 0.07168591199364542,
+            "brier": 0.0708982837921346,
+            "brier_decomposition": {
+              "reliability": 0.017725280633518473,
+              "resolution": 0.11362786506034023,
+              "uncertainty": 0.16683313439458267,
+              "brier_binned": 0.07093054996776091,
+              "grouping_loss": -3.22661756262943e-05
+            },
+            "axis_gaps": {
+              "attack_family": {
+                "gap_auc": NaN,
+                "gap_ece": 0.9994431668584683,
+                "subgroup_auc": {},
+                "subgroup_ece": {
+                  "benign": 0.0024148883748971346,
+                  "ddos": 0.9997720178417888,
+                  "dns": 0.06214509188728681,
+                  "ldap": 0.0032920310647460913,
+                  "mssql": 0.0003288509833205029,
+                  "netbios": 0.004884410445131608,
+                  "ntp": 0.010292853489386135,
+                  "snmp": 0.0008991797805198955,
+                  "syn": 0.6332408938833588,
+                  "tftp": 0.0021791421346547685,
+                  "udp": 0.3081781755092694
+                }
+              }
+            }
+          },
+          "target_cicids2017": {
+            "auc": 0.5602745213386098,
+            "auc_se": 0.0025067733830362654,
+            "macro_f1": 0.2219915832575068,
+            "ece": 0.6717682615571209,
+            "brier": 0.6699654035489725,
+            "brier_decomposition": {
+              "reliability": 0.4866005255864881,
+              "resolution": 0.002750814198833456,
+              "uncertainty": 0.18610320411323206,
+              "brier_binned": 0.6699529155008868,
+              "grouping_loss": 1.2488048085734782e-05
+            },
+            "axis_gaps": {
+              "attack_family": {
+                "gap_auc": NaN,
+                "gap_ece": 0.9192045093862996,
+                "subgroup_auc": {},
+                "subgroup_ece": {
+                  "benign": 0.08060962510978072,
+                  "ddos": 0.6335692619020508,
+                  "goldeneye": 0.9993311077915872,
+                  "hulk": 0.9998141344960804,
+                  "slowhttp": 0.9302990905087132,
+                  "slowloris": 0.9426984960565115
+                }
+              }
+            }
+          }
+        },
+        "deltas": {
+          "target_cicids2017": {
+            "delta_auc": 0.43629016220229655,
+            "delta_auc_p": 0.0,
+            "delta_gap_auc": NaN,
+            "delta_gap_point": NaN,
+            "delta_gap_ci": [
+              NaN,
+              NaN
+            ],
+            "delta_gap_p": null
+          }
+        }
+      }
+    },
+    "xgboost": {
+      "7": {
+        "splits": {
+          "source_test": {
+            "auc": 0.9975713344830361,
+            "auc_se": 9.802299357649276e-05,
+            "macro_f1": 0.9528445690121453,
+            "ece": 0.07105204536715826,
+            "brier": 0.06708632622950332,
+            "brier_decomposition": {
+              "reliability": 0.016962579155720022,
+              "resolution": 0.11452088279268785,
+              "uncertainty": 0.16683313439458267,
+              "brier_binned": 0.06927483075761484,
+              "grouping_loss": -0.0021885045281115206
+            },
+            "axis_gaps": {
+              "attack_family": {
+                "gap_auc": NaN,
+                "gap_ece": 0.9933590678359929,
+                "subgroup_auc": {},
+                "subgroup_ece": {
+                  "benign": 0.0026855672839777526,
+                  "ddos": 0.9938324777630281,
+                  "dns": 0.05855183112590829,
+                  "ldap": 0.003305046051274153,
+                  "mssql": 0.00047340992703512796,
+                  "netbios": 0.008906271289387757,
+                  "ntp": 0.013493422340837839,
+                  "snmp": 0.0011067694742205637,
+                  "syn": 0.6258785386913147,
+                  "tftp": 0.002265382110953193,
+                  "udp": 0.3024998125004962
+                }
+              }
+            }
+          },
+          "target_cicids2017": {
+            "auc": 0.6935070600502473,
+            "auc_se": 0.0024022445511798613,
+            "macro_f1": 0.2486548754618378,
+            "ece": 0.6478160932000208,
+            "brier": 0.6461075049832407,
+            "brier_decomposition": {
+              "reliability": 0.4699677920240391,
+              "resolution": 0.009341541598531337,
+              "uncertainty": 0.18610320411323206,
+              "brier_binned": 0.6467294545387399,
+              "grouping_loss": -0.0006219495554989907
+            },
+            "axis_gaps": {
+              "attack_family": {
+                "gap_auc": NaN,
+                "gap_ece": 0.9238919382544907,
+                "subgroup_auc": {},
+                "subgroup_ece": {
+                  "benign": 0.07290248388805612,
+                  "ddos": 0.6290946625661731,
+                  "goldeneye": 0.9879705538278504,
+                  "hulk": 0.9967944221425468,
+                  "slowhttp": 0.9188044181314585,
+                  "slowloris": 0.7906508301336607
+                }
+              }
+            }
+          }
+        },
+        "deltas": {
+          "target_cicids2017": {
+            "delta_auc": 0.30406427443278883,
+            "delta_auc_p": 0.0,
+            "delta_gap_auc": NaN,
+            "delta_gap_point": NaN,
+            "delta_gap_ci": [
+              NaN,
+              NaN
+            ],
+            "delta_gap_p": null
+          }
+        }
+      },
+      "42": {
+        "splits": {
+          "source_test": {
+            "auc": 0.9980234757488731,
+            "auc_se": 8.552476399809007e-05,
+            "macro_f1": 0.9529248145650708,
+            "ece": 0.06922322826445752,
+            "brier": 0.06546045840790488,
+            "brier_decomposition": {
+              "reliability": 0.016420015282620777,
+              "resolution": 0.1145134515984326,
+              "uncertainty": 0.16683313439458267,
+              "brier_binned": 0.06873969807877084,
+              "grouping_loss": -0.0032792396708659494
+            },
+            "axis_gaps": {
+              "attack_family": {
+                "gap_auc": NaN,
+                "gap_ece": 0.9892607208659282,
+                "subgroup_auc": {},
+                "subgroup_ece": {
+                  "benign": 0.002778636121855243,
+                  "ddos": 0.989743899469556,
+                  "dns": 0.05949239285409444,
+                  "ldap": 0.002803943600237236,
+                  "mssql": 0.00048317860362778416,
+                  "netbios": 0.00844970636340766,
+                  "ntp": 0.010664553608974534,
+                  "snmp": 0.0010731633065575758,
+                  "syn": 0.6116480222889213,
+                  "tftp": 0.002156530206304121,
+                  "udp": 0.29702997882051513
+                }
+              }
+            }
+          },
+          "target_cicids2017": {
+            "auc": 0.6838160441879175,
+            "auc_se": 0.002395388435005982,
+            "macro_f1": 0.24922821015238444,
+            "ece": 0.6458270086726247,
+            "brier": 0.6460288215584624,
+            "brier_decomposition": {
+              "reliability": 0.46775506927112726,
+              "resolution": 0.007269279942249244,
+              "uncertainty": 0.18610320411323206,
+              "brier_binned": 0.6465889934421101,
+              "grouping_loss": -0.0005601718836476532
+            },
+            "axis_gaps": {
+              "attack_family": {
+                "gap_auc": NaN,
+                "gap_ece": 0.9286027662138524,
+                "subgroup_auc": {},
+                "subgroup_ece": {
+                  "benign": 0.06837986295800373,
+                  "ddos": 0.6292935651600877,
+                  "goldeneye": 0.9912138867871546,
+                  "hulk": 0.9969826291718561,
+                  "slowhttp": 0.9196215401472948,
+                  "slowloris": 0.8184190559645877
+                }
+              }
+            }
+          }
+        },
+        "deltas": {
+          "target_cicids2017": {
+            "delta_auc": 0.31420743156095554,
+            "delta_auc_p": 0.0,
+            "delta_gap_auc": NaN,
+            "delta_gap_point": NaN,
+            "delta_gap_ci": [
+              NaN,
+              NaN
+            ],
+            "delta_gap_p": null
+          }
+        }
+      },
+      "123": {
+        "splits": {
+          "source_test": {
+            "auc": 0.997552164751986,
+            "auc_se": 9.474040354381797e-05,
+            "macro_f1": 0.952902088323511,
+            "ece": 0.06951411410295884,
+            "brier": 0.06691425450629974,
+            "brier_decomposition": {
+              "reliability": 0.01687791365004774,
+              "resolution": 0.11444888903133907,
+              "uncertainty": 0.16683313439458267,
+              "brier_binned": 0.06926215901329133,
+              "grouping_loss": -0.0023479045069915994
+            },
+            "axis_gaps": {
+              "attack_family": {
+                "gap_auc": NaN,
+                "gap_ece": 0.9921602468141584,
+                "subgroup_auc": {},
+                "subgroup_ece": {
+                  "benign": 0.0024824588545617416,
+                  "ddos": 0.992640568590586,
+                  "dns": 0.058824330566600254,
+                  "ldap": 0.0030067711104290883,
+                  "mssql": 0.0004803217764276941,
+                  "netbios": 0.008648881341414831,
+                  "ntp": 0.00667364360087449,
+                  "snmp": 0.001045374267017818,
+                  "syn": 0.6240617298574832,
+                  "tftp": 0.002220664250725491,
+                  "udp": 0.3017229538190425
+                }
+              }
+            }
+          },
+          "target_cicids2017": {
+            "auc": 0.6667789450565693,
+            "auc_se": 0.0024598589375854608,
+            "macro_f1": 0.2492886722821647,
+            "ece": 0.6461766416976437,
+            "brier": 0.647428773928024,
+            "brier_decomposition": {
+              "reliability": 0.469074960934424,
+              "resolution": 0.007617250286315639,
+              "uncertainty": 0.18610320411323206,
+              "brier_binned": 0.6475609147613404,
+              "grouping_loss": -0.00013214083331636317
+            },
+            "axis_gaps": {
+              "attack_family": {
+                "gap_auc": NaN,
+                "gap_ece": 0.9301242425540328,
+                "subgroup_auc": {},
+                "subgroup_ece": {
+                  "benign": 0.06815336609436462,
+                  "ddos": 0.6316156518328787,
+                  "goldeneye": 0.9914316489275007,
+                  "hulk": 0.9982776086483974,
+                  "slowhttp": 0.9212771963880585,
+                  "slowloris": 0.7802811588209605
+                }
+              }
+            }
+          }
+        },
+        "deltas": {
+          "target_cicids2017": {
+            "delta_auc": 0.33077321969541673,
+            "delta_auc_p": 0.0,
+            "delta_gap_auc": NaN,
+            "delta_gap_point": NaN,
+            "delta_gap_ci": [
+              NaN,
+              NaN
+            ],
+            "delta_gap_p": null
+          }
+        }
+      }
+    }
+  },
+  "bh_significant": {
+    "delta_auc": {
+      "lightgbm/s7/target_cicids2017": true,
+      "lightgbm/s42/target_cicids2017": true,
+      "lightgbm/s123/target_cicids2017": true,
+      "xgboost/s7/target_cicids2017": true,
+      "xgboost/s42/target_cicids2017": true,
+      "xgboost/s123/target_cicids2017": true
+    }
+  }
+}

@@ -1,0 +1,5 @@
+domain,label_shift_probe,covariate_probe,concept_probe
+clinical,True,False,False
+nlp,True,True,True
+lending,True,True,False
+security,True,False,False

@@ -1,0 +1,1709 @@
+{
+  "h2a_all_cells": {
+    "delta_auc": {
+      "label": "$\\Delta$AUC (discrimination)",
+      "n": 447,
+      "n_clusters": 51,
+      "point_estimate": {
+        "slope": -0.0003176884650905412,
+        "r2": 1.6870412244962552e-07,
+        "pearson_r": -0.0004107360739145048,
+        "spearman_rho": -0.00957886013526005
+      },
+      "cluster_bootstrap_ci95": {
+        "slope": [
+          -0.1911639520679718,
+          0.23074109846591406
+        ],
+        "r2": [
+          1.4597519782755253e-05,
+          0.09161488800151468
+        ],
+        "pearson_r": [
+          -0.28901598909850856,
+          0.25852679252851385
+        ],
+        "spearman_rho": [
+          -0.24914561127583046,
+          0.21752221880137917
+        ]
+      },
+      "clustered_se_ols_crosscheck": {
+        "slope_se": 0.10959709691399275,
+        "slope_t": -0.0028986941628565267,
+        "slope_p": 0.9976871799198518,
+        "slope_ci95": [
+          -0.2151240512266623,
+          0.21448867429648108
+        ],
+        "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+      }
+    },
+    "delta_macro_f1": {
+      "label": "$\\Delta$macro-F1 (operating point)",
+      "n": 447,
+      "n_clusters": 51,
+      "point_estimate": {
+        "slope": 0.024905527011473458,
+        "r2": 0.0004454306466693536,
+        "pearson_r": 0.021105227946397576,
+        "spearman_rho": 0.07832485629157011
+      },
+      "cluster_bootstrap_ci95": {
+        "slope": [
+          -0.2511606090731307,
+          0.307834275851119
+        ],
+        "r2": [
+          7.74243499817584e-06,
+          0.07457650105633111
+        ],
+        "pearson_r": [
+          -0.20227066383296805,
+          0.2639430480334982
+        ],
+        "spearman_rho": [
+          -0.15789579480227375,
+          0.29466546612022065
+        ]
+      },
+      "clustered_se_ols_crosscheck": {
+        "slope_se": 0.1407518810019053,
+        "slope_t": 0.17694631740755293,
+        "slope_p": 0.8595505565680357,
+        "slope_ci95": [
+          -0.2509630905085286,
+          0.3007741445314751
+        ],
+        "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+      }
+    },
+    "delta_f1_positive": {
+      "label": "$\\Delta$F1$_{positive}$ (diagnostic)",
+      "n": 447,
+      "n_clusters": 51,
+      "point_estimate": {
+        "slope": 0.38126740485302707,
+        "r2": 0.06412418437912781,
+        "pearson_r": 0.2532275347965297,
+        "spearman_rho": 0.25511014063433773
+      },
+      "cluster_bootstrap_ci95": {
+        "slope": [
+          0.09859677767420089,
+          0.6723282362651496
+        ],
+        "r2": [
+          0.004816285363300249,
+          0.1776842049032446
+        ],
+        "pearson_r": [
+          0.06920701524727259,
+          0.4215260198635134
+        ],
+        "spearman_rho": [
+          0.0392670647176145,
+          0.4463604171766225
+        ]
+      },
+      "clustered_se_ols_crosscheck": {
+        "slope_se": 0.14610456962463614,
+        "slope_t": 2.6095515412868875,
+        "slope_p": 0.009066098752556586,
+        "slope_ci95": [
+          0.09490771041201501,
+          0.6676270992940383
+        ],
+        "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+      }
+    },
+    "delta_ece": {
+      "label": "$\\Delta$ECE (calibration)",
+      "n": 447,
+      "n_clusters": 51,
+      "point_estimate": {
+        "slope": -0.03997133176271134,
+        "r2": 0.0020480166629843755,
+        "pearson_r": -0.04525501809727331,
+        "spearman_rho": -0.04662583462674502
+      },
+      "cluster_bootstrap_ci95": {
+        "slope": [
+          -0.2864176358258953,
+          0.1931359791355129
+        ],
+        "r2": [
+          2.565963515461789e-05,
+          0.10588729699083317
+        ],
+        "pearson_r": [
+          -0.3219099943339091,
+          0.2170541672314695
+        ],
+        "spearman_rho": [
+          -0.3043679117752018,
+          0.1996279975176843
+        ]
+      },
+      "clustered_se_ols_crosscheck": {
+        "slope_se": 0.1185311837101358,
+        "slope_t": -0.3372220753355498,
+        "slope_p": 0.7359494972178787,
+        "slope_ci95": [
+          -0.2722881828794782,
+          0.19234551935405558
+        ],
+        "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+      }
+    },
+    "delta_brier": {
+      "label": "$\\Delta$Brier (calibration, diagnostic)",
+      "n": 447,
+      "n_clusters": 51,
+      "point_estimate": {
+        "slope": 0.11563318182049948,
+        "r2": 0.026891176833858443,
+        "pearson_r": 0.16398529456588012,
+        "spearman_rho": 0.17803843367485134
+      },
+      "cluster_bootstrap_ci95": {
+        "slope": [
+          -0.024186192360338022,
+          0.25960631656189853
+        ],
+        "r2": [
+          0.00015501222923383908,
+          0.11841831067114836
+        ],
+        "pearson_r": [
+          -0.03725283068424797,
+          0.34411961680364705
+        ],
+        "spearman_rho": [
+          -0.050360455412332694,
+          0.3768220660373841
+        ]
+      },
+      "clustered_se_ols_crosscheck": {
+        "slope_se": 0.07078010780628774,
+        "slope_t": 1.6336960398105955,
+        "slope_p": 0.1023226903258317,
+        "slope_ci95": [
+          -0.023093280301687016,
+          0.2543596439426856
+        ],
+        "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+      }
+    },
+    "delta_gap_auc": {
+      "label": "$\\Delta$G (subgroup gap, race_black)",
+      "n": 447,
+      "n_clusters": 51,
+      "point_estimate": {
+        "slope": 0.12642974916410502,
+        "r2": 0.04617526864338517,
+        "pearson_r": 0.21488431455875331,
+        "spearman_rho": 0.22346459312349248
+      },
+      "cluster_bootstrap_ci95": {
+        "slope": [
+          0.024977666733509696,
+          0.23308275707883516
+        ],
+        "r2": [
+          0.002307078566525195,
+          0.13254745628566414
+        ],
+        "pearson_r": [
+          0.047219351100715345,
+          0.36407065703360153
+        ],
+        "spearman_rho": [
+          0.037873471257910116,
+          0.39720543220866017
+        ]
+      },
+      "clustered_se_ols_crosscheck": {
+        "slope_se": 0.05231444794145991,
+        "slope_t": 2.416727197534041,
+        "slope_p": 0.015660749379014658,
+        "slope_ci95": [
+          0.023895315327747885,
+          0.22896418300046187
+        ],
+        "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+      }
+    }
+  },
+  "h2b_by_year": {
+    "2022": {
+      "delta_auc": {
+        "n": 150,
+        "n_clusters": 50,
+        "point_estimate": {
+          "slope": 0.043958632673626825,
+          "r2": 0.004594761807908743,
+          "pearson_r": 0.06778467236705364,
+          "spearman_rho": 0.07754833548157695
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.13794308376916364,
+            0.31827240454301536
+          ],
+          "r2": [
+            5.338039600029654e-05,
+            0.16193127707733454
+          ],
+          "pearson_r": [
+            -0.24481107655668993,
+            0.39776225287092737
+          ],
+          "spearman_rho": [
+            -0.22732445935601772,
+            0.3577220135644131
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.11135119512922409,
+          "slope_t": 0.3947746822349977,
+          "slope_p": 0.6930091811457835,
+          "slope_ci95": [
+            -0.17428569941514446,
+            0.2622029647623978
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_macro_f1": {
+        "n": 150,
+        "n_clusters": 50,
+        "point_estimate": {
+          "slope": 0.2655872186859082,
+          "r2": 0.07189244047168186,
+          "pearson_r": 0.2681276570435838,
+          "spearman_rho": 0.2743357482554781
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            0.03718761927592366,
+            0.5559769590707777
+          ],
+          "r2": [
+            0.003220793076327422,
+            0.22409681155689282
+          ],
+          "pearson_r": [
+            0.04144571791391786,
+            0.47338619789776143
+          ],
+          "spearman_rho": [
+            0.011421526206654181,
+            0.4939557699674438
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.13136903936867586,
+          "slope_t": 2.021688062592588,
+          "slope_p": 0.04320858788380039,
+          "slope_ci95": [
+            0.008108632839678553,
+            0.5230658045321369
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_f1_positive": {
+        "n": 150,
+        "n_clusters": 50,
+        "point_estimate": {
+          "slope": 0.4150977656763752,
+          "r2": 0.10312722862929657,
+          "pearson_r": 0.32113428441898956,
+          "spearman_rho": 0.368818169696431
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            0.16542148120927874,
+            0.7036469974436877
+          ],
+          "r2": [
+            0.01701120373600367,
+            0.24972769971889905
+          ],
+          "pearson_r": [
+            0.13042700447674024,
+            0.4997275480542952
+          ],
+          "spearman_rho": [
+            0.1020753670633216,
+            0.5781783910651073
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.1355494464922908,
+          "slope_t": 3.0623346418458666,
+          "slope_p": 0.0021961777862392062,
+          "slope_ci95": [
+            0.14942573242714569,
+            0.6807697989256041
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_ece": {
+        "n": 150,
+        "n_clusters": 50,
+        "point_estimate": {
+          "slope": 0.19209226382828715,
+          "r2": 0.05998460334244948,
+          "pearson_r": 0.24491754396622867,
+          "spearman_rho": 0.24064891772967692
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.02591825595838642,
+            0.431949051343021
+          ],
+          "r2": [
+            0.00024566325587487844,
+            0.24626931556033896
+          ],
+          "pearson_r": [
+            -0.03461701894036963,
+            0.4962552579657861
+          ],
+          "spearman_rho": [
+            -0.059660995850968186,
+            0.511146893180511
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.12124567485330033,
+          "slope_t": 1.5843226082968052,
+          "slope_p": 0.11312032349523829,
+          "slope_ci95": [
+            -0.0455448921654352,
+            0.4297294198220095
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_brier": {
+        "n": 150,
+        "n_clusters": 50,
+        "point_estimate": {
+          "slope": 0.18169302889121755,
+          "r2": 0.07733360688864366,
+          "pearson_r": 0.2780892067100834,
+          "spearman_rho": 0.30781634739321745
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            0.05836559298318091,
+            0.3393953562235451
+          ],
+          "r2": [
+            0.00930228203035575,
+            0.21245963177658883
+          ],
+          "pearson_r": [
+            0.0964461587714492,
+            0.4609326048705786
+          ],
+          "spearman_rho": [
+            0.050734809946779154,
+            0.5036871516649754
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.07079634836791748,
+          "slope_t": 2.5664180862406534,
+          "slope_p": 0.010275489196422617,
+          "slope_ci95": [
+            0.04293473585314808,
+            0.3204513219292867
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_gap_auc": {
+        "n": 150,
+        "n_clusters": 50,
+        "point_estimate": {
+          "slope": 0.1401290441657262,
+          "r2": 0.07838711700168333,
+          "pearson_r": 0.279976993700703,
+          "spearman_rho": 0.22186763856171385
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            0.016619357740882287,
+            0.29931322829134777
+          ],
+          "r2": [
+            0.00177238210266156,
+            0.2878223537528458
+          ],
+          "pearson_r": [
+            0.03463295402653288,
+            0.5364884623746345
+          ],
+          "spearman_rho": [
+            -0.022955138135968167,
+            0.45471140309125957
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.06812599796769693,
+          "slope_t": 2.056909966033386,
+          "slope_p": 0.039694887159077034,
+          "slope_ci95": [
+            0.006604541738191083,
+            0.2736535465932609
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      }
+    },
+    "2023": {
+      "delta_auc": {
+        "n": 150,
+        "n_clusters": 50,
+        "point_estimate": {
+          "slope": 0.1387541439383515,
+          "r2": 0.01554561167883206,
+          "pearson_r": 0.12468204232700128,
+          "spearman_rho": 0.12178852393439708
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.17868458520971126,
+            0.5279492614174285
+          ],
+          "r2": [
+            7.964301888331028e-05,
+            0.15424251446102089
+          ],
+          "pearson_r": [
+            -0.18985068615295492,
+            0.39273497667750534
+          ],
+          "spearman_rho": [
+            -0.18659761538492534,
+            0.386935630155505
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.180974602119312,
+          "slope_t": 0.7667050642104711,
+          "slope_p": 0.4432568919951897,
+          "slope_ci95": [
+            -0.21594955833196605,
+            0.49345784620866917
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_macro_f1": {
+        "n": 150,
+        "n_clusters": 50,
+        "point_estimate": {
+          "slope": 0.11580269974727721,
+          "r2": 0.004899809252161158,
+          "pearson_r": 0.06999863750217675,
+          "spearman_rho": 0.16262945019778657
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.4132900869882945,
+            0.5920521015450735
+          ],
+          "r2": [
+            9.627013972046687e-06,
+            0.128790838647776
+          ],
+          "pearson_r": [
+            -0.22443361831381284,
+            0.3573241966112661
+          ],
+          "spearman_rho": [
+            -0.14766354773567614,
+            0.44093129698489497
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.24483129981401758,
+          "slope_t": 0.47298976820057176,
+          "slope_p": 0.6362204789791305,
+          "slope_ci95": [
+            -0.36405783017632565,
+            0.5956632296708794
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_f1_positive": {
+        "n": 150,
+        "n_clusters": 50,
+        "point_estimate": {
+          "slope": 0.5070484315923715,
+          "r2": 0.056845068918026764,
+          "pearson_r": 0.23842203949724688,
+          "spearman_rho": 0.25184585981599183
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.06058362379987683,
+            1.0274285569226689
+          ],
+          "r2": [
+            0.0006816005485596494,
+            0.222689586444971
+          ],
+          "pearson_r": [
+            -0.027291551769692782,
+            0.4718999750084347
+          ],
+          "spearman_rho": [
+            -0.041336633278785256,
+            0.4916395241304309
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.26421007309413375,
+          "slope_t": 1.9191109016184937,
+          "slope_p": 0.0549703000965426,
+          "slope_ci95": [
+            -0.010793796024826219,
+            1.0248906592095683
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_ece": {
+        "n": 150,
+        "n_clusters": 50,
+        "point_estimate": {
+          "slope": -0.04940274577496082,
+          "r2": 0.0017043461972470197,
+          "pearson_r": -0.04128372799599307,
+          "spearman_rho": -0.008691941864082849
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.4284785366876944,
+            0.2886308943362331
+          ],
+          "r2": [
+            1.948304080797714e-05,
+            0.13654862998594464
+          ],
+          "pearson_r": [
+            -0.34342000692406643,
+            0.258679118607794
+          ],
+          "spearman_rho": [
+            -0.33416507106265236,
+            0.2834870668064261
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.18180056124634095,
+          "slope_t": -0.27174143707961285,
+          "slope_p": 0.7858208375512917,
+          "slope_ci95": [
+            -0.4057252981869574,
+            0.3069198066370357
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_brier": {
+        "n": 150,
+        "n_clusters": 50,
+        "point_estimate": {
+          "slope": 0.15952679740771616,
+          "r2": 0.026757647094347248,
+          "pearson_r": 0.1635776485169881,
+          "spearman_rho": 0.19314458420374242
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.0934904907313114,
+            0.3919990997000927
+          ],
+          "r2": [
+            5.671990130945438e-05,
+            0.1700180444499466
+          ],
+          "pearson_r": [
+            -0.1070505579509774,
+            0.4123319087940041
+          ],
+          "spearman_rho": [
+            -0.10078107574172668,
+            0.44052922452186555
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.12211132331532258,
+          "slope_t": 1.3064046238838745,
+          "slope_p": 0.1914149942454202,
+          "slope_ci95": [
+            -0.07980699839484226,
+            0.39886059321027467
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_gap_auc": {
+        "n": 150,
+        "n_clusters": 50,
+        "point_estimate": {
+          "slope": 0.1732115705845818,
+          "r2": 0.03548576156300853,
+          "pearson_r": 0.18837664813614366,
+          "spearman_rho": 0.21308502600115561
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            0.0016875211928974402,
+            0.3716916143288766
+          ],
+          "r2": [
+            0.00025888434329341683,
+            0.1346424464165485
+          ],
+          "pearson_r": [
+            0.002818888965602675,
+            0.3669344196426577
+          ],
+          "spearman_rho": [
+            -0.055142321998329746,
+            0.426831393405899
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.09809104218207905,
+          "slope_t": 1.7658245516757978,
+          "slope_p": 0.07742528815588445,
+          "slope_ci95": [
+            -0.01904333929829266,
+            0.36546648046745567
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      }
+    },
+    "2024": {
+      "delta_auc": {
+        "n": 147,
+        "n_clusters": 49,
+        "point_estimate": {
+          "slope": 0.04252997520687576,
+          "r2": 0.0018798126895153144,
+          "pearson_r": 0.04335680672645661,
+          "spearman_rho": 0.036218634065992183
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.28280033191642234,
+            0.4696025033006216
+          ],
+          "r2": [
+            5.483719256587639e-05,
+            0.17108230811456618
+          ],
+          "pearson_r": [
+            -0.32388743234715195,
+            0.3957265029893015
+          ],
+          "spearman_rho": [
+            -0.27971841554685994,
+            0.35261928246720015
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.1930930737743529,
+          "slope_t": 0.22025634775784886,
+          "slope_p": 0.8256715147743576,
+          "slope_ci95": [
+            -0.3359254950549915,
+            0.42098544546874317
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_macro_f1": {
+        "n": 147,
+        "n_clusters": 49,
+        "point_estimate": {
+          "slope": -0.14453969009352788,
+          "r2": 0.00848111738492241,
+          "pearson_r": -0.09209298227836034,
+          "spearman_rho": 0.04515334456626042
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.7339829027036365,
+            0.3886519911931867
+          ],
+          "r2": [
+            2.6603559825366663e-05,
+            0.16973771687053063
+          ],
+          "pearson_r": [
+            -0.4119545564212479,
+            0.26370626238775935
+          ],
+          "spearman_rho": [
+            -0.30548361622976505,
+            0.35339609687324386
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.28017083785230207,
+          "slope_t": -0.515898411132015,
+          "slope_p": 0.6059253638602351,
+          "slope_ci95": [
+            -0.6936644418024515,
+            0.4045850616153953
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_f1_positive": {
+        "n": 147,
+        "n_clusters": 49,
+        "point_estimate": {
+          "slope": 0.2815670487021259,
+          "r2": 0.020187097867840675,
+          "pearson_r": 0.14208130724286244,
+          "spearman_rho": 0.1548557223703995
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.26281074730098275,
+            0.8091832308638397
+          ],
+          "r2": [
+            0.00017639878340741934,
+            0.15181825213073305
+          ],
+          "pearson_r": [
+            -0.14124067180851813,
+            0.38963700210816155
+          ],
+          "spearman_rho": [
+            -0.1492232294690112,
+            0.40390036156833575
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.2547321807338392,
+          "slope_t": 1.1053454176499404,
+          "slope_p": 0.2690099450667267,
+          "slope_ci95": [
+            -0.21769885123954708,
+            0.7808329486437982
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_ece": {
+        "n": 147,
+        "n_clusters": 49,
+        "point_estimate": {
+          "slope": -0.26373438405265187,
+          "r2": 0.0516623386554107,
+          "pearson_r": -0.2272935077282465,
+          "spearman_rho": -0.14005394827312637
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.7258171803055934,
+            0.15866425036845383
+          ],
+          "r2": [
+            9.607278407136321e-05,
+            0.31922268677470783
+          ],
+          "pearson_r": [
+            -0.5649979528805225,
+            0.13964941506261916
+          ],
+          "spearman_rho": [
+            -0.47536037441500745,
+            0.1696421520376797
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.20699346528625617,
+          "slope_t": -1.2741193722609911,
+          "slope_p": 0.20262111387157133,
+          "slope_ci95": [
+            -0.6694341210488559,
+            0.141965352943552
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_brier": {
+        "n": 147,
+        "n_clusters": 49,
+        "point_estimate": {
+          "slope": 0.02637757270158683,
+          "r2": 0.0008812599865417603,
+          "pearson_r": 0.029686023420822442,
+          "spearman_rho": 0.07815699400826602
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.24062813288852217,
+            0.272225865410318
+          ],
+          "r2": [
+            2.8560911106298447e-05,
+            0.09823498988579611
+          ],
+          "pearson_r": [
+            -0.26399905449241395,
+            0.28626716054716955
+          ],
+          "spearman_rho": [
+            -0.22601387246344512,
+            0.33804433532783407
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.11821691220788479,
+          "slope_t": 0.22312858802471258,
+          "slope_p": 0.8234354291425893,
+          "slope_ci95": [
+            -0.20532331758940087,
+            0.25807846299257436
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_gap_auc": {
+        "n": 147,
+        "n_clusters": 49,
+        "point_estimate": {
+          "slope": 0.18128867207287133,
+          "r2": 0.07182571064744636,
+          "pearson_r": 0.2680031914874266,
+          "spearman_rho": 0.2789027495485421
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            0.01678834263617444,
+            0.3870683289192558
+          ],
+          "r2": [
+            0.0014269970220232159,
+            0.20876645601201374
+          ],
+          "pearson_r": [
+            0.027495691861835557,
+            0.456879784349623
+          ],
+          "spearman_rho": [
+            0.04036154281017109,
+            0.5012404721529223
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.08893200191260722,
+          "slope_t": 2.0385088401700675,
+          "slope_p": 0.04149907158298523,
+          "slope_ci95": [
+            0.006985151251113847,
+            0.3555921928946285
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      }
+    }
+  },
+  "h2b_by_seed": {
+    "7": {
+      "delta_auc": {
+        "n": 149,
+        "n_clusters": 51,
+        "point_estimate": {
+          "slope": -0.00011053251530799555,
+          "r2": 2.0492902153002035e-08,
+          "pearson_r": -0.00014315342196206254,
+          "spearman_rho": -0.011645202249229096
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.19910265857247947,
+            0.2161764075355664
+          ],
+          "r2": [
+            1.9478177191908924e-05,
+            0.09658731680807486
+          ],
+          "pearson_r": [
+            -0.30539158413218137,
+            0.23777457821986445
+          ],
+          "spearman_rho": [
+            -0.25534640184799096,
+            0.1962633415896937
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.11073824543724375,
+          "slope_t": -0.0009981421944306814,
+          "slope_p": 0.9992035978858188,
+          "slope_ci95": [
+            -0.21715350528346286,
+            0.2169324402528466
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_macro_f1": {
+        "n": 149,
+        "n_clusters": 51,
+        "point_estimate": {
+          "slope": 0.016293872440275515,
+          "r2": 0.00019215028093744202,
+          "pearson_r": 0.013861828196062187,
+          "spearman_rho": 0.0714928351169962
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.2762089180972189,
+            0.29908379997159823
+          ],
+          "r2": [
+            1.1647280118959324e-05,
+            0.07279574668157103
+          ],
+          "pearson_r": [
+            -0.2174761128518244,
+            0.23940899218964357
+          ],
+          "spearman_rho": [
+            -0.17283404049819723,
+            0.30440578370070126
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.14018618396756496,
+          "slope_t": 0.11623023024897597,
+          "slope_p": 0.9074700788393648,
+          "slope_ci95": [
+            -0.2584659992662583,
+            0.291053744146809
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_f1_positive": {
+        "n": 149,
+        "n_clusters": 51,
+        "point_estimate": {
+          "slope": 0.36720179151374743,
+          "r2": 0.06119171305514193,
+          "pearson_r": 0.24736958797544575,
+          "spearman_rho": 0.25432251042989296
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            0.09255442247401785,
+            0.6333081267368312
+          ],
+          "r2": [
+            0.0040675961795981035,
+            0.1609701224593435
+          ],
+          "pearson_r": [
+            0.06355272765174447,
+            0.40120470664464264
+          ],
+          "spearman_rho": [
+            0.04416188234757689,
+            0.43611413291753093
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.14327121945186513,
+          "slope_t": 2.5629836398308625,
+          "slope_p": 0.010377693844838842,
+          "slope_ci95": [
+            0.08639536136695752,
+            0.6480082216605376
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_ece": {
+        "n": 149,
+        "n_clusters": 51,
+        "point_estimate": {
+          "slope": -0.0469393210774255,
+          "r2": 0.0028812464492420364,
+          "pearson_r": -0.05367724330889451,
+          "spearman_rho": -0.057591148195175045
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.2978006415274393,
+            0.1916292753348171
+          ],
+          "r2": [
+            2.035905322365362e-05,
+            0.11433400270106585
+          ],
+          "pearson_r": [
+            -0.33810622554330727,
+            0.20916064002354878
+          ],
+          "spearman_rho": [
+            -0.31853581763903366,
+            0.18310614575186274
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.1177424908501966,
+          "slope_t": -0.39866084655153333,
+          "slope_p": 0.6901431211605564,
+          "slope_ci95": [
+            -0.27771036259384774,
+            0.18383172043899665
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_brier": {
+        "n": 149,
+        "n_clusters": 51,
+        "point_estimate": {
+          "slope": 0.10998714332042178,
+          "r2": 0.024730805199503436,
+          "pearson_r": 0.15726031031224447,
+          "spearman_rho": 0.16988209686196262
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.02664422923908221,
+            0.24285245613969153
+          ],
+          "r2": [
+            9.892912173529168e-05,
+            0.11241464798685444
+          ],
+          "pearson_r": [
+            -0.04376685671679062,
+            0.33528143794303533
+          ],
+          "spearman_rho": [
+            -0.057535783563328925,
+            0.3715461942676776
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.07063743646103747,
+          "slope_t": 1.5570658963691166,
+          "slope_p": 0.11945484096266627,
+          "slope_ci95": [
+            -0.028459688103448066,
+            0.24843397474429174
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_gap_auc": {
+        "n": 149,
+        "n_clusters": 51,
+        "point_estimate": {
+          "slope": 0.12984802451036126,
+          "r2": 0.048376615674831536,
+          "pearson_r": 0.21994684738552603,
+          "spearman_rho": 0.2294902956647923
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            0.03717698407237021,
+            0.2334626611960106
+          ],
+          "r2": [
+            0.003651988338424178,
+            0.13526785393911975
+          ],
+          "pearson_r": [
+            0.0604314595253544,
+            0.36778142186228757
+          ],
+          "spearman_rho": [
+            0.050766461709275755,
+            0.4041414869415872
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.053346583773485876,
+          "slope_t": 2.4340457312450794,
+          "slope_p": 0.014931108525256184,
+          "slope_ci95": [
+            0.025290641616080148,
+            0.2344054074046425
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      }
+    },
+    "42": {
+      "delta_auc": {
+        "n": 149,
+        "n_clusters": 51,
+        "point_estimate": {
+          "slope": 0.004493588263045254,
+          "r2": 3.450545059557886e-05,
+          "pearson_r": 0.005874134029429753,
+          "spearman_rho": -0.0033665880645746414
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.1859627181447877,
+            0.2122848238968356
+          ],
+          "r2": [
+            2.667954694792197e-05,
+            0.09349114898099384
+          ],
+          "pearson_r": [
+            -0.28765242680429715,
+            0.23594680411330504
+          ],
+          "spearman_rho": [
+            -0.24796974707869196,
+            0.19931505936193153
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.10821013829227381,
+          "slope_t": 0.04152649958646266,
+          "slope_p": 0.966876167455698,
+          "slope_ci95": [
+            -0.20759438555191007,
+            0.21658156207800044
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_macro_f1": {
+        "n": 149,
+        "n_clusters": 51,
+        "point_estimate": {
+          "slope": 0.019738814760299372,
+          "r2": 0.00028299948485421833,
+          "pearson_r": 0.016822588530124492,
+          "spearman_rho": 0.07514601850172321
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.2722378268901692,
+            0.3092068490324716
+          ],
+          "r2": [
+            2.7299916140086093e-05,
+            0.07641071849481781
+          ],
+          "pearson_r": [
+            -0.21383422186466935,
+            0.2466098151297651
+          ],
+          "spearman_rho": [
+            -0.17419535228234448,
+            0.30036307380028165
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.14134604374366921,
+          "slope_t": 0.13964886626820291,
+          "slope_p": 0.888937429185723,
+          "slope_ci95": [
+            -0.2572943403345155,
+            0.2967719698551139
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_f1_positive": {
+        "n": 149,
+        "n_clusters": 51,
+        "point_estimate": {
+          "slope": 0.3797937637378451,
+          "r2": 0.06462268333698284,
+          "pearson_r": 0.25420991982411467,
+          "spearman_rho": 0.2548412842372574
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            0.09146757562694222,
+            0.6572663995834062
+          ],
+          "r2": [
+            0.004566434229319959,
+            0.16927931606040675
+          ],
+          "pearson_r": [
+            0.06742164645398843,
+            0.4114312447360306
+          ],
+          "spearman_rho": [
+            0.04179215977680031,
+            0.43946755000812665
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.14737294023074196,
+          "slope_t": 2.5770929394718007,
+          "slope_p": 0.009963515717015647,
+          "slope_ci95": [
+            0.09094810858981656,
+            0.6686394188858731
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_ece": {
+        "n": 149,
+        "n_clusters": 51,
+        "point_estimate": {
+          "slope": -0.04274863388812554,
+          "r2": 0.002357429673856659,
+          "pearson_r": -0.048553369335778085,
+          "spearman_rho": -0.04406312352621078
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.2929076456320068,
+            0.19515294172907688
+          ],
+          "r2": [
+            2.4213180611942774e-05,
+            0.11038877288129574
+          ],
+          "pearson_r": [
+            -0.3322480592038434,
+            0.2150477105054376
+          ],
+          "spearman_rho": [
+            -0.3071706508263684,
+            0.1973361412438635
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.11839662215998394,
+          "slope_t": -0.3610629518666609,
+          "slope_p": 0.7180523878312608,
+          "slope_ci95": [
+            -0.2748017492128909,
+            0.18930448143663986
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_brier": {
+        "n": 149,
+        "n_clusters": 51,
+        "point_estimate": {
+          "slope": 0.11833555384443864,
+          "r2": 0.028447241292335,
+          "pearson_r": 0.16866309997250473,
+          "spearman_rho": 0.18475965898784694
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.019527072075776027,
+            0.2522553041390332
+          ],
+          "r2": [
+            0.00021296135792074345,
+            0.11729293451625357
+          ],
+          "pearson_r": [
+            -0.03164219329027557,
+            0.34248050307484085
+          ],
+          "spearman_rho": [
+            -0.04014908801730232,
+            0.3834125463411372
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.07076400446038264,
+          "slope_t": 1.6722563222194273,
+          "slope_p": 0.09447378851256144,
+          "slope_ci95": [
+            -0.020359346299743078,
+            0.25703045398862034
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_gap_auc": {
+        "n": 149,
+        "n_clusters": 51,
+        "point_estimate": {
+          "slope": 0.127378057877317,
+          "r2": 0.04625198527004937,
+          "pearson_r": 0.21506274728564584,
+          "spearman_rho": 0.2305205877017958
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            0.03309792299616663,
+            0.23131381833255016
+          ],
+          "r2": [
+            0.0032219368312398026,
+            0.12882003573987474
+          ],
+          "pearson_r": [
+            0.05675893620614238,
+            0.3588896310723395
+          ],
+          "spearman_rho": [
+            0.05021033647592562,
+            0.39590846018669346
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.05196981865639691,
+          "slope_t": 2.4510006224860685,
+          "slope_p": 0.014245970693721967,
+          "slope_ci95": [
+            0.0255190850277012,
+            0.22923703072693266
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      }
+    },
+    "123": {
+      "delta_auc": {
+        "n": 149,
+        "n_clusters": 51,
+        "point_estimate": {
+          "slope": -0.005162912609899248,
+          "r2": 4.375378869292401e-05,
+          "pearson_r": -0.0066146646697267525,
+          "spearman_rho": -0.017181208053691274
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.20412312810893957,
+            0.21258676799589032
+          ],
+          "r2": [
+            1.595433557893822e-05,
+            0.09988545056791105
+          ],
+          "pearson_r": [
+            -0.3042683349763541,
+            0.23022266521983717
+          ],
+          "spearman_rho": [
+            -0.25971051105496656,
+            0.19401817276382585
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.1107955772954184,
+          "slope_t": -0.04659854423731461,
+          "slope_p": 0.9628331923020577,
+          "slope_ci95": [
+            -0.22231825375524317,
+            0.21199242853544442
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_macro_f1": {
+        "n": 149,
+        "n_clusters": 51,
+        "point_estimate": {
+          "slope": 0.03800837961854639,
+          "r2": 0.0010208262987453365,
+          "pearson_r": 0.031950372435157005,
+          "spearman_rho": 0.08412479593687648
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.2521181316194047,
+            0.32827663101571064
+          ],
+          "r2": [
+            8.781293524012805e-06,
+            0.08286087545694465
+          ],
+          "pearson_r": [
+            -0.20322785232484397,
+            0.2554347374747898
+          ],
+          "spearman_rho": [
+            -0.16036955662172067,
+            0.311164164301464
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.14204107559369186,
+          "slope_t": 0.267587241645994,
+          "slope_p": 0.7890170526370609,
+          "slope_ci95": [
+            -0.2403870128704212,
+            0.31640377210751347
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_f1_positive": {
+        "n": 149,
+        "n_clusters": 51,
+        "point_estimate": {
+          "slope": 0.3962287355285116,
+          "r2": 0.06636051111701313,
+          "pearson_r": 0.25760533984568923,
+          "spearman_rho": 0.262071467440595
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            0.10956853498811116,
+            0.6733012829507679
+          ],
+          "r2": [
+            0.006125073025874517,
+            0.1702127939539422
+          ],
+          "pearson_r": [
+            0.07825605503039536,
+            0.41256845172383966
+          ],
+          "spearman_rho": [
+            0.05304547772030556,
+            0.44182502452500183
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.14902216347164582,
+          "slope_t": 2.658857758456185,
+          "slope_p": 0.007840605755993824,
+          "slope_ci95": [
+            0.10415066222584518,
+            0.6883068088311777
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_ece": {
+        "n": 149,
+        "n_clusters": 51,
+        "point_estimate": {
+          "slope": -0.030531754890563593,
+          "r2": 0.0011633162122512974,
+          "pearson_r": -0.034107421659387585,
+          "spearman_rho": -0.03958643206965355
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.28750751135341807,
+            0.21056117907207364
+          ],
+          "r2": [
+            3.34573689190626e-05,
+            0.10638612776773337
+          ],
+          "pearson_r": [
+            -0.32016060223061876,
+            0.2269864203981574
+          ],
+          "spearman_rho": [
+            -0.31131068025564895,
+            0.20132302983224123
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.12053884300543574,
+          "slope_t": -0.253293910322224,
+          "slope_p": 0.8000411015696488,
+          "slope_ci95": [
+            -0.26678354591934533,
+            0.20572003613821838
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_brier": {
+        "n": 149,
+        "n_clusters": 51,
+        "point_estimate": {
+          "slope": 0.11839480440913777,
+          "r2": 0.027453664184330262,
+          "pearson_r": 0.16569147287754485,
+          "spearman_rho": 0.18026845637583894
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            -0.021473335325761518,
+            0.253181773996252
+          ],
+          "r2": [
+            0.00016897134797592698,
+            0.11628565713144094
+          ],
+          "pearson_r": [
+            -0.0330315040735816,
+            0.3410061153891781
+          ],
+          "spearman_rho": [
+            -0.04733349207362773,
+            0.38197345949599654
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.0715718655413488,
+          "slope_t": 1.6542087245265145,
+          "slope_p": 0.09808511079806762,
+          "slope_ci95": [
+            -0.021883474358249208,
+            0.25867308317652477
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      },
+      "delta_gap_auc": {
+        "n": 149,
+        "n_clusters": 51,
+        "point_estimate": {
+          "slope": 0.11853581086011573,
+          "r2": 0.04333771359227112,
+          "pearson_r": 0.20817712072240588,
+          "spearman_rho": 0.2079666243424633
+        },
+        "cluster_bootstrap_ci95": {
+          "slope": [
+            0.02362121909665544,
+            0.22422975833705253
+          ],
+          "r2": [
+            0.0016055487859390652,
+            0.13377398762388296
+          ],
+          "pearson_r": [
+            0.03760154488293649,
+            0.3657471026234627
+          ],
+          "spearman_rho": [
+            0.03289880205064513,
+            0.3918759997071578
+          ]
+        },
+        "clustered_se_ols_crosscheck": {
+          "slope_se": 0.05253891032271891,
+          "slope_t": 2.256152823345826,
+          "slope_p": 0.02406106191940848,
+          "slope_ci95": [
+            0.015561438840606706,
+            0.22151018287962415
+          ],
+          "method": "statsmodels OLS, cov_type='cluster', groups=state_fips -- standard Huber-White cluster-robust sandwich SE, reported alongside the pre-registered cluster bootstrap as a cross-check, NOT as a second primary method"
+        }
+      }
+    }
+  },
+  "h2b_subgroup_endpoint_note": "lending's PRIMARY_AXIS is race_black only (config.py) -- delta_gap_auc IS that endpoint already reported in h2a_all_cells; no SECOND primary-subgroup endpoint exists in lending_shiftpoints.csv (no income_quartile gap column was computed for T3.1), so no further subgroup-endpoint stratification is possible without a new T3.1 run. Stated as a scope limit, not silently skipped.",
+  "h2b_stability_summary": {
+    "delta_auc": {
+      "sign_consistent_across_years": true,
+      "sign_consistent_across_seeds": false,
+      "r2_all_below_0.10_across_years": true,
+      "r2_all_below_0.10_across_seeds": true,
+      "r2_range_years": [
+        0.0018798126895153144,
+        0.01554561167883206
+      ],
+      "r2_range_seeds": [
+        2.0492902153002035e-08,
+        4.375378869292401e-05
+      ]
+    },
+    "delta_macro_f1": {
+      "sign_consistent_across_years": false,
+      "sign_consistent_across_seeds": true,
+      "r2_all_below_0.10_across_years": true,
+      "r2_all_below_0.10_across_seeds": true,
+      "r2_range_years": [
+        0.004899809252161158,
+        0.07189244047168186
+      ],
+      "r2_range_seeds": [
+        0.00019215028093744202,
+        0.0010208262987453365
+      ]
+    },
+    "delta_f1_positive": {
+      "sign_consistent_across_years": true,
+      "sign_consistent_across_seeds": true,
+      "r2_all_below_0.10_across_years": false,
+      "r2_all_below_0.10_across_seeds": true,
+      "r2_range_years": [
+        0.020187097867840675,
+        0.10312722862929657
+      ],
+      "r2_range_seeds": [
+        0.06119171305514193,
+        0.06636051111701313
+      ]
+    },
+    "delta_ece": {
+      "sign_consistent_across_years": false,
+      "sign_consistent_across_seeds": true,
+      "r2_all_below_0.10_across_years": true,
+      "r2_all_below_0.10_across_seeds": true,
+      "r2_range_years": [
+        0.0017043461972470197,
+        0.05998460334244948
+      ],
+      "r2_range_seeds": [
+        0.0011633162122512974,
+        0.0028812464492420364
+      ]
+    },
+    "delta_brier": {
+      "sign_consistent_across_years": true,
+      "sign_consistent_across_seeds": true,
+      "r2_all_below_0.10_across_years": true,
+      "r2_all_below_0.10_across_seeds": true,
+      "r2_range_years": [
+        0.0008812599865417603,
+        0.07733360688864366
+      ],
+      "r2_range_seeds": [
+        0.024730805199503436,
+        0.028447241292335
+      ]
+    },
+    "delta_gap_auc": {
+      "sign_consistent_across_years": true,
+      "sign_consistent_across_seeds": true,
+      "r2_all_below_0.10_across_years": true,
+      "r2_all_below_0.10_across_seeds": true,
+      "r2_range_years": [
+        0.03548576156300853,
+        0.07838711700168333
+      ],
+      "r2_range_seeds": [
+        0.04333771359227112,
+        0.048376615674831536
+      ]
+    }
+  }
+}

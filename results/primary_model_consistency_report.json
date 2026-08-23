@@ -1,0 +1,108 @@
+{
+  "clinical": {
+    "selected_primary_models": [
+      "fedavg"
+    ],
+    "audit_models_present": [
+      "fedavg",
+      "xgb"
+    ],
+    "audit_consistent": true,
+    "diagnosis_concept_or_proxy_model": "fedavg",
+    "diagnosis_consistent": true,
+    "remediation_models": [
+      "fedavg"
+    ],
+    "remediation_consistent": true,
+    "table_primary_models": [
+      "fedavg"
+    ],
+    "table_consistent": true,
+    "manuscript_models_found": [
+      "fedavg"
+    ],
+    "manuscript_consistent": true,
+    "explicit_note": "diagnosis_concept_or_proxy_model refers to the KS-distance SCORE proxy (no AUC_dc probe exists for this domain); it is fixed to the source-only primary model (fedavg) as of the 2026-08-22 consistency fix."
+  },
+  "nlp": {
+    "selected_primary_models": [
+      "roberta"
+    ],
+    "audit_models_present": [
+      "bert",
+      "mentalbert",
+      "mentalroberta",
+      "roberta"
+    ],
+    "audit_consistent": true,
+    "diagnosis_concept_or_proxy_model": "roberta",
+    "diagnosis_consistent": true,
+    "remediation_models": [
+      "roberta"
+    ],
+    "remediation_consistent": true,
+    "table_primary_models": [
+      "roberta"
+    ],
+    "table_consistent": true,
+    "manuscript_models_found": [
+      "roberta"
+    ],
+    "manuscript_consistent": true,
+    "explicit_note": "diagnosis_concept_or_proxy_model is the concept-shift reweighting probe's model, fixed to the source-only primary model (roberta) as of the 2026-08-22 consistency fix; the covariate probe (AUC_dc) is model-independent (built from raw text features, not any model's predictions), so it has no model identity to check."
+  },
+  "lending": {
+    "selected_primary_models": [
+      "lightgbm_geo",
+      "lightgbm_temporal"
+    ],
+    "audit_models_present": [
+      "lightgbm_geo",
+      "lightgbm_temporal"
+    ],
+    "audit_consistent": true,
+    "diagnosis_concept_or_proxy_model": null,
+    "diagnosis_consistent": null,
+    "remediation_models": [
+      "lightgbm_geo",
+      "lightgbm_temporal"
+    ],
+    "remediation_consistent": true,
+    "table_primary_models": [
+      "lightgbm_geo",
+      "lightgbm_temporal"
+    ],
+    "table_consistent": true,
+    "manuscript_models_found": [
+      "lightgbm_geo",
+      "lightgbm_temporal"
+    ],
+    "manuscript_consistent": true,
+    "explicit_note": "lending has TWO primary models (temporal + geographic are different experiments, not competing models -- audit/primary_model.py docstring). No concept probe exists for lending (feature<->prediction alignment unavailable), so diagnosis_concept_or_proxy_model is None by design, not a gap."
+  },
+  "security": {
+    "selected_primary_models": [
+      "xgboost"
+    ],
+    "audit_models_present": [
+      "lightgbm",
+      "xgboost"
+    ],
+    "audit_consistent": true,
+    "diagnosis_concept_or_proxy_model": null,
+    "diagnosis_consistent": null,
+    "remediation_models": [
+      "xgboost"
+    ],
+    "remediation_consistent": true,
+    "table_primary_models": [
+      "xgboost"
+    ],
+    "table_consistent": true,
+    "manuscript_models_found": [
+      "xgboost"
+    ],
+    "manuscript_consistent": true,
+    "explicit_note": "security has no covariate or concept probe (probe_availability: both False); diagnosis_concept_or_proxy_model is None by design. manuscript_models_found should show only xgboost -- lightgbm's numbers are reported in the supplementary T2_master.csv sensitivity table, not the main-text prose/tables."
+  }
+}

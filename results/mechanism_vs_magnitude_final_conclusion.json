@@ -1,0 +1,5 @@
+{
+  "conclusion": "The current cross-dataset controlled evidence is insufficient to establish that mechanism outperforms magnitude as an out-of-sample predictor.",
+  "all_models_negative_r2_out": true,
+  "note": "This sentence is retained verbatim from round-6 unless a future, better-powered experiment changes it (item 4). Do not soften it while all_models_negative_r2_out is true."
+}

@@ -10,18 +10,25 @@
   },
   "covariate": {
     "target_brfss": {
-      "p_hat_ks": 0.18233310936854996,
-      "note": "target-side features unrecoverable; score-distribution proxy"
+      "p_hat_ks": 0.13092382568116395,
+      "note": "target-side features unrecoverable; score-distribution proxy, not AUC_dc"
     }
   },
   "concept": {
     "note": "target features unrecoverable; not computed"
   },
+  "probe_availability": {
+    "label_shift": true,
+    "covariate": false,
+    "concept": false
+  },
+  "p_hat_ks_model": "fedavg",
   "summary": {
     "target_brfss": {
       "max_delta_pi": 0.05262551606038232,
       "auc_dc": null,
-      "diagnosis": "mixed"
+      "diagnosis": "inconclusive",
+      "note": "no probe produced adjudicable evidence above threshold for this target"
     }
   }
 }

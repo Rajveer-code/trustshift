@@ -1,0 +1,25 @@
+dataset,mechanism,direction,severity,valid,reaches_target_severity,informative,why
+lending,covariate,n/a,low,True,True,True,"resample calibrated to target auc_dc; feasible at all 3 levels, real trend measurable (informative, not ceiling-limited)"
+lending,covariate,n/a,medium,True,True,True,"resample calibrated to target auc_dc; feasible at all 3 levels, real trend measurable (informative, not ceiling-limited)"
+lending,covariate,n/a,high,True,True,True,"resample calibrated to target auc_dc; feasible at all 3 levels, real trend measurable (informative, not ceiling-limited)"
+lending,prior,up,low,False,True,False,replacement_frac=3.08 > 0.5 cap (heavy duplication)
+lending,prior,down,low,True,True,True,feasible
+lending,prior,up,medium,False,False,False,replacement_frac=14.81 > 0.5 cap (heavy duplication)
+lending,prior,down,medium,False,True,False,replacement_frac=0.75 > 0.5 cap (heavy duplication)
+lending,prior,up,high,False,False,False,replacement_frac=14.81 > 0.5 cap (heavy duplication)
+lending,prior,down,high,False,True,False,replacement_frac=0.86 > 0.5 cap (heavy duplication)
+lending,concept_natural,n/a,discovered,True,n/a (not dialed),True,"natural subpopulation, real residual-shift magnitude; single point only, not on a comparable severity scale to dialed mechanisms"
+lending,novel_class,n/a,n/a,N/A,N/A,N/A,binary approve/deny has no natural unseen-class analogue (PHASE3_DESIGN.md)
+security,covariate,n/a,low,True,True,False,feasible but NON-INFORMATIVE: source AUC=1.0 pre-resampling (ceiling effect) -- resample can't push a perfect classifier lower
+security,covariate,n/a,medium,True,True,False,feasible but NON-INFORMATIVE: source AUC=1.0 pre-resampling (ceiling effect) -- resample can't push a perfect classifier lower
+security,covariate,n/a,high,True,True,False,feasible but NON-INFORMATIVE: source AUC=1.0 pre-resampling (ceiling effect) -- resample can't push a perfect classifier lower
+security,prior,up,low,False,True,False,"replacement_frac=10.95 (up: needs >10x duplication of the rare positive class) or reaches_target=True (down: natural pi=1.03% already ~at the 0 floor, cannot move -10/-25/-40pp -- see security_prior_infeasibility_audit.json)"
+security,prior,down,low,False,False,False,"replacement_frac=0.03 (up: needs >10x duplication of the rare positive class) or reaches_target=False (down: natural pi=1.03% already ~at the 0 floor, cannot move -10/-25/-40pp -- see security_prior_infeasibility_audit.json)"
+security,prior,up,medium,False,True,False,"replacement_frac=32.93 (up: needs >10x duplication of the rare positive class) or reaches_target=True (down: natural pi=1.03% already ~at the 0 floor, cannot move -10/-25/-40pp -- see security_prior_infeasibility_audit.json)"
+security,prior,down,medium,False,False,False,"replacement_frac=0.03 (up: needs >10x duplication of the rare positive class) or reaches_target=False (down: natural pi=1.03% already ~at the 0 floor, cannot move -10/-25/-40pp -- see security_prior_infeasibility_audit.json)"
+security,prior,up,high,False,True,False,"replacement_frac=66.09 (up: needs >10x duplication of the rare positive class) or reaches_target=True (down: natural pi=1.03% already ~at the 0 floor, cannot move -10/-25/-40pp -- see security_prior_infeasibility_audit.json)"
+security,prior,down,high,False,False,False,"replacement_frac=0.03 (up: needs >10x duplication of the rare positive class) or reaches_target=False (down: natural pi=1.03% already ~at the 0 floor, cannot move -10/-25/-40pp -- see security_prior_infeasibility_audit.json)"
+security,concept,n/a,n/a,identified_not_executed,n/a,n/a,candidate natural concept-shift construction exists; not built out further in this pass given Phase 3 time/compute scope -- flagged for a follow-up run.
+security,novel_mechanism,n/a,low,True,True,in-source only,"S1 severity ladder reused directly (T3.2); informative in-source (non-monotonic, see phase3_S1_severity_quantification.json), NON-informative cross-dataset (target recall flat/saturated)"
+security,novel_mechanism,n/a,medium,True,True,in-source only,"S1 severity ladder reused directly (T3.2); informative in-source (non-monotonic, see phase3_S1_severity_quantification.json), NON-informative cross-dataset (target recall flat/saturated)"
+security,novel_mechanism,n/a,high,True,True,in-source only,"S1 severity ladder reused directly (T3.2); informative in-source (non-monotonic, see phase3_S1_severity_quantification.json), NON-informative cross-dataset (target recall flat/saturated)"

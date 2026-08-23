@@ -1,0 +1,8 @@
+domain,control,status,achieved_auc_dc,delta_auc,delta_ece,delta_macro_f1,delta_brier,expected_direction,expected_direction_held,tolerance,direction_used,achieved_delta_pi,reason,negative_control_target_recall_mean,mechanism_holdout_target_recall_mean
+lending,NC1_large_covariate_PYX_preserved,OK,0.8969288900000001,0.015492992435776287,-0.0738581121769363,-0.02057088245786931,0.012669396529395666,little discrimination/calibration degradation even at High severity,False,0.02,,,,,
+lending,NC2_small_prior_PYX_altered,OK,,-0.003118084296052981,-0.1223849773532969,-0.09123871179423382,,operating-point performance (macro-F1) moves measurably even at Low severity,True,0.02,low_down,-0.0999981039624187,,,
+security,NC1_large_covariate_PYX_preserved,OK,0.89675888625,0.0,-5.788699684343105e-05,0.0,-1.3797164655215965e-07,little discrimination/calibration degradation even at High severity,True,0.02,,,,,
+security,NC2_small_prior_PYX_altered,INFEASIBLE,,,,,,,,,,,no feasible low-severity direction (see phase3_T33_*.json 'low_up'/'low_down'),,
+security,S1_own_negative_control_low,OK,,,,,,negative control degrades LESS than the matched mechanism-holdout condition,True,,,,,0.1457604667838005,0.14577688741468114
+security,S1_own_negative_control_medium,OK,,,,,,negative control degrades LESS than the matched mechanism-holdout condition,True,,,,,0.14604509105239824,0.1455469985823522
+security,S1_own_negative_control_high,OK,,,,,,negative control degrades LESS than the matched mechanism-holdout condition,True,,,,,0.146373503670011,0.14631329469011534

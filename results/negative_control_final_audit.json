@@ -1,0 +1,22 @@
+{
+  "source_audit": "results/negative_control_audit.json (item L, full quantitative audit, unchanged)",
+  "cov_high_severity_deltas": {
+    "delta_auc": 0.015492992435776287,
+    "delta_macro_f1": -0.02057088245786931,
+    "delta_f1_positive": 0.05265520361600695,
+    "delta_ece": -0.0738581121769363,
+    "delta_brier": 0.012669396529395666
+  },
+  "verdict_components": {
+    "discrimination_robust": true,
+    "brier_robust": true,
+    "ece_moved": true,
+    "macro_f1_moved": true,
+    "ece_movement_explained_by_construction": true,
+    "row_level_invariant_holds": true,
+    "marginal_prevalence_shifted_as_side_effect": true
+  },
+  "classification": "INFORMATIVE_CONTROL",
+  "classification_reason": "Not a 'clean' control (its own primary calibration/operating-point outcomes DO move measurably -- ECE delta=-0.0739, macro-F1 delta=-0.0206, both exceed the 0.02 tolerance), so 'clean control / expected_direction_held' cannot be claimed unconditionally. But the movement is FULLY EXPLAINED and QUANTIFIED (propensity-outcome point-biserial r=0.190, p<0.001; class-level F1 decomposition shows the same offsetting-classes pattern as the real T3.1 finding; calibration mass-shift decomposition attributes >=0.016 of the 0.073 ECE improvement to a concentration artifact), not unexplained or swept under 'control passed'. Discrimination (AUC) and Brier -- the two axes the covariate construction is SUPPOSED to leave untouched by design (P(Y|X) preserved) -- ARE robust (both move <0.02). This is the honest middle category: INFORMATIVE, not CLEAN, not IMPERFECT/BROKEN.",
+  "explicit_rejection_of_naive_pass_fail": "This audit does NOT report 'control passed' merely because negative_controls_report.json's `expected_direction_held` flag looks favorable on some rows and unfavorable on others (it is FALSE for this exact row). A negative control whose own outcome moves for a well-understood, quantified, construction-linked reason is reported as such -- 'passed' would hide the ECE/macro-F1 movement; 'failed' would hide that the movement is not evidence of the model actually degrading in an unexplained/concerning way. INFORMATIVE_CONTROL is the label that keeps both facts visible."
+}

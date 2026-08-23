@@ -1,0 +1,49 @@
+{
+  "domain": "lending",
+  "model": "lightgbm_temporal",
+  "targets": {
+    "target_2022": {
+      "ece_L0": 0.2463243404316485,
+      "auc_L0": 0.8054189074600951,
+      "gap_L0": 0.02137020004211798,
+      "ece_temperature": 0.24896081410458148,
+      "auc_temperature": 0.8054189074600951,
+      "gap_temperature": 0.02137020004211798,
+      "ece_platt": 0.006285261920526576,
+      "auc_platt": 0.8054189074600951,
+      "gap_platt": 0.02137020004211798,
+      "ece_isotonic": 0.005949202115688556,
+      "auc_isotonic": 0.8049135834467805,
+      "gap_isotonic": 0.02118290928648814
+    },
+    "target_2023": {
+      "ece_L0": 0.24010314204415126,
+      "auc_L0": 0.8211865997631754,
+      "gap_L0": 0.018017319435248202,
+      "ece_temperature": 0.24532039766536495,
+      "auc_temperature": 0.8211865997631754,
+      "gap_temperature": 0.018017319435248202,
+      "ece_platt": 0.00837531620431857,
+      "auc_platt": 0.8211865997631754,
+      "gap_platt": 0.018017319435248202,
+      "ece_isotonic": 0.0023656269872679137,
+      "auc_isotonic": 0.8207779515353111,
+      "gap_isotonic": 0.017973532303988016
+    },
+    "target_2024": {
+      "ece_L0": 0.24124174827463912,
+      "auc_L0": 0.8189966320366129,
+      "gap_L0": 0.014592897988683795,
+      "ece_temperature": 0.2460620159214983,
+      "auc_temperature": 0.8189966320366129,
+      "gap_temperature": 0.014592897988683795,
+      "ece_platt": 0.007206331559497115,
+      "auc_platt": 0.8189966320366129,
+      "gap_platt": 0.014592897988683795,
+      "ece_isotonic": 0.00607264128910227,
+      "auc_isotonic": 0.8187176560869863,
+      "gap_isotonic": 0.014691710105021571
+    }
+  },
+  "reading": "L1 expectation: ece_isotonic << ece_L0 while auc_* ~ auc_L0 and gap_* ~ gap_L0"
+}

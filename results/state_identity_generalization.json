@@ -1,0 +1,135 @@
+{
+  "per_axis": {
+    "delta_auc": {
+      "label": "$\\Delta$AUC (discrimination)",
+      "scheme_a_leave_entire_state_out": {
+        "description": "held-out state's rows predicted with ZERO information about that state from training (mathematically the only honest option for a one-hot/fixed-effect state encoding facing an unseen level)",
+        "M0_magnitude_r2_out": -0.07852481781532616,
+        "M0_rmse_out": 0.04229889851815008,
+        "M1_state_identity_r2_out": -0.0334669961849714,
+        "M1_rmse_out": 0.041405906086673404,
+        "M2_both_r2_out": -0.07852481781532616,
+        "M2_rmse_out": 0.04229889851815008
+      },
+      "scheme_b_within_state_10fold": {
+        "description": "random 10-fold over rows; held-out rows' states are present elsewhere in that fold's training data (tests whether a state's OTHER year/seed rows predict its held-out rows)",
+        "M0_magnitude_r2_out": -0.010658354953710258,
+        "M0_rmse_out": 0.04094644218094544,
+        "M1_state_identity_r2_out": 0.7735294786030533,
+        "M1_rmse_out": 0.019382947826169065,
+        "M2_both_r2_out": 0.7994280451409219,
+        "M2_rmse_out": 0.018241018778951523
+      }
+    },
+    "delta_macro_f1": {
+      "label": "$\\Delta$macro-F1 (operating point)",
+      "scheme_a_leave_entire_state_out": {
+        "description": "held-out state's rows predicted with ZERO information about that state from training (mathematically the only honest option for a one-hot/fixed-effect state encoding facing an unseen level)",
+        "M0_magnitude_r2_out": -0.06554316505843083,
+        "M0_rmse_out": 0.06414555995873887,
+        "M1_state_identity_r2_out": -0.034565757264245045,
+        "M1_rmse_out": 0.06320626486408987,
+        "M2_both_r2_out": -0.06554316505843083,
+        "M2_rmse_out": 0.06414555995873887
+      },
+      "scheme_b_within_state_10fold": {
+        "description": "random 10-fold over rows; held-out rows' states are present elsewhere in that fold's training data (tests whether a state's OTHER year/seed rows predict its held-out rows)",
+        "M0_magnitude_r2_out": -0.011264571561247605,
+        "M0_rmse_out": 0.06249042424770578,
+        "M1_state_identity_r2_out": 0.8127771986233292,
+        "M1_rmse_out": 0.02688812054209967,
+        "M2_both_r2_out": 0.8159216744006749,
+        "M2_rmse_out": 0.026661366471283303
+      }
+    },
+    "delta_f1_positive": {
+      "label": "$\\Delta$F1$_{positive}$ (diagnostic)",
+      "scheme_a_leave_entire_state_out": {
+        "description": "held-out state's rows predicted with ZERO information about that state from training (mathematically the only honest option for a one-hot/fixed-effect state encoding facing an unseen level)",
+        "M0_magnitude_r2_out": 0.010924600260795558,
+        "M0_rmse_out": 0.07885129663594279,
+        "M1_state_identity_r2_out": -0.03447051717448568,
+        "M1_rmse_out": 0.08064049741674287,
+        "M2_both_r2_out": 0.010924600260795558,
+        "M2_rmse_out": 0.07885129663594279
+      },
+      "scheme_b_within_state_10fold": {
+        "description": "random 10-fold over rows; held-out rows' states are present elsewhere in that fold's training data (tests whether a state's OTHER year/seed rows predict its held-out rows)",
+        "M0_magnitude_r2_out": 0.05512512818289139,
+        "M0_rmse_out": 0.0770692777231649,
+        "M1_state_identity_r2_out": 0.8124538470715851,
+        "M1_rmse_out": 0.03433588290274464,
+        "M2_both_r2_out": 0.8462042695254872,
+        "M2_rmse_out": 0.031093261456782484
+      }
+    },
+    "delta_ece": {
+      "label": "$\\Delta$ECE (calibration)",
+      "scheme_a_leave_entire_state_out": {
+        "description": "held-out state's rows predicted with ZERO information about that state from training (mathematically the only honest option for a one-hot/fixed-effect state encoding facing an unseen level)",
+        "M0_magnitude_r2_out": -0.07288505232546272,
+        "M0_rmse_out": 0.048176346375452886,
+        "M1_state_identity_r2_out": -0.03420147887944269,
+        "M1_rmse_out": 0.047299858394324094,
+        "M2_both_r2_out": -0.07288505232546272,
+        "M2_rmse_out": 0.048176346375452886
+      },
+      "scheme_b_within_state_10fold": {
+        "description": "random 10-fold over rows; held-out rows' states are present elsewhere in that fold's training data (tests whether a state's OTHER year/seed rows predict its held-out rows)",
+        "M0_magnitude_r2_out": -0.009054408358591726,
+        "M0_rmse_out": 0.04672126095261255,
+        "M1_state_identity_r2_out": 0.7964634450360716,
+        "M1_rmse_out": 0.020983526274660515,
+        "M2_both_r2_out": 0.798118492705122,
+        "M2_rmse_out": 0.020898038870399625
+      }
+    },
+    "delta_brier": {
+      "label": "$\\Delta$Brier (calibration, diagnostic)",
+      "scheme_a_leave_entire_state_out": {
+        "description": "held-out state's rows predicted with ZERO information about that state from training (mathematically the only honest option for a one-hot/fixed-effect state encoding facing an unseen level)",
+        "M0_magnitude_r2_out": -0.02911054392400203,
+        "M0_rmse_out": 0.03766898980855463,
+        "M1_state_identity_r2_out": -0.03491620686013874,
+        "M1_rmse_out": 0.03777509400204687,
+        "M2_both_r2_out": -0.02911054392400203,
+        "M2_rmse_out": 0.03766898980855463
+      },
+      "scheme_b_within_state_10fold": {
+        "description": "random 10-fold over rows; held-out rows' states are present elsewhere in that fold's training data (tests whether a state's OTHER year/seed rows predict its held-out rows)",
+        "M0_magnitude_r2_out": 0.017317883068029505,
+        "M0_rmse_out": 0.0368094633678369,
+        "M1_state_identity_r2_out": 0.8391453428958102,
+        "M1_rmse_out": 0.014892574430682537,
+        "M2_both_r2_out": 0.8506475160241832,
+        "M2_rmse_out": 0.01435024066882864
+      }
+    },
+    "delta_gap_auc": {
+      "label": "$\\Delta$G (subgroup gap, race_black)",
+      "scheme_a_leave_entire_state_out": {
+        "description": "held-out state's rows predicted with ZERO information about that state from training (mathematically the only honest option for a one-hot/fixed-effect state encoding facing an unseen level)",
+        "M0_magnitude_r2_out": 0.010642604611742157,
+        "M0_rmse_out": 0.030817439428077537,
+        "M1_state_identity_r2_out": -0.02026626194567216,
+        "M1_rmse_out": 0.03129512652047075,
+        "M2_both_r2_out": 0.010642604611742157,
+        "M2_rmse_out": 0.030817439428077537
+      },
+      "scheme_b_within_state_10fold": {
+        "description": "random 10-fold over rows; held-out rows' states are present elsewhere in that fold's training data (tests whether a state's OTHER year/seed rows predict its held-out rows)",
+        "M0_magnitude_r2_out": 0.03449412007909658,
+        "M0_rmse_out": 0.03044369836438353,
+        "M1_state_identity_r2_out": 0.624839696266061,
+        "M1_rmse_out": 0.018977036295217152,
+        "M2_both_r2_out": 0.6221967336752328,
+        "M2_rmse_out": 0.019043764532662842
+      }
+    }
+  },
+  "verdict": {
+    "does_state_identity_generalize_to_brand_new_states": "NO, by mathematical construction -- a one-hot/fixed-effect encoding has no coefficient for an unseen level, so scheme (a)'s M1 R2_out is at or near 0 for every axis (see table). This is an expected, mechanical fact about fixed-effect encodings, not a discovery that state heterogeneity is fake -- see scheme (b).",
+    "does_state_identity_generalize_within_a_state_across_years_seeds": "See scheme (b) R2_out per axis -- if positive and well above 0, a state's own other observations carry real, learnable, persistent signal about its future cells; if near 0 or negative, the in-sample R2=0.72-0.88 finding was closer to overfitting noise than real generalizable heterogeneity. Reported per-axis below, not asserted in general.",
+    "correct_characterization_regardless_of_outcome": "The in-sample R2=0.72-0.88 finding (round-5) is correctly described as 'substantial population/context heterogeneity within the lending benchmark' -- a real, in-sample, statistically significant finding about THIS data. Whether it also generalizes predictively is a SEPARATE, now-tested claim (this function), and neither should be silently substituted for the other."
+  }
+}

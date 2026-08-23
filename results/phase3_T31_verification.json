@@ -1,0 +1,177 @@
+{
+  "n_states": 54,
+  "n_years": 3,
+  "n_seeds": 3,
+  "n_cells": 149,
+  "n_cells_scored_rows": 447,
+  "n_excluded": 13,
+  "exclusion_reasons": [
+    {
+      "state_fips": 2,
+      "year": 2024,
+      "n_rows": 3383,
+      "reasons": [
+        "black_negative=7<10"
+      ]
+    },
+    {
+      "state_fips": 11,
+      "year": 2022,
+      "n_rows": 0,
+      "reasons": [
+        "total_rows=0<500",
+        "black_rows=0<30",
+        "black_positive=0<10",
+        "black_negative=0<10",
+        "white_rows=0<30",
+        "white_positive=0<10",
+        "white_negative=0<10",
+        "overall_positive=0<10",
+        "overall_negative=0<10"
+      ]
+    },
+    {
+      "state_fips": 11,
+      "year": 2024,
+      "n_rows": 0,
+      "reasons": [
+        "total_rows=0<500",
+        "black_rows=0<30",
+        "black_positive=0<10",
+        "black_negative=0<10",
+        "white_rows=0<30",
+        "white_positive=0<10",
+        "white_negative=0<10",
+        "overall_positive=0<10",
+        "overall_negative=0<10"
+      ]
+    },
+    {
+      "state_fips": 50,
+      "year": 2023,
+      "n_rows": 4945,
+      "reasons": [
+        "black_negative=9<10"
+      ]
+    },
+    {
+      "state_fips": 56,
+      "year": 2022,
+      "n_rows": 2863,
+      "reasons": [
+        "black_rows=19<30",
+        "black_negative=5<10"
+      ]
+    },
+    {
+      "state_fips": 56,
+      "year": 2023,
+      "n_rows": 1761,
+      "reasons": [
+        "black_rows=17<30",
+        "black_negative=5<10"
+      ]
+    },
+    {
+      "state_fips": 56,
+      "year": 2024,
+      "n_rows": 1919,
+      "reasons": [
+        "black_rows=26<30",
+        "black_negative=9<10"
+      ]
+    },
+    {
+      "state_fips": 78,
+      "year": 2022,
+      "n_rows": 0,
+      "reasons": [
+        "total_rows=0<500",
+        "black_rows=0<30",
+        "black_positive=0<10",
+        "black_negative=0<10",
+        "white_rows=0<30",
+        "white_positive=0<10",
+        "white_negative=0<10",
+        "overall_positive=0<10",
+        "overall_negative=0<10"
+      ]
+    },
+    {
+      "state_fips": 78,
+      "year": 2023,
+      "n_rows": 52,
+      "reasons": [
+        "total_rows=52<500",
+        "black_rows=6<30",
+        "black_positive=6<10",
+        "black_negative=0<10",
+        "white_negative=2<10",
+        "overall_negative=2<10"
+      ]
+    },
+    {
+      "state_fips": 78,
+      "year": 2024,
+      "n_rows": 27,
+      "reasons": [
+        "total_rows=27<500",
+        "black_rows=2<30",
+        "black_positive=2<10",
+        "black_negative=0<10",
+        "white_rows=25<30",
+        "white_negative=1<10",
+        "overall_negative=1<10"
+      ]
+    },
+    {
+      "state_fips": 99,
+      "year": 2022,
+      "n_rows": 0,
+      "reasons": [
+        "total_rows=0<500",
+        "black_rows=0<30",
+        "black_positive=0<10",
+        "black_negative=0<10",
+        "white_rows=0<30",
+        "white_positive=0<10",
+        "white_negative=0<10",
+        "overall_positive=0<10",
+        "overall_negative=0<10"
+      ]
+    },
+    {
+      "state_fips": 99,
+      "year": 2023,
+      "n_rows": 35,
+      "reasons": [
+        "total_rows=35<500",
+        "black_rows=7<30",
+        "black_positive=7<10",
+        "black_negative=0<10",
+        "white_rows=28<30",
+        "white_negative=4<10",
+        "overall_negative=4<10"
+      ]
+    },
+    {
+      "state_fips": 99,
+      "year": 2024,
+      "n_rows": 8,
+      "reasons": [
+        "total_rows=8<500",
+        "black_rows=0<30",
+        "black_positive=0<10",
+        "black_negative=0<10",
+        "white_rows=8<30",
+        "white_positive=8<10",
+        "white_negative=0<10",
+        "overall_positive=8<10",
+        "overall_negative=0<10"
+      ]
+    }
+  ],
+  "bootstrap_method": "cluster (block) bootstrap over included states with replacement; every (year x seed) observation for a resampled state is kept together; 2000 resamples; 2.5th/97.5th percentile CI (docs/PHASE3_DESIGN.md T3.1 'Dependence / uncertainty method')",
+  "primary_endpoint": "failure-fingerprint characterization against CONTINUOUS auc_dc (fine quantile-binned mean curve as visualization only; tercile/quantile binning is never the statistical basis) for each of delta_auc, delta_macro_f1, delta_ece, delta_gap_auc",
+  "secondary_endpoint": "within-domain OLS slope + R2 of each axis's delta on continuous auc_dc, point estimate via OLS, uncertainty via the cluster bootstrap above (never a closed-form/IID OLS CI)"
+}
