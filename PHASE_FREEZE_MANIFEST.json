@@ -1,0 +1,32 @@
+{
+  "purpose": "Checksum manifest for the internal Phase 3/4 planning documents in docs/, which are intentionally excluded from git version control by .gitignore's '# internal (not for public repo)' policy. This file is tracked so the reproducibility/audit trail records that these documents existed, in this exact state, at this commit -- without reversing the repo's own decision to keep full planning prose out of the public history.",
+  "generated": "2026-08-23T19:17:42+05:30",
+  "anchor_commit": {
+    "hash": "d31c67d8378cf73f9ad949a9857d6b85f9ae69e3",
+    "short": "d31c67d",
+    "message": "docs: freeze phase3 evidence and phase4 scientific spine",
+    "committed": "2026-08-23T17:23:09+05:30"
+  },
+  "documents": {
+    "docs/PHASE3_FINAL_DECISION.md": {
+      "sha256": "7DAFA06225CDA1EA65518BA8E76A9ED00A97B0CC09D4423804DCD4586E4E2572"
+    },
+    "docs/NOVELTY_POSITION_FINAL.md": {
+      "sha256": "937CB3F9A9DF655BD1FC8E644F7035331C44834803D8CBE45BDF50493732E49F"
+    },
+    "docs/CLAIM_LEDGER.md": {
+      "sha256": "ED9815ED17FB4020A82F6F7FC8B82E170E08AA850D32909CB2A85441F8A853A7"
+    },
+    "docs/PHASE4_SCIENTIFIC_SPINE.md": {
+      "sha256": "4A36ABA0BAE455ACB384B5998A470E58C97F7AA62242C06745866E670C207AE5"
+    },
+    "docs/PHASE4_CITATION_VERIFICATION.md": {
+      "sha256": "2697A28DF2A28C0A635A180B6464FB06DE52218A440DF1F99D57A3627029DC1F"
+    },
+    "docs/PHASE4_MANUSCRIPT_ARCHITECTURE.md": {
+      "sha256": "1AC9213286CB8673F7650253A70CFE4A4F0CFBB0022DD0149A9705D850FD9B6C"
+    }
+  },
+  "policy_statement": "docs/ is intentionally outside git version control per .gitignore's 'internal, not for public repo' policy (a pre-existing repo decision, not something changed by this manifest). The six SHA256 hashes above let anyone with local filesystem access verify their planning documents are byte-identical to the state that existed at the anchor commit above, without those documents themselves ever entering git history. If a hash here does not match a locally recomputed 'Get-FileHash <path> -Algorithm SHA256', the document has been edited since this manifest was generated.",
+  "recompute_command": "Get-FileHash .\\docs\\<filename> -Algorithm SHA256"
+}
