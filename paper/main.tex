@@ -16,7 +16,7 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage[hidelinks]{hyperref}
-\usepackage{natbib}
+\usepackage[numbers]{natbib}
 \bibliographystyle{plainnat}
 \graphicspath{{../results/figures/}}
 
@@ -41,19 +41,19 @@ and operating-point performance, applied to clinical risk prediction (NHANES$\ri
 mental-health text classification (Kaggle$\rightarrow$Reddit/Twitter), mortgage-approval prediction
 (temporal and cross-state shift over 42M U.S.\ loan records), and network-intrusion detection
 (CIC-DDoS2019$\rightarrow$CICIDS2017). A lending model under measured covariate shift
-(domain-classifier AUC up to $0.80$) improves in ranking (AUC) while its macro-averaged
-operating-point performance stays essentially flat (within $0.02$) even as its positive-class F1
-alone falls by up to $0.078$: a single metric does not tell the whole story, and shift magnitude
+(domain-classifier AUC, area under the ROC curve, up to $0.80$) improves in ranking while its macro-averaged
+operating-point performance stays essentially flat (within $0.02$) even as positive-class F1
+falls by up to $0.078$: a single metric does not tell the whole story, and shift magnitude
 alone did not predict which one would move. A mental-health model at comparable domain-classifier
 magnitudes loses up to $0.39$ AUC. Cheap, largely label-free probes -- prevalence change, a domain
 classifier, an importance-reweighting check -- recover a mechanistic diagnosis for some shifts and
-report \emph{inconclusive} for others when evidence is insufficient. A network-intrusion
-detector holds a
+report \emph{inconclusive} for others. A network-intrusion
+detector holds
 near-ceiling in-domain AUC ($0.998$, capture-session-disjoint split) while collapsing to $0.68$ on
-deployment traffic whose attack mechanisms are entirely absent from training. Post-hoc
+traffic whose attack mechanisms are absent from training. Post-hoc
 recalibration cuts calibration error by one to two orders of magnitude in every domain and
-generally leaves discrimination and subgroup reliability unrestored (security's AUC moves only
-$+0.035$, short of recovering its $0.31$ collapse). We contribute a protocol, a four-domain
+leaves discrimination and subgroup reliability unrestored (security's AUC moves only
+$+0.035$, short of its $0.31$ collapse). We contribute a protocol, a four-domain
 benchmark, and a release in which every reported number traces to a committed result file.
 \end{abstract}
 
