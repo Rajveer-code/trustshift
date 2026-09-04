@@ -29,7 +29,7 @@
       "status": "supported_but_limited",
       "evidence_artifacts": ["results/state_identity_generalization.json", "results/context_generalization_final.json"],
       "current_wording": "not in main.tex at all -- entirely new for Phase 4",
-      "phase4_action": "add as a new Results subsection; must include the operational-availability caveat (does not extrapolate to a never-seen population) every time it is stated"
+      "phase4_action": "add as a new Results subsection; must include the operational-availability caveat (does not extrapolate to a never-seen population) every time it is stated -- APPLIED 2026-08-24 (round-11): new paragraph in Section 5.3 (sec:meta), caveat stated in the same sentence block, never separated"
     },
     {
       "claim_id": "H1",
@@ -52,8 +52,8 @@
       "claim": "Shift mechanism provides information beyond scalar shift magnitude about which trustworthiness axis fails.",
       "status": "not_established",
       "evidence_artifacts": ["results/mechanism_vs_magnitude_final.csv", "results/phase3_h2_magnitude_vs_mechanism.json"],
-      "current_wording": "IMPLIED by the current title ('Shift Mechanism Is More Informative Than Shift Magnitude') -- title change required for Phase 4",
-      "phase4_action": "title and any 'mechanism beats/determines/more informative than magnitude' sentence must not survive Phase 4 unless a future formal test overturns this status"
+      "current_wording": "RESOLVED 2026-08-24 (round-12): title changed to 'TrustShift: A Mechanism-Aware Audit of Machine-Learning Deployment Shift'; no remaining sentence anywhere in main.tex asserts mechanism beats/determines/outpredicts magnitude (forbidden-claim sweep re-run, zero live violations)",
+      "phase4_action": "APPLIED -- title changed; Discussion now carries an explicit H1/H2a/H2b/H3 status paragraph naming H2b not_established as its own sentence"
     },
     {
       "claim_id": "H3",
@@ -61,7 +61,7 @@
       "status": "not_established",
       "evidence_artifacts": ["results/phase3_final_hypothesis_gate.json"],
       "current_wording": "main.tex:549 'these cheap diagnostics, applied jointly, predict which trustworthiness axis a deployment will break' -- reads as an H3-level claim",
-      "phase4_action": "rewrite -- 'predict' is too strong given H3 is not_established; soften to 'is associated with' or scope explicitly to 'in the evaluated settings'"
+      "phase4_action": "rewrite -- 'predict' is too strong given H3 is not_established; soften to 'is associated with' or scope explicitly to 'in the evaluated settings' -- APPLIED 2026-08-23 (round-9): main.tex:549-551 reworded to describe the protocol as organizing evidence about which axis 'may require attention', with an explicit sentence stating predictive superiority over a scalar score is unresolved, see CLAIM_LEDGER.md #42"
     },
     {
       "claim_id": "C-clinical-calibration",
@@ -69,7 +69,7 @@
       "status": "supported_but_limited",
       "evidence_artifacts": ["results/clinical_axis_audit.json", "results/audit_clinical.json"],
       "current_wording": "main.tex Table 3/4: 'holds (approx.)' for AUC, 'falls (down 0.131)' for macro-F1 -- BOTH numbers stale (AUC move is real at 7.2 SE, not literally 'holds'; 0.131 is the pre-F1-correction value, corrected value is 0.102)",
-      "phase4_action": "rewrite -- replace 'holds' with a relative framing ('degrades far less than calibration'); correct 0.131 to 0.102"
+      "phase4_action": "rewrite -- replace 'holds' with a relative framing ('degrades far less than calibration'); correct 0.131 to 0.102 -- APPLIED 2026-08-23 (round-9): all 4 sites in main.tex updated (0.102 throughout; 'holds' replaced with the explicit 7.2-SE / 3-4x relative framing), see CLAIM_LEDGER.md #39-#40"
     },
     {
       "claim_id": "C-lending-aggregation",
@@ -77,7 +77,7 @@
       "status": "supported_but_limited",
       "evidence_artifacts": ["results/lending_aggregation_effect_final.json", "results/lending_f1_aggregation_reconciliation.csv"],
       "current_wording": "not in main.tex -- entirely new for Phase 4",
-      "phase4_action": "add as a candidate secondary methodological result; use 'aggregation-induced reversal', never 'Simpson's paradox' (formal conditions not verified)"
+      "phase4_action": "add as a candidate secondary methodological result; use 'aggregation-induced reversal', never 'Simpson's paradox' (formal conditions not verified) -- APPLIED 2026-08-24 (round-11): new Section 5.4 (sec:res-aggregation)"
     },
     {
       "claim_id": "C-security-mechanism",
@@ -85,7 +85,7 @@
       "status": "supported_but_limited",
       "evidence_artifacts": ["results/security_family_recall.json", "results/security_mechanism_ladder.csv", "results/phase3_S1_severity_quantification.json"],
       "current_wording": "main.tex:337-339 recall numbers ALREADY match security_family_recall.json (verified this round); main.tex:502 still says 'Novel-label shift (security)' and 'classes absent from training' -- stale terminology and technically imprecise (no label-space change ever occurs; it is attack-FAMILIES within the positive class, not classes)",
-      "phase4_action": "rewrite line 502 only -- 'Novel-label shift' -> 'unseen attack-family deployment shift'; 'classes absent from training' -> 'attack families absent from training'. Lines 337-339 need no numeric change."
+      "phase4_action": "rewrite line 502 only -- 'Novel-label shift' -> 'unseen attack-family deployment shift'; 'classes absent from training' -> 'attack families absent from training'. Lines 337-339 need no numeric change. -- APPLIED 2026-08-23 (round-9): main.tex:502 and :519 both fixed (a second live 'novel-label' instance at :519 was found during the re-grep and fixed too), see CLAIM_LEDGER.md #41"
     },
     {
       "claim_id": "C-remediation",

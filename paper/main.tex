@@ -8,6 +8,7 @@
 \usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage[table]{xcolor}
 \usepackage{tcolorbox}
 \definecolor{hlrow}{RGB}{225,238,248}
@@ -19,13 +20,14 @@
 \bibliographystyle{plainnat}
 \graphicspath{{../results/figures/}}
 
-\title{\textbf{TrustShift: Shift Type, Not Shift Magnitude,\\
-Determines Machine-Learning Failure Modes}\\
-\large A cross-domain audit protocol and a failure taxonomy}
+\title{\textbf{TrustShift: A Mechanism-Aware Audit of\\
+Machine-Learning Deployment Shift}\\
+\large A cross-domain protocol for discrimination, calibration, operating-point, and
+subgroup-reliability auditing}
 \author{Rajveer Singh Pall\\[2pt]
 \normalsize Department of Computer Science and Business Systems\\
 \normalsize Gyan Ganga Institute of Technology and Sciences, Jabalpur, Madhya Pradesh, India\\
-\normalsize \texttt{rajveerpall04@gmail.com}\ \ $\cdot$\ \ ORCID: 0009-0001-6763-6124}
+\normalsize \texttt{rajveerpall04@gmail.com}\ \ $\cdot$\ \ ORCID: 0009-0001-6762-6134}
 \date{}
 
 \begin{document}
@@ -33,23 +35,31 @@ Determines Machine-Learning Failure Modes}\\
 
 \begin{abstract}
 \noindent Deployment evaluation implicitly assumes that a larger distribution shift means greater
-risk. Across four domains, we find this assumption false. We introduce \textbf{TrustShift}, a
-single pre-registered protocol measuring discrimination, calibration, and subgroup reliability, and
-apply it identically to four real deployment shifts: clinical risk prediction
-(NHANES$\rightarrow$BRFSS), mental-health text classification (Kaggle$\rightarrow$Reddit/Twitter),
-mortgage-approval prediction (temporal and cross-state shift over 42M U.S.\ loan records), and
-network-intrusion detection (CIC-DDoS2019$\rightarrow$CICIDS2017). A lending model under large
-measured covariate shift (domain-classifier AUC up to $0.80$) degrades on no axis, while a
-mental-health model at comparable magnitudes loses up to $0.39$ AUC: magnitude does not predict
-damage. The shift \emph{type} does. Concept shift breaks every axis; novel-label shift blinds a
-detector to unseen classes while its in-domain AUC reads a perfect $1.00$; covariate shift alone
-breaks nothing; mixed shift breaks calibration silently while discrimination holds. In-domain
-metrics anticipated none of this, yet three inexpensive diagnostic probes correctly distinguish the
-shift type before deployment. Post-hoc recalibration then cuts calibration error by one to two orders of magnitude in
-every domain but never restores lost discrimination or subgroup reliability. We contribute a protocol
-and a four-domain benchmark, and distill the result into a failure taxonomy mapping a
-pre-deployment diagnosis to the trustworthiness axis at risk.
+risk; we find this does not hold uniformly across four real deployment shifts. We introduce
+\textbf{TrustShift}, a single protocol measuring discrimination, calibration, subgroup reliability,
+and operating-point performance, applied to clinical risk prediction (NHANES$\rightarrow$BRFSS),
+mental-health text classification (Kaggle$\rightarrow$Reddit/Twitter), mortgage-approval prediction
+(temporal and cross-state shift over 42M U.S.\ loan records), and network-intrusion detection
+(CIC-DDoS2019$\rightarrow$CICIDS2017). A lending model under measured covariate shift
+(domain-classifier AUC up to $0.80$) improves in ranking (AUC) while its macro-averaged
+operating-point performance stays essentially flat (within $0.02$) even as its positive-class F1
+alone falls by up to $0.078$: a single metric does not tell the whole story, and shift magnitude
+alone did not predict which one would move. A mental-health model at comparable domain-classifier
+magnitudes loses up to $0.39$ AUC. Cheap, largely label-free probes -- prevalence change, a domain
+classifier, an importance-reweighting check -- recover a mechanistic diagnosis for some shifts and
+report \emph{inconclusive} for others when evidence is insufficient. A network-intrusion
+detector holds a
+near-ceiling in-domain AUC ($0.998$, capture-session-disjoint split) while collapsing to $0.68$ on
+deployment traffic whose attack mechanisms are entirely absent from training. Post-hoc
+recalibration cuts calibration error by one to two orders of magnitude in every domain and
+generally leaves discrimination and subgroup reliability unrestored (security's AUC moves only
+$+0.035$, short of recovering its $0.31$ collapse). We contribute a protocol, a four-domain
+benchmark, and a release in which every reported number traces to a committed result file.
 \end{abstract}
+
+\noindent\textbf{Keywords:} distribution shift $\cdot$ deployment auditing $\cdot$ model
+calibration $\cdot$ subgroup reliability $\cdot$ shift diagnosis $\cdot$ trustworthy machine
+learning
 
 \section{Introduction}\label{sec:intro}
 
@@ -57,64 +67,91 @@ Consider three machine-learning systems at the moment of deployment. A clinical 
 from a survey cohort to a national screening population; its discrimination barely changes, and it
 looks fine---yet its probability estimates become substantially miscalibrated, so the risk numbers
 it reports are wrong. An intrusion detector moves from one year's attack corpus to the next; its
-in-domain AUC is a perfect $1.00$, and it looks flawless---yet it is nearly blind to the attack
-families it will actually meet. A mortgage-approval model moves across years and states under a
-distribution shift large enough to be detected almost perfectly by a classifier trained to spot
-it---and nothing breaks; its accuracy even improves.
+in-domain AUC sits near the ceiling ($0.998$, measured under a capture-session-disjoint train/test
+split), and it looks flawless---yet it collapses on deployment traffic whose attack mechanisms are
+entirely absent from its training data. A mortgage-approval model moves across years and states
+under a distribution shift large enough to be detected almost perfectly by a classifier trained to
+spot it---its ranking of applicants (AUC) even improves, while its fixed-threshold approval
+decisions shift as the underlying approval rate moves.
 
 Three systems, three intuitions overturned. We argue these are not isolated accidents but three
 faces of one deployment phenomenon. The one that looked fine failed; the one that looked perfect
 failed; the one that looked most shifted did not. Why? Answering that question is the subject of
-this paper, and the answer is not the magnitude of the shift.
+this paper, and the answer is not the magnitude of the shift alone.
 
 Deployment evaluation is dominated by a single in-domain number---accuracy, or AUC---treated as
 evidence of readiness. When shift is considered at all, it is treated as a scalar severity: bigger
-shift, bigger risk. And it is studied one domain at a time. Clinical prediction has a mature
-external-validation literature; fairness-under-shift has been examined in medical
-imaging~\citep{schrouff2022diagnosing}; tabular shift has dedicated
+shift, bigger risk, rather than as a mechanism with its own trustworthiness consequences. Clinical
+prediction has a mature external-validation literature; fairness-under-shift has been examined in
+medical imaging~\citep{schrouff2022diagnosing}; tabular shift has dedicated
 benchmarks~\citep{gardner2023tableshift}; general shift benchmarks span vision and
-language~\citep{koh2021wilds}. Each answers ``does this model degrade here?'' None answers the
-cross-domain question our three vignettes raise: \emph{are deployment failures of trustworthiness
-domain-specific accidents, or do they follow rules that hold across domains---and can those rules
-be read before deployment?}
+language~\citep{koh2021wilds}. Each answers ``how much does accuracy drop under shift?'' None
+answers the cross-domain question our three vignettes raise: \emph{are deployment failures of
+trustworthiness domain-specific accidents, or do they follow rules that hold across
+domains---and can those rules be read before deployment?}
 
 We answer it with one protocol applied to four deliberately dissimilar domains (the three above
-plus mental-health text classification). The protocol measures three trustworthiness axes
-(discrimination, calibration, subgroup reliability), assigns each shift a mechanistic diagnosis
-(label, covariate, or concept shift) using cheap and largely label-free probes, and quantifies what
-a remediation ladder restores. Holding the protocol fixed across clinical tabular data, social-media
-text, mortgage records, and network traffic separates what is general from what is idiosyncratic.
-The result is a taxonomy (Figure~\ref{fig:taxonomy}): across these domains the shift type, not its
-magnitude, consistently predicts which axis fails, and the shift type is cheap to diagnose in advance.
+plus mental-health text classification). The protocol jointly measures discrimination, calibration,
+subgroup reliability, and fixed-threshold operating-point performance, attempts a staged, largely
+label-free mechanistic diagnosis of each shift, and quantifies what a remediation ladder restores.
+Holding the protocol fixed across clinical tabular data, social-media text, mortgage records, and
+network traffic separates what is general from what is idiosyncratic, and lets us ask directly:
+\textbf{how reliably can deployment-shift magnitude and context explain machine-learning failure
+fingerprints across trustworthiness dimensions, and how can mechanism-aware diagnostics guide
+deployment auditing?} Across these four domains, scalar shift-magnitude measures alone do not
+consistently explain which axis fails; deployment context, evaluated through a staged diagnostic
+protocol that explicitly reports \emph{inconclusive} rather than forcing every shift into a
+category, carries information magnitude misses. Whether shift \emph{mechanism} specifically
+outpredicts shift \emph{magnitude} is a narrower question this paper tests directly and does not
+resolve in the affirmative.
 
 \paragraph{Contributions.}
 \begin{itemize}
-  \item \textbf{Shift type, not magnitude, tracks the failure (the discovery).} We show---and expose
-  the statistical trap behind---that the \emph{magnitude} of covariate shift does not predict
-  deployment damage, while the shift \emph{type} does (Section~\ref{sec:meta}). A lending model at
-  large measured shift is robust; a text model at comparable magnitude collapses.
-  \item \textbf{A failure taxonomy backed by four domains.} We show that the trustworthiness axis
-  that fails is consistently predicted by the shift's mechanistic type across four domains
-  (Table~\ref{tab:fingerprint})---turning measurement into classification.
-  \item \textbf{A remediation result.} Across all four domains, post-hoc recalibration is the only
-  cheap repair and it repairs only calibration; discrimination and subgroup reliability lost to
-  shift require target supervision.
-  \item \textbf{A protocol, not just a benchmark.} TrustShift is a reusable, pre-registered
-  five-quantity audit (discrimination, calibration, subgroup gap, shift diagnosis, remediation)
-  that runs identically on any (source, target) prediction pair, generalizing the single-domain
-  CPFE protocol~\citep{pall2026cpfe} to a domain-agnostic instrument.
-  \item \textbf{A released benchmark.} Four harmonized shift-pairs, standardized predictions, and
-  the protocol implementation, enabling others to place new domains on the same axes.
+  \item \textbf{A joint deployment-trustworthiness audit.} A single protocol measures
+  discrimination, calibration, subgroup reliability, and fixed-threshold operating-point
+  performance together rather than one axis at a time, so that axes shown to move independently are
+  not missed by a single-metric evaluation (Section~\ref{sec:protocol}).
+  \item \textbf{Evidence that scalar shift magnitude alone is insufficient.} Within the evaluated
+  settings, scalar measures of marginal distribution change (a domain-classifier AUC, a prevalence
+  shift) do not consistently explain which trustworthiness axis fails or by how much
+  (Section~\ref{sec:meta}); a lending model at large measured covariate shift stays robust in
+  ranking while its fixed-threshold operating performance moves, and a mental-health model at a
+  comparable domain-classifier magnitude collapses on every axis.
+  \item \textbf{Deployment-context heterogeneity beyond magnitude.} Where prior audit history for a
+  deployment population exists, that population's identity explains substantially more of the
+  observed failure variation than scalar shift magnitude does---evidence that deployment context,
+  not only shift magnitude, is worth measuring before deployment.
+  \item \textbf{A staged, largely label-free diagnostic protocol.} Cheap probes---prevalence
+  change, a domain classifier, and an importance-reweighting check---recover a mechanistic
+  diagnosis for some shifts and explicitly report \emph{inconclusive} for others when the evidence
+  does not support one, rather than forcing every shift into a category
+  (Section~\ref{sec:protocol}).
+  \item \textbf{A remediation ladder.} Across all four domains, post-hoc recalibration is the
+  cheapest repair and reliably restores calibration (Section~\ref{sec:res-remediation}); it does
+  not restore discrimination or subgroup reliability lost to shift, which require target
+  supervision.
+  \item \textbf{A mechanism-aware case study.} Network-intrusion detection shows severe,
+  mechanism-specific degradation on attack families entirely absent from training, reported here as
+  a supporting case study, not as general evidence that shift mechanism outpredicts shift
+  magnitude.
+  \item \textbf{A reproducible four-domain benchmark.} Harmonized shift-pairs, standardized
+  predictions, and the protocol implementation are released so that every number in this paper, and
+  any new domain placed on the same axes, regenerates from a committed result file.
 \end{itemize}
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{fig1_taxonomy.png}
-\caption{\textbf{The TrustShift failure taxonomy.} A model that looks deployable in-domain (top) is
-diagnosed by three cheap, largely label-free probes; the resulting shift type (colored branches)
-predicts which trustworthiness axis fails and the audit a practitioner should run. Each branch is
-realized by one of our four domains. In-domain metrics predicted none of these outcomes; the shift
-type did.}
+\caption{\textbf{The TrustShift audit flow.} A deployed model is first screened with cheap,
+label-free probes (Stage A); the available evidence -- which depends on whether target labels and
+adequate source/target overlap exist -- organizes either a mechanism hypothesis (label, covariate,
+concept, or mixed) or an explicit \texttt{inconclusive} outcome, shown with a dashed border because
+it is a first-class result, not a failure of the protocol. Both outcomes feed the same multi-axis
+trustworthiness audit, which jointly measures discrimination, operating-point performance,
+calibration, and subgroup reliability (right panel) before remediation or escalation. No arrow in
+this figure runs from an individual mechanism hypothesis to an individual trustworthiness axis: the
+four axes are audited jointly from whichever diagnosis is reached, and this paper's own evidence
+(Section~\ref{sec:meta}) does not establish that shift mechanism predicts which axis will fail.}
 \label{fig:taxonomy}
 \end{figure}
 
@@ -122,18 +159,27 @@ type did.}
 
 The protocol consumes, for each domain, a source model's predictions on an in-distribution test
 split (\emph{source}) and on one or more deployment splits (\emph{target}), together with a
-subgroup label per example. It emits five quantities.
+subgroup label per example. It runs in three stages -- a multi-axis trustworthiness audit, a staged
+shift diagnosis (label-free screening first, a labeled confirmatory probe only where target labels
+and adequate support overlap exist), and remediation -- realized as six reported quantities.
 
-\paragraph{Axis 1: Discrimination.} AUC (macro one-vs-rest for multiclass domains) and macro-F1
-per split, with DeLong 95\% confidence intervals~\citep{delong1988comparing}. We report
+\paragraph{Axis 1: Discrimination.} AUC (macro one-vs-rest for multiclass domains), with DeLong
+95\% confidence intervals~\citep{delong1988comparing}. We report
 $\Delta\text{AUC} = \text{AUC}_{\text{source}} - \text{AUC}_{\text{target}}$.
 
-\paragraph{Axis 2: Calibration.} Expected Calibration Error (ECE, 10 equal-width bins) and Brier
+\paragraph{Axis 2: Operating-point performance.} Macro-F1 at a fixed $0.5$ threshold, reported
+alongside AUC because the two can move by different amounts or in different directions
+(Section~\ref{sec:results}). For binary domains we additionally report positive-class F1 where it
+diverges materially from macro-F1: macro-F1 averages both classes' F1 equally, so it can mask a
+real, class-specific change that positive-class F1 alone reveals
+(Section~\ref{sec:res-fingerprint}).
+
+\paragraph{Axis 3: Calibration.} Expected Calibration Error (ECE, 10 equal-width bins) and Brier
 score per split. ECE quantifies the gap between predicted confidence and empirical
 accuracy~\citep{guo2017calibration}; a model can discriminate perfectly and still be badly
 calibrated, and vice versa.
 
-\paragraph{Axis 3: Subgroup reliability.} Per subgroup $g$, AUC$_g$; the subgroup gap
+\paragraph{Axis 4: Subgroup reliability.} Per subgroup $g$, AUC$_g$; the subgroup gap
 $G(\text{split}) = \max_g \text{AUC}_g - \min_g \text{AUC}_g$; and the \emph{gap change}
 $\Delta G = G(\text{target}) - G(\text{source})$---the headline reliability quantity---with a
 stratified bootstrap 95\% CI ($N=2000$). Subgroups are demographic where available (clinical:
@@ -141,19 +187,30 @@ age, sex, race, BMI; lending: race), platform-derived proxy classes for text, an
 (attack family) for intrusion detection. We call this subgroup-conditional reliability and, for
 intrusion detection, never interpret it as demographic fairness (Section~\ref{sec:limitations}).
 
-\paragraph{Axis 4: Shift diagnosis.} Each shift is decomposed with three cheap probes.
-\emph{Label shift}: change in class prevalence $\Delta\pi$ (labels only).
-\emph{Covariate shift}: a domain classifier trained to separate source from target examples on
-shared features, scored by 5-fold cross-validated AUC ($\text{AUC}_{\text{dc}}$; $0.5$ = no shift,
-$\rightarrow 1$ = severe)~\citep{rabanser2019failing}.
-\emph{Concept shift}: importance-weighting the source examples by the domain-classifier odds and
-recomputing source AUC; if the reweighted source AUC stays near the source AUC while the target
-AUC is far lower, covariate shift alone cannot explain the drop~\citep{lipton2018label}.
+\paragraph{Axis 5: Shift diagnosis.} Each shift is decomposed with three probes, not all equally
+cheap. \emph{Label shift}: change in class prevalence $\Delta\pi$ (labels only; label-free at the
+target). \emph{Covariate shift}: a domain classifier trained to separate source from target
+examples on shared features, scored by out-of-fold cross-validated AUC ($\text{AUC}_{\text{dc}}$;
+$0.5$ = no shift, $\rightarrow 1$ = severe)~\citep{rabanser2019failing} (label-free). \emph{Concept
+shift}: importance-weighting the source examples by out-of-fold domain-classifier odds (with a
+sampling-prior correction applied before clipping) and recomputing source AUC; if the reweighted
+source AUC stays near the source AUC while the target AUC is far lower, covariate shift alone
+cannot explain the drop~\citep{lipton2018label}. This probe requires target \emph{labels} (to
+compute the target AUC it compares against) and is therefore not label-free; we additionally
+require the reweighting to have adequate source/target support overlap, measured by effective
+sample size (ESS), before treating its result as evidence -- when ESS falls below 10\% of the
+source sample, we report the probe as non-adjudicable rather than asserting a conclusion from it.
+When no probe produces adjudicable evidence above threshold for a target, or when the evidence for
+one mechanism is directly contradicted by another measurement (e.g.\ a large $\Delta\pi$ where the
+positive-class populations are measurably disjoint between source and target, contradicting label
+shift's requirement that $P(X\mid Y)$ be stable), the diagnosis is reported as
+\textbf{inconclusive} rather than forced into a taxonomy branch.
 
-\paragraph{Axis 5: Remediation ladder.} On a 10\% stratified target calibration split we apply
+\paragraph{Axis 6: Remediation ladder.} On a 10\% stratified target calibration split we apply
 temperature, Platt, and isotonic recalibration~\citep{zadrozny2002isotonic}, then re-measure
-Axes 1--3 on the remaining 90\%. This isolates what a cheap post-hoc fix restores from what
-requires target supervision.
+discrimination, calibration, and subgroup reliability on the remaining 90\%. Operating-point
+performance is not currently re-measured post-remediation. This isolates what a cheap post-hoc fix
+restores from what requires target supervision.
 
 Full metric definitions, seeds, and estimator choices are fixed in the released configuration;
 all reported numbers regenerate from committed prediction files. Algorithm~\ref{alg:trustshift}
@@ -164,18 +221,25 @@ states the protocol as executed.
 \label{alg:trustshift}
 \begin{algorithmic}[1]
 \Require source predictions $(\hat p, y, g)_{\text{src}}$; target predictions $(\hat p, y, g)_{\text{tgt}}$; shared features $X_{\text{src}}, X_{\text{tgt}}$
-\Statex \textit{\textbf{Stage 1 --- Evaluate the three trustworthiness axes}}
+\Statex \textit{\textbf{Stage 1 --- Evaluate the four trustworthiness axes}}
 \State $\Delta\text{AUC} \gets \text{AUC}_{\text{src}} - \text{AUC}_{\text{tgt}}$; \; ECE, Brier per split \Comment{DeLong CIs; 10 bins}
+\State $\Delta\text{F1} \gets \text{F1}^{\text{macro}}_{\text{src}} - \text{F1}^{\text{macro}}_{\text{tgt}}$ \Comment{operating point, threshold 0.5}
 \State $\Delta G \gets (\max_g\!-\!\min_g)\text{AUC}_g^{\text{tgt}} - (\max_g\!-\!\min_g)\text{AUC}_g^{\text{src}}$ \Comment{subgroup gap; bootstrap CI}
 \Statex \textit{\textbf{Stage 2 --- Diagnose the shift type}}
-\State $\Delta\pi \gets$ prevalence change; \; $\text{AUC}_{\text{dc}} \gets$ CV-AUC of a source-vs-target classifier on $X$
-\State $w(x) \gets$ domain-classifier odds; \; $\text{AUC}^{\text{rw}}_{\text{src}} \gets$ $w$-weighted source AUC
-\If{$\text{AUC}^{\text{rw}}_{\text{src}} \approx \text{AUC}_{\text{src}} \gg \text{AUC}_{\text{tgt}}$} diagnosis $\gets$ \textbf{concept}
-\ElsIf{$|\Delta\pi|$ large / unseen classes} diagnosis $\gets$ \textbf{novel-label}
-\ElsIf{$\text{AUC}_{\text{dc}} > 0.65$} diagnosis $\gets$ \textbf{covariate} \Else{} diagnosis $\gets$ \textbf{mixed} \EndIf
+\State $\Delta\pi \gets$ prevalence change; \; $\text{AUC}_{\text{dc}} \gets$ out-of-fold CV-AUC of a source-vs-target classifier on $X$
+\State $w(x) \gets$ prior-corrected, out-of-fold domain-classifier odds; $\text{ESS} \gets (\sum w)^2/\sum w^2$
+\State $\text{evidence} \gets \emptyset$
+\If{$\text{ESS}/n_{\text{src}} \geq 10\%$ \textbf{and} $\text{AUC}^{\text{rw}}_{\text{src}} \approx \text{AUC}_{\text{src}} \gg \text{AUC}_{\text{tgt}}$} $\text{evidence} \gets \text{evidence} \cup \{\textbf{concept}\}$ \EndIf
+\If{$|\Delta\pi| > 0.15$} $\text{evidence} \gets \text{evidence} \cup \{\textbf{label}\}$ \EndIf
+\If{$\text{AUC}_{\text{dc}} > 0.65$} $\text{evidence} \gets \text{evidence} \cup \{\textbf{covariate}\}$ \EndIf
+\If{$\textbf{label} \in \text{evidence}$ \textbf{and} positive-class populations measurably disjoint} diagnosis $\gets$ \textbf{inconclusive}
+\ElsIf{$\text{evidence} = \emptyset$} diagnosis $\gets$ \textbf{inconclusive}
+\ElsIf{$|\text{evidence}| = 1$} diagnosis $\gets$ the one mechanism in evidence
+\Else{} diagnosis $\gets$ \textbf{mixed} \EndIf
 \Statex \textit{\textbf{Stage 3 --- Remediate and re-measure}}
-\State fit recalibration on 10\% target labels; re-measure the three axes on the rest
-\Ensure $(\Delta\text{AUC},\, \text{ECE},\, \Delta G,\, \text{diagnosis},\, \text{restored axes})$
+\State fit recalibration on 10\% target labels; re-measure discrimination, calibration, and
+subgroup reliability on the rest \Comment{operating point not re-measured}
+\Ensure $(\Delta\text{AUC},\, \Delta\text{F1},\, \text{ECE},\, \Delta G,\, \text{diagnosis},\, \text{restored axes})$
 \end{algorithmic}
 \end{algorithm}
 
@@ -186,8 +250,9 @@ any shared pattern is unlikely to be an artifact of one setting (Table~\ref{tab:
 
 \begin{table}[t]
 \centering
-\caption{The four deployment shifts. Subgroup semantics deliberately differ; the protocol is
-identical.}
+\caption{The four deployment shifts. Subgroup semantics deliberately differ; the protocol
+definition is identical across domains, though data availability determines which Stage-2 probes
+return usable evidence in each (Table~\ref{tab:probe-availability}).}
 \label{tab:data}
 \small
 \begin{tabular}{lllll}
@@ -197,7 +262,28 @@ Domain & Source $\rightarrow$ Target & Modality & Subgroup axis & Shift mechanis
 Clinical & NHANES $\rightarrow$ BRFSS & tabular & age/sex/race/BMI & population \\
 NLP & Kaggle $\rightarrow$ Reddit, Twitter & text & proxy class & platform/style \\
 Lending & HMDA 2020--21 $\rightarrow$ 2022--24; cross-state & tabular & race, income & temporal, geographic \\
-Security & CIC-DDoS2019 $\rightarrow$ CICIDS2017 & network flow & attack family & novel attacks \\
+Security & CIC-DDoS2019 $\rightarrow$ CICIDS2017 & network flow & attack family & unseen attack-family deployment \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Stage-2 probe availability per domain (PLAN\_ijdsa.md T1.6). A checkmark means the probe
+returned real, adjudicable evidence for at least one target in that domain; a dash means it was
+not run or never produced evidence above threshold. No domain has all three probes fail silently
+into a default diagnosis -- \texttt{inconclusive} is reported explicitly instead
+(Table~\ref{tab:probe-availability}).}
+\label{tab:probe-availability}
+\small
+\begin{tabular}{lccc}
+\toprule
+Domain & Label-shift ($\Delta\pi$) & Covariate (AUC$_{\text{dc}}$) & Concept (reweighting) \\
+\midrule
+Clinical & \checkmark & -- & -- \\
+NLP & \checkmark & \checkmark & \checkmark \\
+Lending & \checkmark & \checkmark (temporal only) & -- \\
+Security & \checkmark & -- & -- \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -217,20 +303,28 @@ is limited to age for a reason we state plainly in Section~\ref{sec:limitations}
 \section{Results}\label{sec:results}
 
 We organize results as one argument: in-domain metrics do not predict deployment behaviour
-(\ref{sec:res-indomain}); the failure that occurs is consistently predicted by the shift type
-across domains (\ref{sec:res-fingerprint}); that regularity is categorical, not a magnitude law
-(\ref{sec:meta}); and recalibration repairs only calibration (\ref{sec:res-remediation}).
+(\ref{sec:res-indomain}); each domain exhibits a distinct failure fingerprint, and the available
+shift evidence supports different levels of mechanistic interpretation across targets, with three
+of five inconclusive under the current probes (\ref{sec:res-fingerprint}); scalar shift magnitude
+does not explain that variation, while deployment context does, out of sample, for populations with
+prior audit history (\ref{sec:meta}); a pooled aggregate can even reverse the sign of what most
+individual deployment cells show (\ref{sec:res-aggregation}); and recalibration reliably repairs
+calibration but not discrimination or subgroup reliability (\ref{sec:res-remediation}).
 
 \subsection{In-domain performance does not transfer, and does not transfer uniformly}
 \label{sec:res-indomain}
 
-Every source model looked deployable: source AUC ranged from $0.77$ (clinical) to $1.00$
-(security) and source ECE was at most $0.26$. Deployment outcomes did not follow
-(Figure~\ref{fig:bars}, Table~\ref{tab:master}). Mental-health classifiers lost $0.28$--$0.39$
-AUC on new platforms; the intrusion detector fell from AUC $1.00$ to $0.64$; the clinical model
-barely moved in AUC ($0.788\rightarrow 0.757$); and lending models did not degrade at all, in
-fact improving slightly on later years. A single in-domain dashboard would have rated all four
-identically ``ready.'' None of the deployment outcomes is readable from it.
+Every source model looked deployable: source AUC ranged from $0.77$ (clinical) to $0.998$
+(security, measured under a capture-session-disjoint train/test split) and source ECE was at most
+$0.26$. Deployment outcomes did not follow (Figure~\ref{fig:bars}, Table~\ref{tab:master}).
+Mental-health classifiers lost $0.28$--$0.39$ AUC on new platforms; the intrusion detector fell
+from AUC $0.998$ to $0.684$; the clinical model's ranking discrimination moved only slightly
+($\Delta\text{AUC}=0.031$), though its operating-point performance (macro-F1) fell by $0.102$; and
+lending models improved in ranking (AUC) on later years while their macro-averaged operating-point
+performance stayed essentially flat (change within $0.02$) even as positive-class F1 alone fell by
+$0.056$--$0.078$ as approval prevalence shifted. A single in-domain AUC dashboard would have rated
+all four ``ready'' and would have missed the operating-point divergence in clinical and, on the
+positive-class-F1 reading, in lending.
 
 \begin{figure}[t]
 \centering
@@ -243,76 +337,136 @@ ECE---calibration fails where discrimination does not.}
 \label{fig:bars}
 \end{figure}
 
-\subsection{The failure is consistently predicted by the shift type (the taxonomy)}
+\subsection{Shift evidence and failure fingerprints}
 \label{sec:res-fingerprint}
 
-The four domains produce four distinct and interpretable failure fingerprints
-(Table~\ref{tab:fingerprint}), and each fingerprint matches its mechanistic diagnosis.
+The four domains exhibit distinct failure fingerprints (Table~\ref{tab:fingerprint}), while the
+available shift evidence supports different levels of mechanistic interpretation across the five
+evaluated targets: NLP carries \textbf{mixed} evidence, security and clinical are
+\textbf{inconclusive} under the current probes, lending temporal diagnoses as \textbf{covariate},
+and lending geographic is \textbf{inconclusive}. For each target below we report the observed
+fingerprint first, the available diagnostic evidence second, and the resulting confidence level
+third.
 
-\emph{Concept shift $\rightarrow$ everything fails.} The NLP shift diagnoses as concept shift:
-the domain classifier separates platforms almost perfectly ($\text{AUC}_{\text{dc}} =
-0.93$--$0.99$), yet importance-reweighting the source barely changes source AUC
-($0.988\rightarrow 0.987$) while target AUC is $\approx 0.60$---covariate shift cannot explain the
-drop. Discrimination collapses ($\Delta\text{AUC}$ $0.28$--$0.39$), calibration breaks (target ECE
-up to $0.27$), and the subgroup gap widens ($\Delta G$ up to $+0.15$). All three axes fail together.
+\emph{Every axis fails together $\rightarrow$ evidence is mixed (label $+$ covariate, and concept
+where adjudicable).} The NLP shift's diagnosis is \textbf{mixed}, not a single mechanism: the domain
+classifier
+separates platforms almost perfectly ($\text{AUC}_{\text{dc}} = 0.93$--$0.99$) and class prevalence
+shifts sharply ($|\Delta\pi|$ up to $0.52$), so both covariate and label evidence fire for both
+targets. The concept-shift reweighting probe additionally fires for Reddit, where source/target
+support overlap is adequate (effective sample size $16\%$ of $n_{\text{source}}$): reweighting
+barely changes source AUC ($0.990\rightarrow 0.989$) while target AUC is $\approx 0.60$, so
+covariate shift alone cannot explain that drop. For Twitter, support overlap is too thin
+(effective sample size $4\%$) for the reweighting probe to adjudicate, and we report it as such
+rather than asserting a mechanism from it. Whichever probes fire, the outcome is the same:
+discrimination collapses ($\Delta\text{AUC}$ $0.28$--$0.39$ across the four architectures tested),
+calibration breaks (target ECE up to $0.27$), and the subgroup gap widens ($\Delta G$ up to
+$+0.15$). All three axes fail together, for the source-selected primary model (RoBERTa) and every
+other model tested.
 
-\emph{Novel-label shift $\rightarrow$ discrimination and calibration collapse on new classes.}
-The intrusion detector achieves a perfect in-domain AUC of $1.00$ (a known separability property
-of whole-flow DDoS features), then falls to $0.64$ externally, with ECE rising from $0.001$ to
-$0.45$. The mechanism is label shift ($\Delta\pi = 0.34$): the deployment set contains attack
-families absent from training. Per-family recall exposes it directly---families seen in training
-are detected at $0.99$+, while novel families are nearly invisible (\texttt{hulk} $0.05$,
-\texttt{slowhttp} $0.12$, \texttt{slowloris} $0.21$). A detector can be perfect in-domain and
-blind to the attacks it will actually meet.
+\emph{Discrimination collapses on attack mechanisms absent from training $\rightarrow$
+inconclusive by the current probes.} The intrusion detector holds a near-ceiling in-domain AUC of
+$0.998$, measured on a train/test split that is disjoint at the capture-file level (the dataset's
+own native ``-training''/``-testing'' file partition) rather than a random row split. The native
+file/session split showed no evidence of excess cross-split duplication relative to within-split
+duplication under our duplicate check: the across-split near-duplicate rate ($2.0\%$) was no
+higher than the rate already present \emph{within} the training files themselves ($5.9\%$) or the
+testing files ($2.2\%$); we do not claim this proves the split leakage-free, only that this
+specific check found no evidence of excess leakage. Under this evaluation, AUC still falls to $0.684$
+externally, and calibration error rises from $0.069$ to $0.646$. This is \emph{not} label shift in
+the classical sense: raw (uncapped) class prevalence does shift substantially
+($\Delta\pi=0.633$, source $77\%$ attack, target $14\%$ attack -- a larger shift than the training-
+pipeline's engineered class balance would suggest), but label shift's requirement that the
+positive-class conditional distribution $P(X\mid Y{=}1)$ stay stable is directly contradicted: all
+five attack families present at deployment are entirely absent from the source training data (see
+the label-space audit released with this benchmark), so the diagnosis is reported as
+\textbf{inconclusive} rather than forced into a label-shift label. Per-family recall shows a family
+that shares a label string with a training-side family (\texttt{ddos}) detected at only $0.37$,
+alongside three families with no training-side counterpart at all detected near zero
+(\texttt{goldeneye} $0.00$, \texttt{hulk} $0.0003$, \texttt{slowloris} $0.21$,
+\texttt{slowhttp} $0.07$). We describe this observed pattern as an \emph{unseen attack-family
+deployment shift}: the binary task (benign vs.\ attack) is unchanged, but the attack mechanisms
+present at deployment were never represented in training. Whether this is best formalized as a
+distinct taxonomy category alongside covariate/label/concept shift, or as a mixed/compound shift,
+is left to the controlled mechanism-isolation experiment in future work; we do not assign it a
+firm category here.
 
-\emph{Covariate shift alone $\rightarrow$ no damage.} The lending temporal shift diagnoses as
-covariate ($\text{AUC}_{\text{dc}}$ $0.69$--$0.80$) with no label or concept component, and nothing
-fails: AUC \emph{improves} ($\Delta\text{AUC}$ $-0.012$ to $-0.028$), calibration is stable, and
-the race gap shrinks. Geographic shift behaves the same (mild $\Delta\text{AUC}=+0.059$, gap
-$-0.029$).
+\emph{Ranking is robust, the operating point is nearly flat $\rightarrow$ evidence is covariate.}
+The lending temporal shift diagnoses as covariate ($\text{AUC}_{\text{dc}}$ $0.69$--$0.80$) with no
+label or concept component. Ranking discrimination \emph{improves} ($\Delta\text{AUC}$ $-0.012$ to
+$-0.028$) and calibration is stable; macro-averaged operating-point performance stays essentially
+flat (change within $0.02$) even as positive-class F1 alone falls by $0.056$--$0.078$ as the
+approval prevalence moves ($\pi=0.850\rightarrow 0.759$) and the denied class becomes less rare, and
+the race gap shrinks. The geographic experiment shows a different pattern: ranking discrimination
+also improves ($\Delta\text{AUC}=+0.059$) and the race gap narrows ($-0.029$), but macro-averaged
+operating-point performance degrades more than in the temporal experiment (macro-F1 falls by
+$0.034$), even though its own shift is diagnosed \textbf{inconclusive}: no covariate probe has been
+built for the geographic target (see Table~\ref{tab:probe-availability}), so the shared
+ranking-improvement pattern is a numerical similarity to the temporal result, not a confirmed shared
+mechanism, pending the within-domain analysis in Section~\ref{sec:limitations}.
 
-\emph{Mixed $\rightarrow$ silent calibration failure.} The clinical shift holds discrimination
-($\Delta\text{AUC}=+0.031$) while calibration deteriorates sharply (ECE $0.168\rightarrow 0.276$
-for the primary model; $0.41$ for the boosted baseline). The age subgroup gap does not widen; it
-narrows ($\Delta G=-0.066$, 95\% CI $[-0.113,-0.016]$). A model whose AUC certifies it as
-unchanged is producing risk estimates that are substantially miscalibrated.
+\emph{Calibration fails despite near-flat discrimination $\rightarrow$ evidence is inconclusive.}
+The clinical shift's diagnosis is \textbf{inconclusive}: the only available covariate probe for
+this domain is a score-distribution
+proxy (target-side features are unrecoverable, Section~\ref{sec:limitations}) that does not
+produce an $\text{AUC}_{\text{dc}}$, so no probe reaches the evidence threshold. The observed
+failure is nonetheless clear: the source-selected primary model (FedAvg) shows a small but
+statistically detectable ranking-discrimination shift ($\Delta\text{AUC}=+0.031$, $\approx 7.2$
+source-test standard errors) that is nonetheless $3$--$4\times$ smaller than its calibration and
+operating-point shifts: operating-point performance falls sharply (macro-F1 $-0.102$) and
+calibration deteriorates sharply (ECE $0.168\rightarrow 0.276$; $0.41$ for the non-primary boosted
+model). The age subgroup gap narrows for the primary model
+($\Delta G=-0.066$, 95\% CI $[-0.113,-0.016]$) but \emph{widens} for the non-primary boosted model
+($\Delta G=+0.029$, 95\% CI includes zero) -- subgroup reliability here is a property of the
+(model, shift) pair, not of the dataset alone. A model whose AUC certifies it as unchanged is
+producing risk estimates that are substantially miscalibrated, at a fixed operating point that has
+also moved.
 
 \begin{table}[t]
 \centering
-\caption{\textbf{The failure fingerprint.} One row per domain (primary model). $\uparrow$/$\downarrow$
-mark the direction and $\approx$ near-invariance. The trustworthiness axis that fails tracks the
-diagnosis, across four dissimilar domains.}
+\caption{\textbf{The failure fingerprint.} One row per domain (source-only primary model,
+Section~\ref{sec:protocol}); lending has two rows because temporal and geographic shift are
+different experiments, not competing models. $\uparrow$/$\downarrow$ mark the direction and
+$\approx$ near-invariance. Discrimination is AUC (ranking); Operating point is macro-F1 at
+threshold 0.5 -- the two are reported separately because they can disagree (Lending, Clinical).
+Diagnoses of \texttt{inconclusive} mean no probe reached the evidence threshold, or (Security) the
+one probe that fired is contradicted by other measured evidence -- not that the shift is absent.
+$^{*}$Macro-averaged operating-point performance is flat for lending temporal, but its
+positive-class F1 alone falls $0.06$--$0.08$ (Section~\ref{sec:res-fingerprint}).}
 \label{tab:fingerprint}
-\small
+\footnotesize
 \begin{tabular}{lccccc}
 \toprule
-Domain & Diagnosis & Discrimination & Calibration & Subgroup reliability \\
+Domain & Diagnosis & Discrimination & Operating point & Calibration & Subgroup reliability \\
 \midrule
-NLP & concept & collapses ($\downarrow0.28$--$0.39$) & breaks & gap widens ($\uparrow$) \\
-Security & novel-label & collapses ($1.00\!\rightarrow\!0.64$) & breaks ($\uparrow$ $450\times$) & novel-family blind \\
-\rowcolor{hlrow} Clinical & mixed & \textbf{holds} ($\approx$) & \textbf{breaks silently} ($\uparrow$) & gap narrows ($\downarrow$) \\
-Lending & covariate & holds/improves ($\approx$) & stable ($\approx$) & gap narrows ($\downarrow$) \\
+NLP & mixed & collapses ($\downarrow0.28$--$0.39$) & collapses ($\downarrow$) & breaks & gap widens ($\uparrow$) \\
+Security & inconclusive & collapses ($0.998\!\rightarrow\!0.684$) & collapses ($\downarrow$) & breaks ($\uparrow$ $9\times$) & unseen-family blind \\
+\rowcolor{hlrow} Clinical & inconclusive & \textbf{degrades less} ($\downarrow0.03$) & \textbf{falls} ($\downarrow0.102$) & \textbf{breaks silently} ($\uparrow$) & model-dependent \\
+Lending (temporal) & covariate & holds/improves ($\approx$) & flat$^{*}$ ($\approx$) & stable ($\approx$) & gap narrows ($\downarrow$) \\
+Lending (geographic) & inconclusive & improves ($\uparrow$) & falls ($\downarrow0.03$) & stable ($\approx$) & gap narrows ($\downarrow$) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[t]
 \centering
-\caption{Master results, primary models. Source and target AUC/ECE, discrimination change, and
-subgroup-gap change $\Delta G$ (positive = gap widens under shift). Numbers regenerate from
-committed prediction files.}
+\caption{Master results, source-only primary models (Section~\ref{sec:protocol}). Source/target
+AUC (ranking) and ECE, discrimination change, operating-point change ($\Delta$macro-F1, positive
+= degrades), and subgroup-gap change $\Delta G$ (positive = gap widens under shift). Every number
+regenerates from committed prediction files; the complete table for every model tested (not only
+the primary) is released as \texttt{T2\_master.csv}.}
 \label{tab:master}
 \scriptsize
-\begin{tabular}{llcccccc}
+\begin{tabular}{llccccccc}
 \toprule
-Domain & Target & AUC$_{\text{src}}$ & AUC$_{\text{tgt}}$ & $\Delta$AUC & ECE$_{\text{src}}$ & ECE$_{\text{tgt}}$ & $\Delta G$ \\
+Domain & Target & AUC$_{\text{src}}$ & AUC$_{\text{tgt}}$ & $\Delta$AUC & $\Delta$F1 & ECE$_{\text{src}}$ & ECE$_{\text{tgt}}$ & $\Delta G$ \\
 \midrule
-\rowcolor{hlrow} Clinical & BRFSS & 0.788 & 0.757 & $+0.031$ & 0.168 & \textbf{0.276} & $-0.066$ \\
-NLP & Reddit & 0.984 & 0.645 & $\mathbf{+0.339}$ & 0.030 & 0.117 & $+0.074$ \\
-NLP & Twitter & 0.984 & 0.596 & $\mathbf{+0.388}$ & 0.030 & 0.255 & $+0.080$ \\
-Lending & 2023 & 0.793 & 0.821 & $-0.028$ & 0.258 & 0.240 & $-0.031$ \\
-Lending & held-out states & 0.845 & 0.786 & $+0.059$ & 0.206 & 0.190 & $-0.029$ \\
-Security & CICIDS2017 & \textbf{1.000} & \textbf{0.635} & $\mathbf{+0.365}$ & 0.001 & \textbf{0.451} & --- \\
+\rowcolor{hlrow} Clinical (FedAvg) & BRFSS & 0.788 & 0.757 & $+0.031$ & $+0.102$ & 0.168 & \textbf{0.276} & $-0.066$ \\
+NLP (RoBERTa) & Reddit & 0.987 & 0.637 & $\mathbf{+0.349}$ & $+0.580$ & 0.029 & 0.112 & $+0.068$ \\
+NLP (RoBERTa) & Twitter & 0.987 & 0.603 & $\mathbf{+0.384}$ & $+0.599$ & 0.029 & 0.258 & $+0.108$ \\
+Lending (temporal) & 2023 & 0.793 & 0.821 & $-0.028$ & $-0.014$ & 0.258 & 0.240 & $-0.031$ \\
+Lending (geographic) & held-out states & 0.845 & 0.786 & $+0.059$ & $+0.034$ & 0.206 & 0.190 & $-0.029$ \\
+Security (XGBoost) & CICIDS2017 & \textbf{0.998} & \textbf{0.684} & $\mathbf{+0.314}$ & $+0.704$ & 0.069 & \textbf{0.646} & --- \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -336,20 +490,23 @@ The cross-domain regression of subgroup-gap change on covariate-shift magnitude
 would license ``measure the shift; the bigger it is, the more subgroup reliability you lose.''
 That reading is wrong. Within the lending domain, where covariate-shift magnitude rises from
 $0.69$ to $0.80$ across deployment years, the same slope is \emph{negative} ($-0.10$): more
-measured shift, less damage. The positive cross-domain slope is a two-cluster (Simpson) artifact
-separating high-shift text from moderate-shift tabular data---an aggregate line drawn through two
+measured shift, less damage. The positive cross-domain slope is a two-cluster, aggregation-induced
+artifact separating high-shift text from moderate-shift tabular data---an aggregate line drawn
+through two
 groups that individually tell the opposite story. Lending exhibits larger measured covariate shift
-than many settings described as ``severe,'' while remaining fully robust on every axis. This
-mattered to our own analysis: an earlier version of this work reported the $0.54$ slope as a
-finding before the within-domain check exposed it, and we retain it here precisely because the
-mistake is instructive. \textbf{Shift magnitude and deployment risk are not interchangeable}; the
-\emph{categorical} diagnosis (Figure~\ref{fig:taxonomy}), recoverable from cheap probes, is what
-tracks failure.
+than many settings described as ``severe,'' while remaining fully robust on every axis measured
+this way. This mattered to our own analysis: an earlier version of this work reported the $0.54$
+slope as a finding before the within-domain check exposed it, and we retain it here precisely
+because the mistake is instructive. \textbf{Shift magnitude and deployment risk are not
+interchangeable}; the \emph{categorical} diagnosis (Figure~\ref{fig:taxonomy}) provides a more
+structured description of the observed deployment evidence, but the present data do not establish
+that mechanism categorization predicts failure more accurately than scalar shift magnitude -- that
+comparative question remains unresolved.
 \end{tcolorbox}
 
 We therefore report the cross-domain regressions (Figure~\ref{fig:scatter}) as exploratory
 synthesis over four domain-clusters, not as a fitted predictor, and rest the contribution on the
-categorical taxonomy.
+magnitude-insufficiency finding, not on a claim that mechanism categorization outpredicts it.
 
 \begin{figure}[t]
 \centering
@@ -360,94 +517,219 @@ Security is absent because its operational subgroups are all-positive, so a gap 
 \label{fig:scatter}
 \end{figure}
 
+\paragraph{Deployment context explains far more of this variation than magnitude does, out of
+sample.} If scalar shift magnitude does not explain the within-lending variation above, what does?
+Using the same $447$-cell lending-temporal panel, we tested whether a state's own identity --
+under 10-fold cross-validation, never trained and evaluated on the same fold -- predicts its
+held-out cells better than the scalar shift score does. It does, by a wide margin, on every axis:
+state identity reaches $R^2_{\text{out}}=0.62$--$0.84$ (discrimination $0.77$, operating point
+$0.81$, calibration $0.80$, subgroup gap $0.62$), while $\text{AUC}_{\text{dc}}$ under the identical
+cross-validation scheme reaches at most $R^2_{\text{out}}=0.06$ and is negative on three of six
+axes. This is context evidence, not mechanism evidence -- shift mechanism is held constant
+(covariate) throughout this panel -- and it comes with a sharp operational caveat that must be
+stated alongside it, not separately: the state \emph{identifier} is available before any
+deployment, trivially, but its \emph{predictive value} is not. Holding out an entire state never
+seen in training instead, state identity's $R^2_{\text{out}}$ collapses to approximately zero
+($-0.03$ to $-0.02$), exactly as a fixed-effect encoding must for a level it has never observed.
+Deployment-context heterogeneity is therefore a real, generalizing, and substantial signal a scalar
+shift score misses -- but only for a population with prior audit history, not as a universal
+pre-deployment diagnostic (\texttt{state\_identity\_generalization.json},
+\texttt{context\_generalization\_final.json}).
+
+\subsection{Aggregation-induced reversal: a worked methodological lesson}\label{sec:res-aggregation}
+
+The lending-temporal panel also illustrates a pitfall this paper's own thesis warns against: an
+aggregate number can disagree with what is happening in the cells that compose it, in a way that
+would mislead an auditor who checks only the aggregate. Pooling all lending-temporal predictions
+for a target year and computing one macro-F1 delta -- the whole-year aggregate reported in
+Section~\ref{sec:res-fingerprint} -- shows operating-point performance essentially flat to
+slightly improving ($-0.003$ to $-0.019$ across years). Computed the other way, per (state, year,
+seed) cell and averaged with every cell counted equally, the picture flips: $66$--$80\%$ of the
+$49$--$50$ cells in each target year individually \emph{degrade} (unweighted mean effect
+$+0.024$ to $+0.046$, median effect $+0.025$ to $+0.056$), yet the pooled aggregate improves in all
+three years. The reconciliation is arithmetic, not mysterious: weighting each cell by its row count
+reproduces the pooled aggregate to within $0.005$--$0.008$, because a handful of large states (FIPS
+$12$/Florida, $6$/California, $48$/Texas) dominate the row-weighted total while an unweighted
+per-state mean gives a state with a thousand loans the same vote as a state with a million. We call
+this an \textbf{aggregation-induced reversal} rather than Simpson's paradox: the sign reversal
+itself is confirmed, but the classical two-group and lurking-variable conditions for that specific
+term were not formally verified here (\texttt{lending\_aggregation\_effect\_final.json}). The
+practical lesson mirrors this paper's central claim at a smaller scale: a single summary number --
+here, one pooled aggregate delta -- does not tell the whole story, and an auditor who checks only
+that figure for a lending model would conclude operating-point performance is stable while a
+majority of the populations it serves are individually seeing it degrade.
+
 \subsection{Recalibration repairs calibration only}\label{sec:res-remediation}
 
 Isotonic recalibration on a 10\% labeled target split reduced ECE by one to two orders of
-magnitude in every domain: clinical $0.276\rightarrow 0.002$, lending $0.246\rightarrow 0.006$,
-security $0.450\rightarrow 0.013$, NLP $0.115/0.254\rightarrow 0.016/0.055$
-(Table~\ref{tab:remediation}). In the three continuous-score domains, AUC and the subgroup gap
-moved by less than $0.012$---calibration is cheaply repairable, discrimination and reliability are
-not. (For security the isotonic map perturbs AUC by $+0.07$; because the in-domain-perfect
-detector emits near-degenerate probabilities, isotonic collapses them into $28$ tied levels, and
-AUC with heavy ties is not transform-invariant. This is a tie artifact, not restored
-discrimination: $+0.07$ does not recover the $0.37$ collapse.) Restoring discrimination requires
-target supervision---e.g., in the NLP domain, target fine-tuning recovers far more than any
-post-hoc fix~\citep{pall2026cpfe}.
+magnitude in every domain: clinical $0.276\rightarrow 0.002$, lending $0.240\rightarrow 0.002$
+(temporal), security $0.646\rightarrow 0.004$, NLP $0.111/0.260\rightarrow 0.020/0.062$
+(Table~\ref{tab:remediation}; source-only primary models throughout, Section~\ref{sec:protocol}).
+In clinical, lending, and NLP, AUC and the subgroup gap moved by less than $0.012$---calibration is
+cheaply repairable, discrimination and reliability are not. Security is the exception: isotonic
+recalibration moves AUC by $+0.035$ ($0.684\rightarrow0.718$). We do not yet have a rows-level tie
+count for the current (leakage-controlled, XGBoost) pipeline as we did for the earlier lightgbm
+result, so we report this as an open question rather than repeat the earlier ``tie artifact''
+explanation unverified for this model; either way, $+0.035$ does not recover the $0.31$ collapse.
+Restoring discrimination requires target supervision---e.g., in the NLP domain, target fine-tuning
+recovers far more than any post-hoc fix~\citep{pall2026cpfe}.
 
 \begin{table}[t]
 \centering
-\caption{Remediation ladder (isotonic recalibration on 10\% target labels). ECE falls sharply;
-AUC is essentially unchanged in continuous-score domains.}
+\caption{Remediation ladder (isotonic recalibration on 10\% target labels), source-only primary
+models. ECE falls sharply in every domain; AUC is essentially unchanged except security.}
 \label{tab:remediation}
 \small
 \begin{tabular}{llcccc}
 \toprule
 Domain & Target & ECE (no fix) & ECE (isotonic) & AUC (no fix) & AUC (isotonic) \\
 \midrule
-Clinical & BRFSS & 0.276 & 0.002 & 0.757 & 0.757 \\
-Lending & 2023 & 0.240 & 0.002 & 0.821 & 0.821 \\
-NLP & Twitter & 0.254 & 0.055 & 0.592 & 0.589 \\
-Security & CICIDS2017 & 0.450 & 0.013 & 0.634 & 0.708$^{\dagger}$ \\
+Clinical (FedAvg) & BRFSS & 0.276 & 0.002 & 0.757 & 0.757 \\
+Lending (temporal) & 2023 & 0.240 & 0.002 & 0.821 & 0.821 \\
+NLP (RoBERTa) & Twitter & 0.260 & 0.062 & 0.594 & 0.592 \\
+Security (XGBoost) & CICIDS2017 & 0.646 & 0.004 & 0.684 & 0.718$^{\dagger}$ \\
 \bottomrule
 \end{tabular}
 \captionsetup{font=footnotesize}
-\caption*{$^{\dagger}$ tie artifact from near-degenerate scores; not restored discrimination.}
+\caption*{$^{\dagger}$ AUC moves by $+0.035$ under isotonic recalibration; whether this reflects a
+tie artifact (as it did for the previously-reported lightgbm result) has not been re-verified for
+this model and is noted as an open question, not restored discrimination.}
 \end{table}
 
 \section{Discussion}\label{sec:discussion}
 
-\paragraph{What failed, and why.} The four domains failed in four ways, and each way matched its
-shift mechanism. Concept shift (NLP) broke every axis because the input--label relationship itself
-changed. Novel-label shift (security) broke discrimination and calibration precisely on classes
-absent from training, leaving trained classes untouched. Covariate shift alone (lending) broke
-nothing, even at large magnitude. Mixed shift (clinical) broke calibration while sparing
-discrimination. The common thread is mechanistic: the axis that fails is the axis the shift
-mechanism attacks.
+\paragraph{What failed, and why.} The four domains produced four different failure patterns. NLP's
+shift carries mixed evidence (both label and covariate probes fire, and the concept probe
+additionally fires for one target), and every axis failed together: discrimination, calibration,
+and subgroup reliability all collapsed. Security's shift is diagnosed \textbf{inconclusive} by the
+current probes, yet discrimination and calibration collapsed together on the attack families absent
+from training, and even the one family shared with training degraded substantially
+(Section~\ref{sec:res-fingerprint}). Lending's temporal shift, diagnosed \textbf{covariate}, degraded
+on none of the four measured axes; its geographic shift, also evaluated here but diagnosed
+\textbf{inconclusive}, degraded operating-point performance while ranking still improved. Clinical's
+shift, likewise inconclusive, affected calibration and the operating point far more than
+discrimination. Which axes failed together, and how severely, differed by target; whether that
+pattern is explained by shift \emph{mechanism} specifically, rather than by deployment context or
+another factor the evaluated probes do not isolate, is the open question Section~\ref{sec:meta}'s
+own direct test does not resolve in the affirmative.
 
 \paragraph{The most practically important observation.} Maintaining high discrimination after
-deployment did not imply trustworthy behaviour. The clinical model retained its AUC while its
-probability estimates became substantially miscalibrated, and the lending model stayed robust
-despite measurable covariate shift. These contrasting outcomes argue that deployment decisions
-should not rest on aggregate discrimination alone, but should incorporate diagnostics tailored to
-the underlying shift mechanism---which are cheap and, for covariate and label probes, require no
-target labels.
+deployment did not imply trustworthy behaviour. The clinical model's ranking discrimination moved
+only slightly while its probability estimates became substantially miscalibrated, and the lending
+model stayed robust or improved on every measured axis despite measurable covariate shift. These
+contrasting outcomes argue that deployment decisions should not rest on aggregate discrimination
+alone, but should incorporate the multi-axis audit this protocol runs---which is cheap and, for the
+covariate and label probes specifically, requires no target labels.
 
-\paragraph{What practitioners should do differently.} The results support a concrete
-pre-deployment routine: (1) probe label prevalence; (2) fit a source-vs-target domain classifier;
-(3) run the reweighting probe. The resulting diagnosis indicates which dashboard will mislead---a
-covariate-only diagnosis is reassuring, a concept or novel-label diagnosis is a warning that
-discrimination and subgroup reliability, not just calibration, are at risk---and a small labeled
-target sample should be budgeted for recalibration, which was cheap and universally effective.
-Monitoring aggregate AUC alone, the most common practice, was the least informative signal in all
-four domains.
+\paragraph{What practitioners should do differently.} The results support a concrete pre-deployment
+routine, not a formally validated predictive decision rule: (1) screen with cheap, largely
+label-free probes -- prevalence change, a domain classifier, and, where target labels exist, the
+reweighting check; (2) characterize what evidence is actually available, since not every target
+supports every probe (Table~\ref{tab:probe-availability}); (3) audit all four trustworthiness axes
+rather than aggregate discrimination alone; (4) report \emph{inconclusive} honestly when the
+evidence does not support a firm diagnosis, rather than forcing one; (5) budget a small labeled
+target sample for recalibration, which was cheap and consistently improved calibration; and
+(6) escalate to target supervision when discrimination or subgroup reliability remain degraded
+after remediation, since recalibration alone did not reliably restore them. Monitoring aggregate
+AUC alone, the most common practice, was the least informative signal in all four domains.
 
 \paragraph{Outlook.} If this pattern continues to hold across additional domains, deployment
 evaluation may need to shift its emphasis from measuring \emph{how large} a distribution shift is
-toward identifying \emph{what type} of shift has occurred before deployment. We do not claim a
-universal law from four domains; we claim a reproducible regularity, a mechanism that explains it,
-and a cheap protocol for testing whether it holds in a new setting. Establishing its boundaries---the
-domains, shift types, and model classes where the taxonomy breaks down---is the natural next step,
-and the benchmark is built to accept new domains.
+toward auditing multiple trustworthiness axes directly, since scalar magnitude alone did not
+consistently explain which axis failed in the settings studied here. Some shift evidence can be
+screened before deployment using unlabeled target data, while other mechanisms require target
+labels or remain inconclusive under the available probes (Section~\ref{sec:protocol}). We do not
+claim a universal law from four domains, nor that shift mechanism has been shown to outpredict
+shift magnitude; we claim a reproducible pattern of axis-specific failure, a magnitude-insufficiency
+finding, and a cheap protocol for testing both on a new domain. Establishing where mechanism-aware
+diagnosis does and does not add information beyond magnitude is the natural next step, and the
+benchmark is built to accept new domains.
+
+\paragraph{What this evidence establishes, and what remains uncertain.} Framed against the four
+hypotheses this paper set out to test: \textbf{H1} (different shift mechanisms produce
+distinguishable failure fingerprints) is \emph{mixed} -- only one of four possible mechanism-pair
+comparisons was both valid and informative enough to adjudicate. \textbf{H2a} (scalar shift
+magnitude alone is insufficient to characterize the observed failure variation) is
+\emph{supported}, with both in-sample (447 cells, every axis) and out-of-sample
+(Section~\ref{sec:meta}) evidence. \textbf{H2b} (shift mechanism carries information beyond
+magnitude about which axis fails) is \emph{not established} -- the direct test (mechanism-only vs.\
+magnitude-only vs.\ both, leave-one-out cross-validated) returns negative out-of-sample $R^2$ for
+every candidate model on the $n=10$ mechanism-comparable points available, which we read as
+underpowered rather than as evidence against the hypothesis. \textbf{H3} (the staged audit is more
+actionable than a scalar score alone) is \emph{not formally tested}; no comparison in this paper
+measures actionability directly. These four statuses, not a comparative mechanism-beats-magnitude
+claim, are this paper's actual scientific position.
 
 \section{Related Work}\label{sec:related}
 
-\paragraph{Shift benchmarks} such as WILDS~\citep{koh2021wilds} and
+\paragraph{Dataset-shift taxonomy.} The covariate/prior/concept-shift decomposition TrustShift's
+diagnosis protocol is built on is not new: it follows the canonical taxonomy
+of~\citet{morenotorres2012unifying}, the foundational treatment
+in~\citet{quinonerocandela2009dataset}, and Shimodaira's importance-weighting correction for
+covariate shift~\citep{shimodaira2000improving}. TrustShift does not propose a new taxonomy; it
+operationalizes the existing one with label-free-where-possible probes and is explicit, via its
+\emph{inconclusive} category, about where those probes cannot adjudicate.
+
+\paragraph{Shift diagnosis and decomposition.} Our probes build on black-box shift
+detection~\citep{rabanser2019failing} and label-shift estimation~\citep{lipton2018label}. The
+domain-classifier probe (AUC$_{\text{dc}}$) is grounded in the $\mathcal{H}$-divergence bound
+of~\citet{bendavid2010theory}, which relates target error to source error plus a source/target
+divergence a classifier can estimate directly. The closest prior work is
+DISDE~\citep{cai2023disde}, which decomposes an aggregate performance \emph{change} into
+harder-seen-inputs, $P(Y\mid X)$-change, and new-input-region components with a formal estimator.
+DISDE answers \emph{why aggregate performance moved}; TrustShift asks a different question --
+\emph{which trustworthiness axis failed}, jointly across discrimination, calibration,
+operating-point performance, and subgroup reliability -- and does not claim its categorical
+diagnosis explains failure better than a decomposition method such as DISDE would; that comparison
+is untested here.
+
+\paragraph{Open-set, novel-class, and subpopulation shift.} Genuine open-set recognition -- new
+classes entering the label space at test time -- is formalized by~\citet{scheirer2013toward}.
+Security's deployment shift is deliberately \emph{not} described in those terms: the binary task
+(benign vs.\ attack) is unchanged at test time, so no label-space expansion occurs. The closer
+prior-work anchor is subpopulation shift~\citep{yang2023change}, which studies degradation on
+subpopulations absent or rare in training while the label space stays fixed -- the same structure
+as security's unseen attack families within the single positive class, and a framing we also draw
+on for the deployment-context result discussed in Section~\ref{sec:discussion}.
+
+\paragraph{Shift robustness benchmarks} such as WILDS~\citep{koh2021wilds} and
 TableShift~\citep{gardner2023tableshift} quantify how much accuracy drops under shift, within a
-modality. TrustShift differs in measuring calibration and subgroup reliability alongside
-discrimination, in assigning a mechanistic diagnosis, and in spanning modalities so cross-domain
-regularities are visible.
+modality; \citet{wiles2022fine} cross shift \emph{type} with method across
+$\approx\!85{,}000$ models and are the reason we do not claim prior work studies shift one domain or
+type at a time -- that claim would be false and directly checkable against their own results.
+TrustShift differs from all three not in scale but in what it measures: calibration and subgroup
+reliability alongside discrimination, jointly, on a small number of real, non-synthetic,
+cross-modality deployment shifts, coupled to a staged diagnostic and remediation workflow rather
+than a robustness leaderboard.
 
-\paragraph{Fairness under shift} has been examined mostly in single domains; \citet{schrouff2022diagnosing}
-show fairness properties fail to transfer in medical settings and that clinically plausible shifts
-violate the assumptions of single-mechanism mitigations. We corroborate the multi-mechanism point
-across four domains and connect the mechanism to which axis fails. A recent
-survey~\citep{lin2024fairnessshiftsurvey} catalogues methods; we contribute an empirical taxonomy.
+\paragraph{Calibration under shift.} \citet{ovadia2019trust} establish that predictive-uncertainty
+calibration degrades under distribution shift and that post-hoc calibration methods can underperform
+in that regime -- the antecedent our own calibration finding (calibration and the operating point
+degrade far more than discrimination in three of four domains) builds on rather than rediscovers.
+Our post-hoc recalibration step uses temperature, Platt, and isotonic
+scaling~\citep{guo2017calibration,zadrozny2002isotonic}; we report Expected Calibration Error with
+equal-width binning and note, following~\citet{roelofs2022mitigating}, that equal-mass binning has
+lower estimator bias -- a sensitivity check this paper's released configuration is built to run but
+has not yet executed. Calibration failure is not a cosmetic concern in a domain such as clinical
+risk prediction, where miscalibrated probabilities directly mislead
+decisions~\citep{vancalster2019achilles}.
 
-\paragraph{Shift diagnosis and calibration.} Our probes build on black-box shift
-detection~\citep{rabanser2019failing}, label-shift estimation~\citep{lipton2018label}, and
-post-hoc calibration~\citep{guo2017calibration,zadrozny2002isotonic}. Our contribution is not a new
-estimator but the finding that these cheap diagnostics, applied jointly, predict \emph{which}
-trustworthiness axis a deployment will break.
+\paragraph{Subgroup and fairness reliability under shift} has mostly been examined within single
+domains; \citet{schrouff2022diagnosing} show fairness properties fail to transfer in medical
+settings and that clinically plausible shifts violate the assumptions of single-mechanism
+mitigations. We corroborate the multi-mechanism point across four domains: the subgroup gap moves
+in different directions for different (model, shift) pairs within the same domain, not just across
+domains. A recent survey~\citep{lin2024fairnessshiftsurvey} catalogues methods; we contribute an
+empirical, cross-domain fingerprint rather than a new fairness-under-shift method.
+
+\paragraph{Where TrustShift sits.} TrustShift is not a new dataset-shift taxonomy -- it uses the
+existing one. It is not a formal performance-decomposition estimator -- it asks a different
+question than DISDE. It is not a claim that shift mechanism outpredicts shift magnitude -- that
+direct comparison, run in Section~\ref{sec:meta}, does not resolve in the affirmative. Its
+contribution is the joint discrimination/calibration/operating-point/subgroup-reliability audit,
+coupled to a staged, largely label-free diagnostic workflow that reports \emph{inconclusive} as a
+first-class outcome, evaluated on four real, non-synthetic, cross-modality deployment shifts -- a
+combination no single work cited above provides.
 
 \section{Limitations}\label{sec:limitations}
 
@@ -460,24 +742,60 @@ Clinical target-side subgroup analysis is limited to age: the released predictio
 generated from a previously harmonized BRFSS dataset whose preprocessing pipeline is no longer
 recoverable, so sex, race, and BMI analyses are not reproducible on the target side; age-based
 analyses remain fully reproducible and constitute the primary clinical subgroup evaluation. The
-clinical and lending subgroup gaps \emph{narrow} under shift, which we attribute tentatively to
-changes in subgroup composition rather than to genuine fairness improvement, and flag as a
-hypothesis. The security detector's near-perfect in-domain AUC is a known separability property of
-whole-flow features, which we treat as the in-domain ceiling rather than a result. This study
+clinical (source-only primary model, FedAvg) and lending subgroup gaps \emph{narrow} under shift,
+which we attribute tentatively to changes in subgroup composition rather than to genuine fairness
+improvement, and flag as a hypothesis; this narrowing is model-dependent, not domain-dependent --
+the non-primary clinical boosted model's gap \emph{widens} under the identical shift ($\Delta
+G=+0.029$), so subgroup reliability here is a property of the (model, shift) pair. The security
+detector's near-ceiling in-domain AUC ($0.998$) is measured under a capture-session-disjoint
+train/test split; a duplicate-row check found no evidence of excess cross-split duplication
+relative to within-split duplication (we do not claim this proves the split is leakage-free). A
+random row-level split of the same data (ignoring capture-file identity) gives a higher AUC of
+$1.000$, reported alongside as a sensitivity comparison rather than as the primary number. We
+treat the native-split $0.998$ as a genuine in-domain ceiling for whole-flow volumetric/reflection
+features rather than a leakage artifact, though we
+have not yet formally characterized \emph{why} the separability is so high. This study
 examines four deployment settings rather than an exhaustive sample of machine-learning domains;
 important modalities---especially vision foundation models and large language models, whose shift
 behaviour may differ---remain to be tested, and the benchmark is designed to accept them.
 Finally, all experiments run on a single workstation, bounding model scale.
 
+\paragraph{Scope of the magnitude, context, and mechanism claims.} The context-heterogeneity result
+(Section~\ref{sec:meta}) uses a bare state identifier as the only context variable; no economic or
+regulatory state-level covariate was available in the current feature set, so we test whether
+population identity carries signal, not what about a population carries it. The
+magnitude-insufficiency claim (H2a) is evaluated against two proxies,
+$\text{AUC}_{\text{dc}}$ and $|\Delta\pi|$; other severity proxies (e.g.\ population-stability
+index, raw score drift) are not tested. The direct mechanism-vs-magnitude comparison (H2b) has only
+$n=10$ mechanism-comparable points after excluding cells without both a valid mechanism label and
+sufficient severity spread -- underpowered, not merely inconclusive, and every candidate model in
+that comparison scores negative out-of-sample $R^2$; we do not treat this as evidence against H2b,
+only as evidence the current data cannot adjudicate it. H3 (staged diagnosis more actionable than a
+scalar score) has no formal test in this paper. The aggregation-induced reversal
+(Section~\ref{sec:res-aggregation}) is demonstrated in lending only; whether the same weighting
+effect recurs in the other three domains is untested. Clinical has no covariate-shift probe at all
+-- the only available proxy never reaches $\text{AUC}_{\text{dc}}$ -- so its \texttt{inconclusive}
+diagnosis reflects missing evidence, not evidence against covariate shift. NLP's remediation-stage
+subgroup gap is undefined (\texttt{NaN}) for both targets in the released artifacts, a
+data-generation issue not yet root-caused; the remediation claim in
+Section~\ref{sec:res-remediation} is scoped to clinical and lending's subgroup-gap stability for
+this reason.
+
 \section{Conclusion}\label{sec:conclusion}
 
-Deployment shift does not degrade machine-learning trustworthiness uniformly. Which axis
-fails---discrimination, calibration, or subgroup reliability---is set by the type of shift, and the
-type is recoverable before deployment with cheap, largely label-free diagnostics; the magnitude of
-shift is not, on its own, a measure of risk. In-domain metrics predicted none of this. We make the
-TrustShift protocol and benchmark available upon publication so that new domains can be placed on
-the same axes, and offer the resulting taxonomy as a practical guide to what a deployment audit
-should check.
+Deployment shift does not degrade machine-learning trustworthiness uniformly: discrimination,
+calibration, operating-point performance, and subgroup reliability can move independently, and even
+in different directions, within the same deployment. Scalar marginal shift scores -- a
+domain-classifier AUC, a prevalence shift -- were not sufficient, on their own, to explain which
+axis moved or by how much in the settings studied here. Deployment context can carry additional
+information beyond scalar magnitude when historical audit data for that population exist, though
+this signal does not extrapolate to a population never audited before. Mechanism-aware diagnosis is
+a promising organizing framework -- it recovers a specific diagnosis for some shifts and honestly
+reports \emph{inconclusive} for others -- but its predictive superiority over scalar shift magnitude
+has not been established by the direct test this paper runs. In-domain metrics predicted none of
+the deployment outcomes we observed. We release the TrustShift protocol and benchmark so that new
+domains, and the open question of when mechanism adds information beyond magnitude, can be tested
+directly.
 
 \section*{Statements and Declarations}
 

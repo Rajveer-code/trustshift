@@ -1,16 +1,27 @@
 """TrustShift configuration: ALL paths and constants live here (single PATHS block).
 
 Every script imports from this module. Never hardcode a machine path elsewhere.
+
+The sibling-repo paths below default to this project's own development machine layout and are
+only needed to regenerate predictions from raw source repos (most reproduction needs just the
+committed results/ predictions). Override any of them with the matching TRUSTSHIFT_* environment
+variable -- see README.md's Configuration section -- without editing this file.
 """
+import os
 from pathlib import Path
 
+
+def _env_path(var: str, default: str) -> Path:
+    return Path(os.environ.get(var, default))
+
+
 P = {
-    "clinical_repo":     Path(r"D:\Projects\diabetes_prediction_project\federated"),
-    "nlp_repo":          Path(r"D:\Projects\mental-health-fairness-nlp-main"),
-    "hmda_features":     Path(r"D:\Projects\CATE-HMDA-Heterogeneous-Effects\data\features_panel.parquet"),
-    "hmda_feature_sets": Path(r"D:\Projects\CATE-HMDA-Heterogeneous-Effects\data\feature_sets.json"),
-    "ddos_notebook":     Path(r"C:\Users\Asus\Downloads\CrossDataset_DDoS_Colab.ipynb"),
-    "fairscope":         Path(r"D:\Projects\fairscope"),
+    "clinical_repo":     _env_path("TRUSTSHIFT_CLINICAL_REPO", r"D:\Projects\diabetes_prediction_project\federated"),
+    "nlp_repo":          _env_path("TRUSTSHIFT_NLP_REPO", r"D:\Projects\mental-health-fairness-nlp-main"),
+    "hmda_features":     _env_path("TRUSTSHIFT_HMDA_FEATURES", r"D:\Projects\CATE-HMDA-Heterogeneous-Effects\data\features_panel.parquet"),
+    "hmda_feature_sets": _env_path("TRUSTSHIFT_HMDA_FEATURE_SETS", r"D:\Projects\CATE-HMDA-Heterogeneous-Effects\data\feature_sets.json"),
+    "ddos_notebook":     _env_path("TRUSTSHIFT_DDOS_NOTEBOOK", r"C:\Users\Asus\Downloads\CrossDataset_DDoS_Colab.ipynb"),
+    "fairscope":         _env_path("TRUSTSHIFT_FAIRSCOPE", r"D:\Projects\fairscope"),
     "out":               Path(__file__).parent / "results",
     "data":              Path(__file__).parent / "data",
 }
