@@ -1,4 +1,5 @@
 # TrustShift
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21739501.svg)](https://doi.org/10.5281/zenodo.21739501)
 
 **A mechanism-aware audit of machine-learning deployment shift.**
 
