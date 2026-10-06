@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software or protocol, please cite it as below."
-title: "TrustShift: Shift Type, Not Shift Magnitude, Determines Machine-Learning Failure Modes — A Cross-Domain Audit Protocol and a Failure Taxonomy"
+title: "TrustShift: A Mechanism-Aware Audit of Machine-Learning Deployment Shift"
 type: software
 authors:
   - family-names: Pall
